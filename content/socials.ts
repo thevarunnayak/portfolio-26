@@ -3,8 +3,8 @@ import { SocialLink } from '@/types';
 export const socialLinks: SocialLink[] = [
   {
     platform: 'GitHub',
-    url: 'https://github.com/varunnayak',
-    handle: '@varunnayak',
+    url: 'https://github.com/thevarunnayak',
+    handle: '@thevarunnayak',
     iconName: 'Github'
   },
   {
@@ -21,8 +21,8 @@ export const socialLinks: SocialLink[] = [
   },
   {
     platform: 'Email',
-    url: 'mailto:varun.nayak@example.com',
-    handle: 'varun.nayak@example.com',
+    url: 'mailto:iamvarunnayak@gmail.com',
+    handle: 'iamvarunnayak@gmail.com',
     iconName: 'Mail'
   },
   {

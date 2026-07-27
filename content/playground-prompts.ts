@@ -24,7 +24,7 @@ export const playgroundDetails: PlaygroundDetail[] = [
       'Separates geometry buffer generation from material uniforms for optimal GPU memory management.'
     ],
     liveDemoUrl: 'https://threejs-lab.varunnayak.com',
-    githubUrl: 'https://github.com/varunnayak/threejs-shader-lab'
+    githubUrl: 'https://github.com/thevarunnayak/threejs-shader-lab'
   },
   {
     id: 'exp-motion-physics',
@@ -39,7 +39,7 @@ export const playgroundDetails: PlaygroundDetail[] = [
       'Applies CSS transform 3D matrix acceleration for hardware GPU composition.'
     ],
     liveDemoUrl: 'https://motion.varunnayak.com',
-    githubUrl: 'https://github.com/varunnayak/motion-physics-engine'
+    githubUrl: 'https://github.com/thevarunnayak/motion-physics-engine'
   },
   {
     id: 'exp-data-stream',
@@ -54,7 +54,7 @@ export const playgroundDetails: PlaygroundDetail[] = [
       'Canvas 2D requestAnimationFrame rendering loop for zero-lag 60fps packet animations.'
     ],
     liveDemoUrl: 'https://stream.varunnayak.com',
-    githubUrl: 'https://github.com/varunnayak/rxjs-stream-synthesizer'
+    githubUrl: 'https://github.com/thevarunnayak/rxjs-stream-synthesizer'
   },
   {
     id: 'exp-audio-visualizer',
@@ -69,6 +69,6 @@ export const playgroundDetails: PlaygroundDetail[] = [
       'Renders high-definition gradients and glowing oscilloscope traces on Canvas 2D.'
     ],
     liveDemoUrl: 'https://audio.varunnayak.com',
-    githubUrl: 'https://github.com/varunnayak/web-audio-spectrum'
+    githubUrl: 'https://github.com/thevarunnayak/web-audio-spectrum'
   }
 ];

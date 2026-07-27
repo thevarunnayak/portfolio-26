@@ -16,6 +16,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: `${siteConfig.name} — ${siteConfig.role}`,
   description: `${siteConfig.role} & ${siteConfig.subRole}. ${siteConfig.tagline}`,
+  icons: {
+    icon: '/images/prof.jpg',
+    shortcut: '/images/prof.jpg',
+    apple: '/images/prof.jpg',
+  },
   keywords: [
     'Software Engineer',
     'Angular',
@@ -26,7 +31,7 @@ export const metadata: Metadata = {
     'Design Systems',
     'Varun Nayak'
   ],
-  authors: [{ name: siteConfig.name, url: 'https://github.com/varunnayak' }],
+  authors: [{ name: siteConfig.name, url: 'https://github.com/thevarunnayak' }],
   creator: siteConfig.name,
   openGraph: {
     type: 'website',

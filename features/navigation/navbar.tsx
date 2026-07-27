@@ -76,13 +76,17 @@ export function Navbar({ onOpenCommandMenu }: NavbarProps) {
             <a
               href="#hero"
               onClick={(e) => handleNavClick(e, '#hero')}
-              onMouseEnter={() => setCursorState('link', 'VN')}
+              onMouseEnter={() => setCursorState('link', 'Varun')}
               onMouseLeave={resetCursorState}
-              className="flex items-center gap-2 px-2 py-1 rounded-full text-white hover:text-blue-400 transition-colors shrink-0"
+              className="group flex items-center gap-2.5 px-2 py-1 rounded-full text-white hover:text-blue-400 transition-colors shrink-0"
             >
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 font-mono text-xs font-bold text-white border border-white/20">
-                VN
-              </span>
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-full overflow-hidden border border-white/20 shadow-md group-hover:border-blue-400 group-hover:scale-105 transition-all">
+                <img
+                  src="/images/prof.jpg"
+                  alt="Varun Nayak"
+                  className="h-full w-full object-cover object-center"
+                />
+              </div>
               <span className="hidden font-mono text-xs font-semibold tracking-tight sm:inline-block">
                 {siteConfig.shortName}
               </span>

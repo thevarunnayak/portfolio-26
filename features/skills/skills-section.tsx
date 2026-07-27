@@ -81,7 +81,7 @@ export function SkillsSection() {
               <span className="text-neutral-500">CAPABILITIES</span>
             </h2>
           </div>
-          <p className="max-w-md text-sm text-neutral-400">
+          <p className="max-w-md text-sm text-neutral-400 md:text-right">
             No superficial percentages or arbitrary progress bars. Hover any technology node to inspect experience depth, project deployments, and architectural capabilities.
           </p>
         </div>

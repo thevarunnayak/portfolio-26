@@ -37,7 +37,7 @@ export function ProjectsSection() {
               <span className="text-neutral-500">PRODUCTS</span>
             </h2>
           </div>
-          <p className="max-w-md text-sm text-neutral-400">
+          <p className="max-w-md text-sm text-neutral-400 md:text-right">
             Click any product to launch its full desktop window case study view with architecture flowcharts, source code specs, and live performance benchmarks.
           </p>
         </div>

@@ -8,7 +8,7 @@ export const playgroundData: PlaygroundItem[] = [
     category: '3D/WebGL (Three.js)',
     tech: ['Three.js', 'React Three Fiber', 'Drei', 'GLSL Shaders'],
     interactiveDemoId: 'threejs-lab',
-    githubLink: 'https://github.com/varunnayak/threejs-shader-lab',
+    githubLink: 'https://github.com/thevarunnayak/threejs-shader-lab',
     liveDemoUrl: 'https://threejs-lab.varunnayak.com'
   },
   {
@@ -18,7 +18,7 @@ export const playgroundData: PlaygroundItem[] = [
     category: 'Motion Design (Framer & GSAP)',
     tech: ['Framer Motion', 'GSAP', 'TypeScript', 'Spring Physics'],
     interactiveDemoId: 'motion-physics',
-    githubLink: 'https://github.com/varunnayak/motion-physics-engine',
+    githubLink: 'https://github.com/thevarunnayak/motion-physics-engine',
     liveDemoUrl: 'https://motion.varunnayak.com'
   },
   {
@@ -28,7 +28,7 @@ export const playgroundData: PlaygroundItem[] = [
     category: 'Data Architecture (RxJS/WebSockets)',
     tech: ['RxJS', 'WebSockets', 'React State', 'Canvas 2D'],
     interactiveDemoId: 'data-stream',
-    githubLink: 'https://github.com/varunnayak/rxjs-stream-synthesizer',
+    githubLink: 'https://github.com/thevarunnayak/rxjs-stream-synthesizer',
     liveDemoUrl: 'https://stream.varunnayak.com'
   },
   {
@@ -38,7 +38,7 @@ export const playgroundData: PlaygroundItem[] = [
     category: 'Hardware APIs (Web Audio API)',
     tech: ['Web Audio API', 'Canvas 2D', 'FFT Oscilloscope', 'TypeScript'],
     interactiveDemoId: 'audio-visualizer',
-    githubLink: 'https://github.com/varunnayak/web-audio-spectrum',
+    githubLink: 'https://github.com/thevarunnayak/web-audio-spectrum',
     liveDemoUrl: 'https://audio.varunnayak.com'
   }
 ];
