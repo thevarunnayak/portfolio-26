@@ -3,67 +3,106 @@ import { CertificationItem } from '@/types';
 export const certificationsData: CertificationItem[] = [
   {
     id: 'google-ai-pro',
-    title: 'Google AI Professional Certificate',
+    title: 'Google AI Professional Specialization',
     issuer: 'Google',
+    credentialType: 'Specialization',
     issueDate: '2025',
-    credentialId: 'GOOG-AI-994821',
-    verifyUrl: 'https://coursera.org/verify/professional-cert/google-ai',
-    summary: 'Comprehensive certification in applied artificial intelligence, machine learning pipelines, prompt engineering, generative AI model integration, and ethical AI deployment.',
-    modules: [
-      {
-        name: 'Foundations of AI & Machine Learning',
-        skillsLearned: ['Neural Network Architectures', 'Supervised & Unsupervised Learning', 'Model Evaluation Metrics']
-      },
-      {
-        name: 'Generative AI & LLM Systems Integration',
-        skillsLearned: ['Prompt Optimization', 'RAG (Retrieval-Augmented Generation)', 'Vector Embeddings']
-      },
-      {
-        name: 'Responsible & Ethical AI Engineering',
-        skillsLearned: ['Bias Audit Pipelines', 'Model Interpretability', 'Data Privacy Frameworks']
-      }
+    credentialId: 'SZAVGR35A0TB',
+    verifyUrl: 'https://coursera.org/share/4ed1f66453471edd92416b0597c57e82',
+    summary: 'Professional multi-course specialization in applied artificial intelligence, generative AI prompt engineering, AI for workplace productivity, data analysis, and building custom AI-powered applications.',
+    coursesCompleted: [
+      'AI Fundamentals',
+      'AI for Brainstorming and Planning',
+      'AI for Research and Insights',
+      'AI for Writing and Communicating',
+      'AI for Content Creation',
+      'AI for Data Analysis',
+      'AI for App Building'
+    ],
+    keyLearnings: [
+      'Collaborator Mindset: Structured prompt engineering enabling AI to act as an autonomous collaborator rather than a simple task completer.',
+      'Responsible AI: Architectural understanding of model capabilities for confident, ethical, and safe enterprise integration.',
+      'Domain Optimization: AI workflow automation across data analysis, deep technical research, and executive communication.',
+      'Vibe Coding & Custom Apps: Rapid prototyping and deployment of custom workplace web applications and automated domain tools.'
+    ],
+    skillsGained: [
+      'Responsible AI',
+      'Business Communication',
+      'Generative AI',
+      'Data Visualization',
+      'Research',
+      'Communication Planning',
+      'Prompt Patterns',
+      'Brainstorming',
+      'Data Analysis',
+      'Artificial Intelligence',
+      'Vibe Coding',
+      'Presentations'
     ]
   },
   {
     id: 'react-dev-pro',
     title: 'Become a Professional React Developer',
-    issuer: 'Meta / Coursera',
+    issuer: 'Scrimba',
+    credentialType: 'Specialization',
     issueDate: '2024',
-    credentialId: 'META-REACT-773019',
-    verifyUrl: 'https://coursera.org/verify/professional-cert/meta-react',
-    summary: 'Advanced mastery of React architecture, custom hooks performance optimization, state management patterns, automated testing suites, and production web deployment.',
-    modules: [
-      {
-        name: 'Advanced React State & Architecture',
-        skillsLearned: ['Context API Optimization', 'Reducer State Machines', 'Compound Component Patterns']
-      },
-      {
-        name: 'React Native & Mobile Systems',
-        skillsLearned: ['Native Bridge Interop', 'Device Hardware APIs', 'Navigation Stacks']
-      },
-      {
-        name: 'Performance Profiling & Testing',
-        skillsLearned: ['React Profiler flamegraphs', 'Jest & React Testing Library', 'End-to-End Cypress Integration']
-      }
+    credentialId: 'AR2METHPHVDK',
+    verifyUrl: 'https://coursera.org/share/4de22f9a32c62af1fad436dc18f6b60c',
+    summary: 'Advanced multi-course specialization covering React fundamentals, modern state management, React 19 architecture, technical interview mastery, and production web application development.',
+    coursesCompleted: [
+      'Learn React',
+      'Learn Advanced React',
+      "What's new in React 19?",
+      'React Technical Interview Practice Questions',
+      'React Interview Questions'
+    ],
+    keyLearnings: [
+      'React Architecture Proficiency: Deep expertise in core fundamentals, complex state management, and React 19 capabilities for enterprise web apps.',
+      'Real-World Engineering Execution: Production application deployment, advanced problem-solving, and technical interview mastery.'
+    ],
+    skillsGained: [
+      'Javascript',
+      'User Interface (UI)',
+      'Web Development Tools',
+      'JavaScript Frameworks',
+      'Web Frameworks',
+      'Cascading Style Sheets (CSS)',
+      'React.js',
+      'Web Content Accessibility Guidelines',
+      'Routing Protocols',
+      'User Interface and User Experience (UI/UX) Design',
+      'Data Management',
+      'Context Management'
     ]
   },
   {
     id: 'ibm-sql-ds',
     title: 'IBM SQL for Data Science',
     issuer: 'IBM',
+    credentialType: 'Certification',
     issueDate: '2024',
-    credentialId: 'IBM-SQL-338192',
-    verifyUrl: 'https://coursera.org/verify/specialization/ibm-sql',
-    summary: 'Specialized credentials in enterprise database querying, relational schema normalization, complex SQL joins, index optimization, and Python DB-API connectivity.',
-    modules: [
-      {
-        name: 'Relational Database Architecture',
-        skillsLearned: ['Schema Normalization (3NF)', 'Foreign Key Constraints', 'Index Optimization Strategy']
-      },
-      {
-        name: 'Advanced SQL Querying & Aggregations',
-        skillsLearned: ['Window Functions', 'Subqueries & CTEs', 'Transaction ACID Compliance']
-      }
+    credentialId: 'RQSVXNZYBYPN',
+    verifyUrl: 'https://coursera.org/share/c0a1ed525065a68285953e733d0217ff',
+    summary: 'Industry certification in relational database querying, Python data analysis, schema DDL design, DML query construction, views, transaction processing, and stored procedures.',
+    keyLearnings: [
+      'Database Data Analysis: Comprehensive relational data analysis using complex SQL queries and Python DB-API drivers.',
+      'Relational Schema Design: Table creation, schema normalization, and constraint enforcement using DDL commands.',
+      'DML Query Optimization: Multi-table filtering, aggregations, subqueries, and data manipulation.',
+      'Advanced Database Architecture: Transaction processing, views, stored procedures, and complex relational JOIN operations.'
+    ],
+    skillsGained: [
+      'Stored Procedure',
+      'Data Manipulation',
+      'Transaction Processing',
+      'Data Analysis',
+      'Jupyter',
+      'Database Management',
+      'Data Access',
+      'Relational Databases',
+      'Python Programming',
+      'Query Languages',
+      'SQL',
+      'Databases'
     ]
   }
 ];

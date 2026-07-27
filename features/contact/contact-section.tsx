@@ -51,7 +51,7 @@ export function ContactSection() {
             </span>
           </h2>
           <p className="max-w-xl mx-auto text-base text-neutral-400 font-normal pt-2">
-            Available for Software Engineering opportunities specializing in Angular, React, and Next.js. Have a project or role in mind?
+            Available for opportunities specializing in Angular, React, and Next.js. Have a project or role in mind?
           </p>
         </div>
 

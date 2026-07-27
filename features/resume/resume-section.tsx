@@ -89,7 +89,7 @@ export function ResumeSection() {
                 <h1 className="text-3xl font-extrabold text-white">{siteConfig.name}</h1>
                 <p className="font-mono text-sm text-blue-400">{siteConfig.role} — {siteConfig.subRole}</p>
                 <p className="font-mono text-xs text-neutral-400">
-                  {siteConfig.location} | {siteConfig.email} | github.com/varunnayak | linkedin.com/in/varunnayak
+                  {siteConfig.location} | {siteConfig.email} | github.com/thevarunnayak | linkedin.com/in/varunnayak
                 </p>
               </div>
 

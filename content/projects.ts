@@ -58,7 +58,7 @@ export const projectsData: ProjectCaseStudy[] = [
       'Strict TypeScript schema validation between client SQLite and Supabase PostgreSQL prevents silent data drift.'
     ],
     liveUrl: 'https://odyssey-app.example.com',
-    githubUrl: 'https://github.com/varunnayak/odyssey'
+    githubUrl: 'https://github.com/thevarunnayak/odyssey'
   },
   {
     id: '75-hard',
@@ -108,7 +108,7 @@ export const projectsData: ProjectCaseStudy[] = [
       'Edge functions with streaming response lower initial time-to-first-byte (TTFB) significantly.'
     ],
     liveUrl: 'https://75hard-tracker.example.com',
-    githubUrl: 'https://github.com/varunnayak/75hard-tracker'
+    githubUrl: 'https://github.com/thevarunnayak/75hard-tracker'
   },
   {
     id: 'sportz-score',
@@ -158,7 +158,7 @@ export const projectsData: ProjectCaseStudy[] = [
       'Pre-allocating array buffers on the client avoids memory garbage collection pauses during high-frequency updates.'
     ],
     liveUrl: 'https://sportzscore.example.com',
-    githubUrl: 'https://github.com/varunnayak/sportz-score'
+    githubUrl: 'https://github.com/thevarunnayak/sportz-score'
   },
   {
     id: 'ghostchat',
@@ -200,7 +200,7 @@ export const projectsData: ProjectCaseStudy[] = [
     challenges: ['Preventing memory leaks of decrypted string references across React render cycles.'],
     lessons: ['Explicitly nullifying Uint8Array buffers ensures data cannot be inspected in memory dumps.'],
     liveUrl: 'https://ghostchat.example.com',
-    githubUrl: 'https://github.com/varunnayak/ghostchat'
+    githubUrl: 'https://github.com/thevarunnayak/ghostchat'
   },
   {
     id: 'medslot',
@@ -242,7 +242,7 @@ export const projectsData: ProjectCaseStudy[] = [
     challenges: ['Preventing double-booking race conditions when multiple patients reply simultaneously.'],
     lessons: ['Database row locks during dispatch verification prevent scheduling collisions.'],
     liveUrl: 'https://medslot.example.com',
-    githubUrl: 'https://github.com/varunnayak/medslot'
+    githubUrl: 'https://github.com/thevarunnayak/medslot'
   },
   {
     id: 'docsync',
@@ -284,7 +284,7 @@ export const projectsData: ProjectCaseStudy[] = [
     challenges: ['Synchronizing custom code syntax highlighting tokens across collaborative operational transforms.'],
     lessons: ['Separating document AST representation from display DOM prevents editor re-render jank.'],
     liveUrl: 'https://docsync.example.com',
-    githubUrl: 'https://github.com/varunnayak/docsync'
+    githubUrl: 'https://github.com/thevarunnayak/docsync'
   },
   {
     id: 'convo',
@@ -326,6 +326,6 @@ export const projectsData: ProjectCaseStudy[] = [
     challenges: ['Managing dynamic WebRTC bitrate degradation on unstable mobile network connections.'],
     lessons: ['Adaptive bitrate scaling is crucial for video call continuity under weak network signals.'],
     liveUrl: 'https://convo.example.com',
-    githubUrl: 'https://github.com/varunnayak/convo'
+    githubUrl: 'https://github.com/thevarunnayak/convo'
   }
 ];

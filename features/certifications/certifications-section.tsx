@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { certificationsData } from '@/content/certifications';
 import { useCursor } from '@/features/cursor/cursor-context';
-import { Award, ExternalLink, ChevronDown, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Award, ChevronDown, ExternalLink, Calendar, CheckCircle2, ShieldCheck, BookOpen, Sparkles, Layers } from 'lucide-react';
 
 export function CertificationsSection() {
   const { setCursorState, resetCursorState } = useCursor();
   const [expandedCert, setExpandedCert] = useState<string>(certificationsData[0].id);
 
-  const toggleCert = (id: string) => {
+  const toggleExpand = (id: string) => {
     setExpandedCert(expandedCert === id ? '' : id);
   };
 
@@ -25,15 +25,15 @@ export function CertificationsSection() {
           <div className="space-y-3">
             <div className="flex items-center gap-2 font-mono text-xs font-semibold tracking-wider text-blue-400 uppercase">
               <Award className="h-4 w-4" />
-              <span>VERIFIED CREDENTIALS</span>
+              <span>VERIFIED CREDENTIALS & SPECIALIZATIONS</span>
             </div>
             <h2 className="text-4xl font-extrabold tracking-tight section-title-main sm:text-5xl lg:text-6xl uppercase">
               INDUSTRY <br />
               <span className="text-neutral-500">CERTIFICATIONS</span>
             </h2>
           </div>
-          <p className="max-w-md text-sm text-neutral-400">
-            Professional certifications from Google, Meta, and IBM covering Artificial Intelligence, Advanced React Systems, and Enterprise SQL.
+          <p className="max-w-md text-sm text-neutral-400 md:text-right">
+            Professional specializations and certifications from Google, Scrimba, and IBM covering Artificial Intelligence, Advanced React Systems, and Enterprise SQL.
           </p>
         </div>
 
@@ -52,36 +52,45 @@ export function CertificationsSection() {
                   isExpanded ? 'border-blue-500/30 bg-neutral-900/90 shadow-2xl' : 'bg-neutral-900/40'
                 }`}
               >
-                {/* Header Header */}
+                {/* Header Bar Clickable */}
                 <div
-                  onClick={() => toggleCert(cert.id)}
-                  onMouseEnter={() => setCursorState('button', isExpanded ? 'Close Modules' : 'View Modules')}
+                  onClick={() => toggleExpand(cert.id)}
+                  onMouseEnter={() => setCursorState('button', isExpanded ? 'Collapse' : 'Expand')}
                   onMouseLeave={resetCursorState}
                   className="flex flex-col cursor-pointer p-6 sm:p-8 md:flex-row md:items-center justify-between gap-6"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 font-mono text-sm font-bold text-blue-400 border border-blue-500/20">
-                      <ShieldCheck className="h-6 w-6" />
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 font-mono text-sm font-bold text-blue-400 border border-blue-500/20 shadow-inner">
+                      <ShieldCheck className="h-6 w-6 text-blue-400" />
                     </div>
-                    <div className="space-y-1">
-                      <h3 className="text-xl font-bold text-white sm:text-2xl">
-                        {cert.title}
-                      </h3>
-                      <div className="flex items-center gap-3 font-mono text-xs text-neutral-400">
-                        <span className="text-blue-400 font-semibold">{cert.issuer}</span>
-                        <span>•</span>
-                        <span>Issued {cert.issueDate}</span>
-                        {cert.credentialId && (
-                          <>
-                            <span>•</span>
-                            <span className="text-neutral-500">ID: {cert.credentialId}</span>
-                          </>
-                        )}
+                    <div className="space-y-1.5">
+                      <div className="flex flex-wrap items-center gap-3">
+                        <h3 className="text-xl font-bold text-white sm:text-2xl">
+                          {cert.title}
+                        </h3>
+                        <span className="rounded-full bg-white/5 px-3 py-0.5 font-mono text-[10px] font-semibold text-neutral-300 border border-white/10">
+                          {cert.issuer}
+                        </span>
+                        <span className={`rounded-full px-3 py-0.5 font-mono text-[10px] font-bold border ${
+                          cert.credentialType === 'Specialization'
+                            ? 'bg-purple-500/15 text-purple-400 border-purple-500/30'
+                            : 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
+                        }`}>
+                          {cert.credentialType.toUpperCase()}
+                        </span>
                       </div>
+                      <p className="font-mono text-xs text-neutral-400">
+                        CREDENTIAL ID: <span className="text-neutral-300 font-semibold">{cert.credentialId}</span>
+                      </p>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between md:justify-end gap-4 font-mono text-xs">
+                    <div className="flex items-center gap-1.5 text-neutral-400">
+                      <Calendar className="h-3.5 w-3.5 text-blue-400" />
+                      <span>{cert.issueDate}</span>
+                    </div>
+
                     <a
                       href={cert.verifyUrl}
                       target="_blank"
@@ -91,7 +100,7 @@ export function CertificationsSection() {
                       onMouseLeave={resetCursorState}
                       className="flex items-center gap-1.5 rounded-full bg-white/5 px-4 py-2 text-blue-400 hover:bg-blue-500 hover:text-white border border-white/10 transition-all"
                     >
-                      <span>Verify License</span>
+                      <span>Verify Certificate</span>
                       <ExternalLink className="h-3.5 w-3.5" />
                     </a>
 
@@ -106,7 +115,7 @@ export function CertificationsSection() {
                   {cert.summary}
                 </div>
 
-                {/* Expandable Module Breakdown */}
+                {/* Expandable Breakdown */}
                 <AnimatePresence>
                   {isExpanded && (
                     <motion.div
@@ -114,33 +123,63 @@ export function CertificationsSection() {
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                      className="border-t border-white/10 px-6 py-8 sm:px-8 space-y-6 bg-black/40"
+                      className="border-t border-white/10 px-6 py-8 sm:px-8 space-y-8 bg-black/40"
                     >
-                      <h4 className="font-mono text-xs font-semibold text-neutral-400 uppercase tracking-wider">
-                        COMPLETED MODULES & DOMAIN COMPETENCIES
-                      </h4>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {cert.modules.map((mod, idx) => (
-                          <div key={idx} className="rounded-2xl bg-white/5 p-5 border border-white/10 space-y-3">
-                            <h5 className="font-bold text-sm text-white flex items-center gap-2">
-                              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-500/20 font-mono text-[10px] text-blue-400 font-bold">
-                                {idx + 1}
-                              </span>
-                              {mod.name}
-                            </h5>
-                            <div className="flex flex-wrap gap-1.5">
-                              {mod.skillsLearned.map((skill, sIdx) => (
-                                <span
-                                  key={sIdx}
-                                  className="rounded-md bg-black/60 px-2.5 py-1 font-mono text-[11px] text-neutral-300 border border-white/5"
-                                >
-                                  {skill}
-                                </span>
-                              ))}
-                            </div>
+                      {/* Section 1: Course Certificates Completed (For Specializations) */}
+                      {cert.coursesCompleted && cert.coursesCompleted.length > 0 && (
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-2 font-mono text-xs font-semibold text-purple-400 uppercase tracking-wider">
+                            <Layers className="h-4 w-4" />
+                            <span>COURSE CERTIFICATES COMPLETED ({cert.coursesCompleted.length})</span>
                           </div>
-                        ))}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                            {cert.coursesCompleted.map((course, cIdx) => (
+                              <div
+                                key={cIdx}
+                                className="flex items-center gap-2.5 rounded-xl bg-white/5 p-3.5 border border-white/10 text-xs font-medium text-white"
+                              >
+                                <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
+                                <span>{course}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Section 2: Core Competencies & Key Highlights */}
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 font-mono text-xs font-semibold text-blue-400 uppercase tracking-wider">
+                          <BookOpen className="h-4 w-4" />
+                          <span>CORE COMPETENCIES & KEY HIGHLIGHTS</span>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          {cert.keyLearnings.map((learning, lIdx) => (
+                            <div
+                              key={lIdx}
+                              className="rounded-2xl bg-white/5 p-4 border border-white/10 text-xs leading-relaxed text-neutral-300"
+                            >
+                              {learning}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Section 3: Skills Gained */}
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 font-mono text-xs font-semibold text-amber-400 uppercase tracking-wider">
+                          <Sparkles className="h-4 w-4" />
+                          <span>SKILLS GAINED ({cert.skillsGained.length})</span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {cert.skillsGained.map((skill, sIdx) => (
+                            <span
+                              key={sIdx}
+                              className="rounded-lg bg-white/5 px-3 py-1.5 font-mono text-xs text-neutral-200 border border-white/10 hover:border-blue-500/40 transition-all"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </motion.div>
                   )}

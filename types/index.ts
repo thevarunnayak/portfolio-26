@@ -45,6 +45,9 @@ export interface ExperienceItem {
   techStack: string[];
   featuredProjects: string[];
   logoText: string;
+  award?: string;
+  bannerImage?: string;
+  companyLogo?: string;
 }
 
 export interface ProjectMetric {
@@ -107,11 +110,14 @@ export interface CertificationItem {
   id: string;
   title: string;
   issuer: string;
+  credentialType: 'Specialization' | 'Certification';
   issueDate: string;
   credentialId?: string;
   verifyUrl: string;
   summary: string;
-  modules: CertificationModule[];
+  coursesCompleted?: string[];
+  keyLearnings: string[];
+  skillsGained: string[];
 }
 
 export interface PlaygroundItem {
