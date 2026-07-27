@@ -1,0 +1,217 @@
+@import "tailwindcss";
+
+@layer base {
+  :root, [data-theme='dark'] {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #141414;
+    --bg-tertiary: #1f1f1f;
+    --text-primary: #f5f5f5;
+    --text-secondary: #a3a3a3;
+    --text-muted: #737373;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(255, 255, 255, 0.18);
+    --accent-color: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.25);
+    --accent-cyan: #2dd4bf;
+    --glass-bg: rgba(20, 20, 20, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --card-bg: rgba(20, 20, 20, 0.5);
+    --code-bg: #000000;
+    color-scheme: dark;
+  }
+
+  [data-theme='light'] {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f1f5f9;
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    --border-subtle: rgba(15, 23, 42, 0.08);
+    --border-hover: rgba(15, 23, 42, 0.2);
+    --accent-color: #2563eb;
+    --accent-glow: rgba(37, 99, 235, 0.15);
+    --accent-cyan: #0d9488;
+    --glass-bg: rgba(255, 255, 255, 0.88);
+    --glass-border: rgba(15, 23, 42, 0.08);
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --code-bg: #0f172a;
+    color-scheme: light;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-inter), sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-satoshi), sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-geist-mono), monospace;
+  }
+}
+
+/* Custom Noise Texture Background */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* Fine Grid Pattern */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+[data-theme='light'] .bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-hover:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1), 0 0 20px -5px var(--accent-glow);
+}
+
+[data-theme='dark'] .glass-panel-hover:hover {
+  background: rgba(30, 30, 30, 0.8);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 20px -5px var(--accent-glow);
+}
+
+/* Precise Light & Dark Theme Background Transparency for Global 3D Ambient Canvas */
+main,
+section {
+  background-color: transparent !important;
+}
+
+[data-theme='light'] main,
+[data-theme='light'] section {
+  background-color: transparent !important;
+}
+
+[data-theme='light'] h1:not(.keep-white),
+[data-theme='light'] h2:not(.keep-white),
+[data-theme='light'] h3:not(.keep-white),
+[data-theme='light'] h4:not(.keep-white),
+[data-theme='light'] h5:not(.keep-white),
+[data-theme='light'] h6:not(.keep-white) {
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .text-white:not(.keep-white) {
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .text-neutral-300:not(.keep-white),
+[data-theme='light'] .text-neutral-200:not(.keep-white) {
+  color: #334155 !important;
+}
+
+[data-theme='light'] .text-neutral-400:not(.keep-white) {
+  color: #475569 !important;
+}
+
+[data-theme='light'] .text-neutral-500:not(.keep-white) {
+  color: #64748b !important;
+}
+
+[data-theme='light'] .hero-title-gradient {
+  background-image: linear-gradient(to right, #0f172a, #334155, #64748b) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+
+[data-theme='light'] .hero-title-main {
+  color: #0f172a !important;
+}
+
+[data-theme='light'] .glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] .bg-black\/60,
+[data-theme='light'] .bg-black\/80,
+[data-theme='light'] .bg-black\/40 {
+  background-color: #f1f5f9;
+}
+
+[data-theme='light'] .bg-neutral-900\/90,
+[data-theme='light'] .bg-neutral-900\/60,
+[data-theme='light'] .bg-neutral-900\/40,
+[data-theme='light'] .bg-neutral-900\/50,
+[data-theme='light'] .bg-neutral-900,
+[data-theme='light'] .bg-neutral-950 {
+  background-color: #ffffff;
+}
+
+[data-theme='light'] .border-white\/10,
+[data-theme='light'] .border-white\/5,
+[data-theme='light'] .border-white\/15,
+[data-theme='light'] .border-white\/20 {
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme='light'] .bg-white\/5,
+[data-theme='light'] .bg-white\/10 {
+  background-color: rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] footer {
+  background-color: #f1f5f9;
+  border-color: rgba(15, 23, 42, 0.08);
+  color: #475569;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
+/* Hide system cursor globally when custom cursor active */
+@media (pointer: fine) {
+  html.custom-cursor-active,
+  body.custom-cursor-active,
+  .custom-cursor-active *,
+  .custom-cursor-active ::before,
+  .custom-cursor-active ::after {
+    cursor: none !important;
+  }
+}
