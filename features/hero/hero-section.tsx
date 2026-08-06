@@ -8,7 +8,7 @@ import { Magnetic } from '@/components/motion/magnetic';
 import { useCursor } from '@/features/cursor/cursor-context';
 import { copyToClipboard } from '@/lib/utils';
 import { HeroAvatar3D } from '@/components/canvas/hero-avatar-3d';
-import { ArrowDownRight, Copy, Check, MapPin, Sparkles, Terminal } from 'lucide-react';
+import { ArrowDownRight, ArrowDown, Copy, Check, MapPin, Sparkles, Terminal } from 'lucide-react';
 
 const HeroParticles = dynamic(
   () => import('@/components/canvas/hero-particles').then((m) => m.HeroParticles),
@@ -157,8 +157,14 @@ export function HeroSection() {
           <Terminal className="h-3.5 w-3.5 text-blue-400" />
           <span>PORTFOLIO_SYSTEM_V2.6 // ACTIVE</span>
         </div>
-        <div className="hidden sm:flex items-center gap-4">
-          <span>[SCROLL TO DISCOVER]</span>
+        <div className="flex items-center gap-2 font-mono text-xs sm:text-sm font-bold tracking-wider text-neutral-200">
+          <span>SCROLL TO DISCOVER</span>
+          <motion.div
+            animate={{ y: [0, 5, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+          >
+            <ArrowDown className="h-4 w-4 text-blue-400 stroke-[2.5]" />
+          </motion.div>
         </div>
       </motion.div>
     </section>
