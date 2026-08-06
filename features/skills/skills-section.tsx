@@ -18,6 +18,7 @@ import {
   Users,
   Server,
   LayoutGrid,
+  Smartphone,
   CheckCircle2
 } from 'lucide-react';
 
@@ -25,6 +26,8 @@ function getSkillIcon(iconName: string, className = "h-4 w-4") {
   switch (iconName) {
     case 'Atom':
       return <Atom className={`${className} text-cyan-400`} />;
+    case 'Smartphone':
+      return <Smartphone className={`${className} text-sky-400`} />;
     case 'Layers':
       return <Layers className={`${className} text-blue-400`} />;
     case 'Code2':
@@ -87,7 +90,7 @@ export function SkillsSection() {
         </div>
 
         {/* Category Filters */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 font-mono text-xs">
+        <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
           {categories.map((cat) => (
             <button
               key={cat}

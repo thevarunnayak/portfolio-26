@@ -16,25 +16,45 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     const lenisInstance = new Lenis({
-      duration: 1.2,
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 2,
+      wheelMultiplier: 1.1,
+      touchMultiplier: 1.2,
+      lerp: 0.1,
     });
 
     setLenis(lenisInstance);
 
+    let rafId: number;
     function raf(time: number) {
       lenisInstance.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
+
+    // Scroll to target hash on initial load or route transition if present
+    const scrollToHash = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const targetEl = document.querySelector(hash);
+        if (targetEl) {
+          setTimeout(() => {
+            lenisInstance.scrollTo(targetEl as HTMLElement, { offset: -60, duration: 1.2 });
+          }, 200);
+        }
+      }
+    };
+
+    scrollToHash();
+    window.addEventListener('hashchange', scrollToHash);
 
     return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('hashchange', scrollToHash);
       lenisInstance.destroy();
     };
   }, []);

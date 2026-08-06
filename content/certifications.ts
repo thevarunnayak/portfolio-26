@@ -9,6 +9,8 @@ export const certificationsData: CertificationItem[] = [
     issueDate: '2025',
     credentialId: 'SZAVGR35A0TB',
     verifyUrl: 'https://coursera.org/share/4ed1f66453471edd92416b0597c57e82',
+    credlyUrl: 'https://www.credly.com/badges/84b44056-5553-4090-96b2-9ee6e2eb9c27',
+    badgeImage: 'https://images.credly.com/images/5bd2d506-c95c-4766-a5b1-8da62a3a23b2/blob',
     summary: 'Professional multi-course specialization in applied artificial intelligence, generative AI prompt engineering, AI for workplace productivity, data analysis, and building custom AI-powered applications.',
     coursesCompleted: [
       'AI Fundamentals',

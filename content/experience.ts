@@ -49,6 +49,7 @@ export const experienceItems: ExperienceItem[] = [
       'getUserMedia Camera',
       'AI Copilot & ChatGPT',
       'Photolog Scripting',
+      'Figma',
       'Design Systems'
     ],
     featuredProjects: ['Connect Assistant', 'Finding Action Assistant', 'Timeline & Calendar View', 'Custom Camera & Image Editor', 'Angular Window Service']

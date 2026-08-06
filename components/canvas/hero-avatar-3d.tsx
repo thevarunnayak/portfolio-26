@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
+import Image from 'next/image';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useCursor } from '@/features/cursor/cursor-context';
 import { ShieldCheck } from 'lucide-react';
@@ -83,41 +84,46 @@ export function HeroAvatar3D() {
       >
         {/* Profile Image & Cyber Container */}
         <div className="relative w-full h-full rounded-[20px] overflow-hidden bg-neutral-950 flex flex-col justify-between isolate">
-          {/* Top Status Bar */}
-          <div className="relative z-10 flex items-center justify-between px-4 py-3 bg-black/70 backdrop-blur-md border-b border-white/10 rounded-t-[20px]">
-            <div className="flex items-center gap-2 font-mono text-[11px] font-semibold text-neutral-200">
+          {/* Top Status Bar - Always Crisp Dark Cyber Header with White Text */}
+          <div className="relative z-10 flex items-center justify-between px-4 py-3 bg-neutral-900/90 keep-dark backdrop-blur-md border-b border-white/10 keep-white rounded-t-[20px]">
+            <div className="flex items-center gap-2 font-mono text-[11px] font-semibold text-white keep-white">
               <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>VARUN NAYAK</span>
+              <span className="text-white keep-white">VARUN NAYAK</span>
             </div>
-            <div className="flex items-center gap-1 font-mono text-[10px] text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-500/20">
-              <ShieldCheck className="h-3 w-3" />
-              <span>SOFTWARE ENGINEER</span>
+            <div className="flex items-center gap-1 font-mono text-[10px] text-blue-400 bg-blue-500/20 px-2 py-0.5 rounded-full border border-blue-500/30">
+              <ShieldCheck className="h-3 w-3 text-blue-400" />
+              <span className="text-blue-400 font-semibold">SOFTWARE ENGINEER</span>
             </div>
           </div>
 
-          {/* High-Resolution Portrait Photo */}
+          {/* High-Resolution Optimized Portrait Photo with fetchPriority="high" & priority */}
           <div className="relative flex-1 w-full overflow-hidden">
-            <img
+            <Image
               src="/images/prof.jpg"
-              alt="Varun Nayak Profile Photo"
-              className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+              alt="Pangala Varun Nayak Portrait"
+              fill
+              priority
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 384px"
+              className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
             />
-            {/* Subtle Gradient Overlays for Depth */}
-            <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/10 to-transparent" />
+            {/* Subtle Vignette Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent opacity-80" />
           </div>
 
-          {/* Floating Technology Badges Overlay */}
-          <div className="absolute bottom-3 left-3 right-3 z-20">
-            <div className="flex flex-wrap items-center gap-1.5">
-              {['Angular', 'React', 'Next.js 16', 'TypeScript'].map((tech) => (
-                <span
-                  key={tech}
-                  className="font-mono text-[10px] font-medium text-neutral-200 bg-black/80 backdrop-blur-md border border-white/15 px-2.5 py-1 rounded-md shadow-lg"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
+          {/* Floating Cyber Badges Bar at Bottom of Portrait */}
+          <div className="relative z-10 p-3 bg-neutral-950/80 keep-dark backdrop-blur-md border-t border-white/10 flex flex-wrap items-center justify-center gap-1.5">
+            <span className="rounded-lg bg-white/10 keep-dark px-2.5 py-1 font-mono text-[10px] font-semibold text-white keep-white border border-white/10">
+              Angular
+            </span>
+            <span className="rounded-lg bg-white/10 keep-dark px-2.5 py-1 font-mono text-[10px] font-semibold text-white keep-white border border-white/10">
+              React
+            </span>
+            <span className="rounded-lg bg-white/10 keep-dark px-2.5 py-1 font-mono text-[10px] font-semibold text-white keep-white border border-white/10">
+              Next.js 16
+            </span>
+            <span className="rounded-lg bg-white/10 keep-dark px-2.5 py-1 font-mono text-[10px] font-semibold text-white keep-white border border-white/10">
+              TypeScript
+            </span>
           </div>
         </div>
       </motion.div>

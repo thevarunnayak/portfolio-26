@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, OrbitControls } from '@react-three/drei';
+import { Float, OrbitControls, useGLTF, Center } from '@react-three/drei';
 import * as THREE from 'three';
 
 /* 1. Multi-Geometry WebGL Scene (Three.js & R3F) */
@@ -75,9 +75,9 @@ function PhysicsMotionCanvas() {
     let animId: number;
     let t = 0;
     const nodes = [
-      { x: 100, y: 100, targetX: 100, targetY: 100, vx: 0, vy: 0, radius: 14, color: '#3b82f6' },
-      { x: 220, y: 140, targetX: 220, targetY: 140, vx: 0, vy: 0, radius: 18, color: '#2dd4bf' },
-      { x: 340, y: 90, targetX: 340, targetY: 90, vx: 0, vy: 0, radius: 12, color: '#a855f7' },
+      { x: 160, y: 180, targetX: 160, targetY: 180, vx: 0, vy: 0, radius: 24, color: '#3b82f6' },
+      { x: 400, y: 230, targetX: 400, targetY: 230, vx: 0, vy: 0, radius: 32, color: '#2dd4bf' },
+      { x: 640, y: 150, targetX: 640, targetY: 150, vx: 0, vy: 0, radius: 22, color: '#a855f7' },
     ];
 
     const render = () => {
@@ -87,13 +87,13 @@ function PhysicsMotionCanvas() {
       // Draw Grid Lines
       ctx.strokeStyle = 'rgba(255,255,255,0.04)';
       ctx.lineWidth = 1;
-      for (let x = 0; x < canvas.width; x += 30) {
+      for (let x = 0; x < canvas.width; x += 40) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x, canvas.height);
         ctx.stroke();
       }
-      for (let y = 0; y < canvas.height; y += 30) {
+      for (let y = 0; y < canvas.height; y += 40) {
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(canvas.width, y);
@@ -102,8 +102,8 @@ function PhysicsMotionCanvas() {
 
       // Update & Draw Spring Nodes
       nodes.forEach((node, i) => {
-        node.targetX = (canvas.width / 4) * (i + 1) + Math.sin(t + i) * 40;
-        node.targetY = canvas.height / 2 + Math.cos(t * 1.5 + i) * 35;
+        node.targetX = (canvas.width / 4) * (i + 1) + Math.sin(t + i) * 70;
+        node.targetY = canvas.height / 2 + Math.cos(t * 1.5 + i) * 60;
 
         // Spring physics equation
         const ax = (node.targetX - node.x) * 0.1;
@@ -117,8 +117,8 @@ function PhysicsMotionCanvas() {
         ctx.beginPath();
         ctx.strokeStyle = node.color;
         ctx.globalAlpha = 0.4;
-        ctx.lineWidth = 2;
-        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 2.5;
+        ctx.setLineDash([6, 6]);
         ctx.moveTo(node.x, node.y);
         ctx.lineTo(node.targetX, node.targetY);
         ctx.stroke();
@@ -130,7 +130,7 @@ function PhysicsMotionCanvas() {
         ctx.fillStyle = node.color;
         ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
         ctx.shadowColor = node.color;
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 20;
         ctx.fill();
         ctx.shadowBlur = 0;
       });
@@ -142,7 +142,7 @@ function PhysicsMotionCanvas() {
     return () => cancelAnimationFrame(animId);
   }, []);
 
-  return <canvas ref={canvasRef} width={460} height={240} className="w-full h-full object-cover" />;
+  return <canvas ref={canvasRef} width={800} height={460} className="w-full h-full object-cover" />;
 }
 
 /* 3. Canvas 2D Real-Time Data Stream Visualizer */
@@ -169,12 +169,12 @@ function DataStreamCanvas() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Spawn new data packets
-      if (Math.random() < 0.12) {
+      if (Math.random() < 0.14) {
         const topic = topics[Math.floor(Math.random() * topics.length)];
         packets.push({
-          x: -20,
-          y: 40 + Math.random() * (canvas.height - 80),
-          speed: 2 + Math.random() * 2.5,
+          x: -40,
+          y: 60 + Math.random() * (canvas.height - 120),
+          speed: 3 + Math.random() * 3.5,
           id: packetSeq++,
           topic: topic.name,
           color: topic.color,
@@ -183,8 +183,8 @@ function DataStreamCanvas() {
 
       // Draw Stream Channels
       ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-      ctx.lineWidth = 1;
-      [60, 120, 180].forEach((y) => {
+      ctx.lineWidth = 1.5;
+      [100, 230, 360].forEach((y) => {
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(canvas.width, y);
@@ -192,32 +192,32 @@ function DataStreamCanvas() {
       });
 
       // Update & Draw Packets
-      packets.forEach((p, idx) => {
+      packets.forEach((p) => {
         p.x += p.speed;
 
         // Packet Capsule
-        ctx.fillStyle = 'rgba(20, 20, 20, 0.9)';
+        ctx.fillStyle = 'rgba(15, 20, 30, 0.9)';
         ctx.strokeStyle = p.color;
-        ctx.lineWidth = 1.5;
+        ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.roundRect(p.x, p.y - 12, 110, 24, 6);
+        ctx.roundRect(p.x, p.y - 16, 140, 32, 8);
         ctx.fill();
         ctx.stroke();
 
         // Glowing Dot
         ctx.fillStyle = p.color;
         ctx.beginPath();
-        ctx.arc(p.x + 12, p.y, 4, 0, Math.PI * 2);
+        ctx.arc(p.x + 16, p.y, 6, 0, Math.PI * 2);
         ctx.fill();
 
         // Packet ID Text
-        ctx.font = '10px Geist Mono, monospace';
+        ctx.font = '12px Geist Mono, monospace';
         ctx.fillStyle = '#f5f5f5';
-        ctx.fillText(`#${p.id} ${p.topic.slice(0, 7)}`, p.x + 22, p.y + 3);
+        ctx.fillText(`#${p.id} ${p.topic.slice(0, 8)}`, p.x + 28, p.y + 4);
       });
 
       // Remove offscreen packets
-      packets = packets.filter((p) => p.x < canvas.width + 120);
+      packets = packets.filter((p) => p.x < canvas.width + 160);
 
       animId = requestAnimationFrame(render);
     };
@@ -226,7 +226,7 @@ function DataStreamCanvas() {
     return () => cancelAnimationFrame(animId);
   }, []);
 
-  return <canvas ref={canvasRef} width={460} height={240} className="w-full h-full object-cover" />;
+  return <canvas ref={canvasRef} width={800} height={460} className="w-full h-full object-cover" />;
 }
 
 /* 4. Canvas 2D Web Audio API FFT Spectrum Visualizer */
@@ -241,42 +241,42 @@ function AudioSpectrumCanvas() {
 
     let animId: number;
     let t = 0;
-    const barsCount = 32;
+    const barsCount = 36;
 
     const render = () => {
       t += 0.05;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const barWidth = (canvas.width - 40) / barsCount;
+      const barWidth = (canvas.width - 60) / barsCount;
 
       for (let i = 0; i < barsCount; i++) {
         // Simulated FFT frequency value
         const freq = Math.abs(Math.sin(t + i * 0.25) * Math.cos(t * 0.7 + i * 0.1)) * 0.85 + 0.15;
-        const barHeight = freq * (canvas.height - 60);
+        const barHeight = freq * (canvas.height - 100);
 
-        const x = 20 + i * barWidth;
-        const y = canvas.height - 30 - barHeight;
+        const x = 30 + i * barWidth;
+        const y = canvas.height - 40 - barHeight;
 
         // Gradient Bar
-        const grad = ctx.createLinearGradient(0, canvas.height - 30, 0, 20);
+        const grad = ctx.createLinearGradient(0, canvas.height - 40, 0, 40);
         grad.addColorStop(0, '#3b82f6');
         grad.addColorStop(0.5, '#2dd4bf');
         grad.addColorStop(1, '#a855f7');
 
         ctx.fillStyle = grad;
-        ctx.fillRect(x, y, barWidth - 3, barHeight);
+        ctx.fillRect(x, y, barWidth - 4, barHeight);
 
         // Peak Indicator Cap
         ctx.fillStyle = '#ffffff';
-        ctx.fillRect(x, y - 3, barWidth - 3, 2);
+        ctx.fillRect(x, y - 4, barWidth - 4, 3);
       }
 
       // Oscilloscope Trace Line on Top
       ctx.beginPath();
       ctx.strokeStyle = '#2dd4bf';
-      ctx.lineWidth = 1.5;
-      for (let x = 0; x < canvas.width; x += 5) {
-        const y = 40 + Math.sin(t * 2 + x * 0.03) * 15;
+      ctx.lineWidth = 2.5;
+      for (let x = 0; x < canvas.width; x += 8) {
+        const y = 80 + Math.sin(t * 2 + x * 0.02) * 30;
         if (x === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
@@ -289,12 +289,300 @@ function AudioSpectrumCanvas() {
     return () => cancelAnimationFrame(animId);
   }, []);
 
-  return <canvas ref={canvasRef} width={460} height={240} className="w-full h-full object-cover" />;
+  return <canvas ref={canvasRef} width={800} height={460} className="w-full h-full object-cover" />;
+}
+
+/* 5. 3D Car Configurator & Scene Settings Studio */
+function ProceduralCarMesh({ color, wireframe }: { color: string; wireframe: boolean }) {
+  const groupRef = useRef<THREE.Group>(null!);
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    if (groupRef.current) {
+      groupRef.current.position.y = Math.sin(t * 1.5) * 0.04;
+    }
+  });
+
+  return (
+    <group ref={groupRef} position={[0, -0.15, 0]}>
+      {/* Car Main Body Chassis */}
+      <mesh position={[0, 0.4, 0]}>
+        <boxGeometry args={[2.4, 0.48, 1.2]} />
+        <meshStandardMaterial
+          color={color}
+          roughness={0.15}
+          metalness={0.85}
+          wireframe={wireframe}
+        />
+      </mesh>
+
+      {/* Car Roof Cabin */}
+      <mesh position={[-0.2, 0.8, 0]}>
+        <boxGeometry args={[1.2, 0.45, 1.0]} />
+        <meshStandardMaterial
+          color="#0f172a"
+          roughness={0.1}
+          metalness={0.9}
+          wireframe={wireframe}
+        />
+      </mesh>
+
+      {/* Rear Spoiler */}
+      <mesh position={[1.1, 0.75, 0]}>
+        <boxGeometry args={[0.2, 0.15, 1.1]} />
+        <meshStandardMaterial
+          color="#1e293b"
+          roughness={0.2}
+          metalness={0.9}
+          wireframe={wireframe}
+        />
+      </mesh>
+
+      {/* Wheels */}
+      {[
+        [-0.8, 0.15, 0.65],
+        [0.8, 0.15, 0.65],
+        [-0.8, 0.15, -0.65],
+        [0.8, 0.15, -0.65],
+      ].map((pos, idx) => (
+        <mesh key={idx} position={pos as [number, number, number]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.3, 0.3, 0.18, 32]} />
+          <meshStandardMaterial color="#09090b" roughness={0.5} metalness={0.5} wireframe={wireframe} />
+        </mesh>
+      ))}
+
+      {/* Headlights */}
+      {[-0.4, 0.4].map((z, idx) => (
+        <mesh key={idx} position={[-1.21, 0.4, z]}>
+          <boxGeometry args={[0.05, 0.1, 0.25]} />
+          <meshBasicMaterial color="#60a5fa" />
+        </mesh>
+      ))}
+
+      {/* Ground Shadow Disc */}
+      <mesh position={[0, -0.05, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[3.2, 2.2]} />
+        <meshBasicMaterial color="#000000" transparent opacity={0.4} />
+      </mesh>
+    </group>
+  );
+}
+
+function GLTFCarModel({ color, wireframe }: { color: string; wireframe: boolean }) {
+  const { scene } = useGLTF('/models/car.glb');
+  const groupRef = useRef<THREE.Group>(null!);
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    if (groupRef.current) {
+      groupRef.current.position.y = Math.sin(t * 1.5) * 0.04;
+    }
+  });
+
+  const clonedScene = React.useMemo(() => {
+    const clone = scene.clone(true);
+    
+    // Calculate bounding box to normalize model dimensions to ~3.2 units
+    const box = new THREE.Box3().setFromObject(clone);
+    const size = new THREE.Vector3();
+    box.getSize(size);
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const targetScale = maxDim > 0 ? 3.2 / maxDim : 1;
+    
+    clone.scale.setScalar(targetScale);
+
+    clone.traverse((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        const mesh = child as THREE.Mesh;
+        if (mesh.material) {
+          const mat = (mesh.material as THREE.MeshStandardMaterial).clone();
+          mat.wireframe = wireframe;
+          if (color) {
+            mat.color = new THREE.Color(color);
+          }
+          mesh.material = mat;
+        }
+      }
+    });
+
+    return clone;
+  }, [scene, color, wireframe]);
+
+  return (
+    <group ref={groupRef} position={[0, 0, 0]}>
+      <Center>
+        <primitive object={clonedScene} />
+      </Center>
+    </group>
+  );
+}
+
+function CarMesh({ color, wireframe }: { color: string; wireframe: boolean }) {
+  return (
+    <React.Suspense fallback={<ProceduralCarMesh color={color} wireframe={wireframe} />}>
+      <GLTFCarModel color={color} wireframe={wireframe} />
+    </React.Suspense>
+  );
+}
+
+function CarConfiguratorDemo() {
+  const [themeMode, setThemeMode] = React.useState<'light' | 'dark' | 'midnight'>('dark');
+  const [carColor, setCarColor] = React.useState<string>('#3b82f6');
+  const [autoRotate, setAutoRotate] = React.useState<boolean>(true);
+  const [wireframe, setWireframe] = React.useState<boolean>(false);
+  const [lightIntensity, setLightIntensity] = React.useState<number>(1.5);
+  const [camPosition, setCamPosition] = React.useState<[number, number, number]>([-3.5, 2.2, 3.5]);
+
+  const themeBgMap = {
+    light: 'bg-slate-200',
+    dark: 'bg-[#18181b]',
+    midnight: 'bg-[#09090b]'
+  };
+
+  const colors = [
+    { name: 'Silver', hex: '#cbd5e1' },
+    { name: 'Slate', hex: '#1e293b' },
+    { name: 'Electric Blue', hex: '#3b82f6' },
+    { name: 'Sunset Gold', hex: '#f59e0b' },
+    { name: 'Mint Emerald', hex: '#10b981' },
+    { name: 'Crimson Red', hex: '#ef4444' }
+  ];
+
+  return (
+    <div className={`relative h-full w-full ${themeBgMap[themeMode]} transition-colors duration-500 overflow-hidden flex items-center justify-center`}>
+      {/* 3D WebGL Canvas */}
+      <Canvas camera={{ position: camPosition, fov: 45 }}>
+        <ambientLight intensity={lightIntensity * 0.5} />
+        <directionalLight position={[5, 8, 5]} intensity={lightIntensity} />
+        <pointLight position={[-5, 5, -5]} color={carColor} intensity={lightIntensity * 1.2} />
+        <CarMesh color={carColor} wireframe={wireframe} />
+        <OrbitControls
+          enableZoom={true}
+          autoRotate={autoRotate}
+          autoRotateSpeed={1.5}
+          maxPolarAngle={Math.PI / 2 - 0.05}
+        />
+      </Canvas>
+
+      {/* Floating Interactive Settings Drawer Overlay */}
+      <div className="absolute top-4 right-4 z-20 w-72 rounded-2xl bg-white/95 text-slate-900 dark:bg-neutral-900/95 dark:text-slate-100 p-4 border border-white/20 shadow-2xl backdrop-blur-xl font-sans text-xs space-y-4 max-h-[90%] overflow-y-auto no-scrollbar">
+        <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-2">
+          <span className="font-bold text-sm tracking-tight">Scene Settings</span>
+          <span className="font-mono text-[10px] text-blue-500 font-semibold uppercase">3D WEBGL POC</span>
+        </div>
+
+        {/* Theme Mode Selector */}
+        <div className="space-y-1.5">
+          <span className="font-mono text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">THEME MODE</span>
+          <div className="grid grid-cols-3 gap-1">
+            {(['light', 'dark', 'midnight'] as const).map((mode) => (
+              <button
+                key={mode}
+                onClick={() => setThemeMode(mode)}
+                className={`py-1 rounded-lg text-[10px] font-semibold capitalize border transition-all ${
+                  themeMode === mode
+                    ? 'bg-blue-600 text-white border-blue-500 shadow-md'
+                    : 'bg-slate-100 dark:bg-white/5 border-slate-300 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-200'
+                }`}
+              >
+                {mode === 'light' ? 'Studio Light' : mode === 'dark' ? 'Dark Studio' : 'Midnight'}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Car Color Palette Swatches */}
+        <div className="space-y-1.5">
+          <span className="font-mono text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">CAR COLOR PALETTE</span>
+          <div className="flex items-center gap-2">
+            {colors.map((c) => (
+              <button
+                key={c.hex}
+                onClick={() => setCarColor(c.hex)}
+                style={{ backgroundColor: c.hex }}
+                title={c.name}
+                className={`h-6 w-6 rounded-full border-2 transition-transform ${
+                  carColor === c.hex ? 'scale-125 border-blue-500 shadow-md' : 'border-white/50 opacity-80 hover:opacity-100'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Auto Rotate & Wireframe Toggles */}
+        <div className="space-y-2 pt-1 border-t border-slate-200 dark:border-white/10">
+          <div className="flex items-center justify-between">
+            <span className="font-medium text-[11px]">Auto Rotate</span>
+            <button
+              onClick={() => setAutoRotate(!autoRotate)}
+              className={`w-9 h-5 rounded-full p-0.5 transition-colors ${autoRotate ? 'bg-blue-600' : 'bg-slate-300 dark:bg-white/20'}`}
+            >
+              <div className={`h-4 w-4 rounded-full bg-white transition-transform ${autoRotate ? 'translate-x-4' : 'translate-x-0'}`} />
+            </button>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="font-medium text-[11px]">Wireframe Mode</span>
+            <button
+              onClick={() => setWireframe(!wireframe)}
+              className={`w-9 h-5 rounded-full p-0.5 transition-colors ${wireframe ? 'bg-blue-600' : 'bg-slate-300 dark:bg-white/20'}`}
+            >
+              <div className={`h-4 w-4 rounded-full bg-white transition-transform ${wireframe ? 'translate-x-4' : 'translate-x-0'}`} />
+            </button>
+          </div>
+        </div>
+
+        {/* Camera Angle Presets */}
+        <div className="space-y-1.5 pt-1 border-t border-slate-200 dark:border-white/10">
+          <span className="font-mono text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">CAMERA PRESETS</span>
+          <div className="grid grid-cols-3 gap-1 text-[10px]">
+            {[
+              { label: 'Isometric', pos: [-3.5, 2.2, 3.5] },
+              { label: 'Front', pos: [-4.2, 0.4, 0] },
+              { label: 'Rear', pos: [4.2, 0.4, 0] },
+              { label: 'Top', pos: [0.01, 5, 0.01] },
+              { label: 'Left', pos: [0, 0.4, 4.2] },
+              { label: 'Right', pos: [0, 0.4, -4.2] }
+            ].map((preset) => (
+              <button
+                key={preset.label}
+                onClick={() => setCamPosition(preset.pos as [number, number, number])}
+                className="py-1 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 hover:bg-blue-600 hover:text-white transition-all"
+              >
+                {preset.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Lighting Intensity Slider */}
+        <div className="space-y-1 pt-1 border-t border-slate-200 dark:border-white/10">
+          <div className="flex justify-between font-mono text-[10px] text-slate-500 dark:text-slate-400">
+            <span>LIGHTING INTENSITY</span>
+            <span>{lightIntensity.toFixed(1)}x</span>
+          </div>
+          <input
+            type="range"
+            min="0.5"
+            max="3.0"
+            step="0.1"
+            value={lightIntensity}
+            onChange={(e) => setLightIntensity(parseFloat(e.target.value))}
+            className="w-full h-1 bg-slate-300 dark:bg-white/20 rounded-lg appearance-none cursor-pointer accent-blue-600"
+          />
+        </div>
+      </div>
+
+      <div className="absolute bottom-4 left-4 font-mono text-[11px] text-neutral-300 bg-black/80 px-3.5 py-1.5 rounded-full border border-white/15 shadow-md">
+        THREE.JS & ANGULAR // 3D CAR SCENE STUDIO POC
+      </div>
+    </div>
+  );
 }
 
 export function PlaygroundCanvas({ demoId }: { demoId: string }) {
   return (
-    <div className="h-64 w-full rounded-2xl bg-black/70 overflow-hidden relative border border-white/10 flex items-center justify-center">
+    <div className="h-full w-full relative border border-white/10 flex items-center justify-center bg-black/90 rounded-3xl overflow-hidden">
       {demoId === 'threejs-lab' && (
         <>
           <Canvas camera={{ position: [0, 0, 4.5], fov: 50 }}>
@@ -304,7 +592,7 @@ export function PlaygroundCanvas({ demoId }: { demoId: string }) {
             <MultiGeometryScene />
             <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1.2} />
           </Canvas>
-          <div className="absolute bottom-3 left-3 font-mono text-[10px] text-neutral-400 bg-black/80 px-2.5 py-1 rounded-full border border-white/10">
+          <div className="absolute bottom-4 left-4 font-mono text-[11px] text-neutral-300 bg-black/80 px-3 py-1.5 rounded-full border border-white/15 shadow-md">
             THREE.JS & DREI // DRAG TO ROTATE 3D MESHES
           </div>
         </>
@@ -313,7 +601,7 @@ export function PlaygroundCanvas({ demoId }: { demoId: string }) {
       {demoId === 'motion-physics' && (
         <>
           <PhysicsMotionCanvas />
-          <div className="absolute bottom-3 left-3 font-mono text-[10px] text-neutral-400 bg-black/80 px-2.5 py-1 rounded-full border border-white/10">
+          <div className="absolute bottom-4 left-4 font-mono text-[11px] text-neutral-300 bg-black/80 px-3 py-1.5 rounded-full border border-white/15 shadow-md">
             FRAMER MOTION // SPRING VELOCITY VECTOR FIELD
           </div>
         </>
@@ -322,7 +610,7 @@ export function PlaygroundCanvas({ demoId }: { demoId: string }) {
       {demoId === 'data-stream' && (
         <>
           <DataStreamCanvas />
-          <div className="absolute bottom-3 left-3 font-mono text-[10px] text-neutral-400 bg-black/80 px-2.5 py-1 rounded-full border border-white/10">
+          <div className="absolute bottom-4 left-4 font-mono text-[11px] text-neutral-300 bg-black/80 px-3 py-1.5 rounded-full border border-white/15 shadow-md">
             RXJS & WEBSOCKETS // REAL-TIME PUB/SUB CONVEYOR
           </div>
         </>
@@ -331,10 +619,14 @@ export function PlaygroundCanvas({ demoId }: { demoId: string }) {
       {demoId === 'audio-visualizer' && (
         <>
           <AudioSpectrumCanvas />
-          <div className="absolute bottom-3 left-3 font-mono text-[10px] text-neutral-400 bg-black/80 px-2.5 py-1 rounded-full border border-white/10">
+          <div className="absolute bottom-4 left-4 font-mono text-[11px] text-neutral-300 bg-black/80 px-3 py-1.5 rounded-full border border-white/15 shadow-md">
             WEB AUDIO API // 32-BIN FFT OSCILLOSCOPE
           </div>
         </>
+      )}
+
+      {demoId === '3d-car-configurator' && (
+        <CarConfiguratorDemo />
       )}
     </div>
   );

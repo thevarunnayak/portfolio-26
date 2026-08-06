@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { certificationsData } from '@/content/certifications';
 import { useCursor } from '@/features/cursor/cursor-context';
@@ -125,7 +126,51 @@ export function CertificationsSection() {
                       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                       className="border-t border-white/10 px-6 py-8 sm:px-8 space-y-8 bg-black/40"
                     >
-                      {/* Section 1: Course Certificates Completed (For Specializations) */}
+                      {/* Section 1: Official Credly Badge Earned Block */}
+                      {cert.badgeImage && (
+                        <div className="rounded-2xl bg-white/5 p-6 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
+                          <div className="flex items-center gap-5">
+                            <div className="relative h-28 w-28 shrink-0 drop-shadow-2xl transition-transform hover:scale-105">
+                              <Image
+                                src={cert.badgeImage}
+                                alt={`${cert.title} Credly Badge`}
+                                fill
+                                unoptimized
+                                className="object-contain"
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <div className="flex items-center gap-2 font-mono text-xs font-semibold text-emerald-400 uppercase tracking-wider">
+                                <CheckCircle2 className="h-4 w-4" />
+                                <span>OFFICIAL VERIFIED BADGE EARNED</span>
+                              </div>
+                              <h4 className="text-lg font-bold text-white">
+                                {cert.title}
+                              </h4>
+                              <p className="text-xs text-neutral-400 font-mono">
+                                Issued by {cert.issuer} • Verified via Credly Platform
+                              </p>
+                            </div>
+                          </div>
+
+                          {cert.credlyUrl && (
+                            <a
+                              href={cert.credlyUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              onMouseEnter={() => setCursorState('link', 'Credly')}
+                              onMouseLeave={resetCursorState}
+                              className="shrink-0 flex items-center gap-2 rounded-xl bg-amber-500/10 px-5 py-2.5 font-mono text-xs font-bold text-amber-400 hover:bg-amber-500 hover:text-black border border-amber-500/20 transition-all shadow-md"
+                            >
+                              <span>Verify Badge on Credly</span>
+                              <ExternalLink className="h-3.5 w-3.5" />
+                            </a>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Section 2: Course Certificates Completed (For Specializations) */}
                       {cert.coursesCompleted && cert.coursesCompleted.length > 0 && (
                         <div className="space-y-3">
                           <div className="flex items-center gap-2 font-mono text-xs font-semibold text-purple-400 uppercase tracking-wider">
@@ -146,7 +191,7 @@ export function CertificationsSection() {
                         </div>
                       )}
 
-                      {/* Section 2: Core Competencies & Key Highlights */}
+                      {/* Section 3: Core Competencies & Key Highlights */}
                       <div className="space-y-3">
                         <div className="flex items-center gap-2 font-mono text-xs font-semibold text-blue-400 uppercase tracking-wider">
                           <BookOpen className="h-4 w-4" />
@@ -164,7 +209,7 @@ export function CertificationsSection() {
                         </div>
                       </div>
 
-                      {/* Section 3: Skills Gained */}
+                      {/* Section 4: Skills Gained */}
                       <div className="space-y-3">
                         <div className="flex items-center gap-2 font-mono text-xs font-semibold text-amber-400 uppercase tracking-wider">
                           <Sparkles className="h-4 w-4" />

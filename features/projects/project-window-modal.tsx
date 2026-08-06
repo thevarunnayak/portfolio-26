@@ -5,7 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ProjectCaseStudy } from '@/types';
 import { useCursor } from '@/features/cursor/cursor-context';
 import { GithubIcon } from '@/components/ui/icons';
-import { X, Maximize2, Minimize2, ExternalLink, Layers, Cpu, CheckCircle, Code2, Sparkles } from 'lucide-react';
+import { X, Maximize2, ExternalLink, Layers, Cpu, CheckCircle, Code2, Sparkles } from 'lucide-react';
+import { useSmoothScroll } from '@/components/providers/smooth-scroll-provider';
+import { ProjectGalleryGrid } from '@/components/ui/project-gallery-grid';
 
 interface ProjectWindowModalProps {
   project: ProjectCaseStudy | null;
@@ -14,14 +16,40 @@ interface ProjectWindowModalProps {
 
 export function ProjectWindowModal({ project, onClose }: ProjectWindowModalProps) {
   const { setCursorState, resetCursorState } = useCursor();
+  const { lenis } = useSmoothScroll();
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'features' | 'metrics'>('overview');
+
+  // Lock main body scroll & pause Lenis when modal is open & listen for ESC key
+  React.useEffect(() => {
+    if (project) {
+      document.body.style.overflow = 'hidden';
+      if (lenis) lenis.stop();
+    }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = '';
+      if (lenis) lenis.start();
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [project, lenis, onClose]);
 
   if (!project) return null;
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/80 backdrop-blur-xl">
+      <div
+        onClick={(e) => {
+          if (e.target === e.currentTarget) onClose();
+        }}
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/80 backdrop-blur-xl"
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.92, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -62,7 +90,7 @@ export function ProjectWindowModal({ project, onClose }: ProjectWindowModalProps
 
             {/* Window Title & Tag */}
             <div className="flex items-center gap-2 font-mono text-xs text-neutral-300">
-              <span className="text-blue-400 font-bold">{project.title}.app</span>
+              <span className="text-blue-400 font-bold">{project.title}</span>
               <span className="text-neutral-600">•</span>
               <span className="text-neutral-400">{project.category}</span>
             </div>
@@ -98,45 +126,59 @@ export function ProjectWindowModal({ project, onClose }: ProjectWindowModalProps
           <div className="flex items-center gap-4 px-6 py-3 bg-black/40 border-b border-white/10 font-mono text-xs shrink-0 overflow-x-auto">
             <button
               onClick={() => setActiveTab('overview')}
-              className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'overview' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'text-neutral-400 hover:text-white'}`}
+              className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'overview' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30 font-bold' : 'text-neutral-400 hover:text-white'}`}
             >
               01 // Overview
             </button>
             <button
               onClick={() => setActiveTab('architecture')}
-              className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'architecture' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'text-neutral-400 hover:text-white'}`}
+              className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'architecture' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30 font-bold' : 'text-neutral-400 hover:text-white'}`}
             >
               02 // Architecture Diagram
             </button>
             <button
               onClick={() => setActiveTab('features')}
-              className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'features' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'text-neutral-400 hover:text-white'}`}
+              className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'features' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30 font-bold' : 'text-neutral-400 hover:text-white'}`}
             >
               03 // Key Features & Code
             </button>
             <button
               onClick={() => setActiveTab('metrics')}
-              className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'metrics' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'text-neutral-400 hover:text-white'}`}
+              className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'metrics' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30 font-bold' : 'text-neutral-400 hover:text-white'}`}
             >
               04 // Metrics & Lessons
             </button>
           </div>
 
-          {/* Scrollable Desktop Window Body Content */}
-          <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-10">
+          {/* Scrollable Desktop Window Body Content - data-lenis-prevent enables independent inner scrolling */}
+          <div
+            data-lenis-prevent
+            className="flex-1 min-h-0 overflow-y-auto p-6 sm:p-8 space-y-10 focus:outline-none"
+            style={{ overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}
+          >
             {activeTab === 'overview' && (
               <div className="space-y-8 animate-fadeIn">
                 {/* Hero Header Banner */}
-                <div className="rounded-2xl bg-gradient-to-r from-blue-900/40 via-neutral-900 to-teal-900/30 p-6 border border-white/10 space-y-4">
-                  <span className="rounded-full bg-blue-500/20 px-3 py-1 font-mono text-xs text-blue-400 border border-blue-500/30">
-                    {project.period}
-                  </span>
-                  <h1 className="text-3xl font-extrabold text-white sm:text-4xl">
-                    {project.title}
-                  </h1>
-                  <p className="text-lg text-neutral-300 max-w-2xl font-light">
-                    {project.tagline}
-                  </p>
+                <div className="relative overflow-hidden rounded-2xl bg-neutral-950 border border-white/10">
+                  {project.heroImage && (
+                    <div className="relative w-full aspect-[16/9] max-h-80 overflow-hidden bg-neutral-950">
+                      <img
+                        src={project.heroImage}
+                        alt={project.title}
+                        className="w-full h-full object-cover object-top"
+                      />
+                      {/* Gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/80 via-40% to-transparent" />
+                    </div>
+                  )}
+                  <div className={`p-6 sm:p-8 space-y-3 ${project.heroImage ? 'relative z-10 -mt-28 sm:-mt-32 pt-12 bg-gradient-to-b from-transparent via-neutral-950/90 to-neutral-950' : 'bg-neutral-950'}`}>
+                    <h1 className="text-3xl font-extrabold text-white keep-white sm:text-4xl tracking-tight">
+                      {project.title}
+                    </h1>
+                    <p className="text-base sm:text-lg text-neutral-200 keep-white max-w-2xl font-light leading-relaxed">
+                      {project.tagline}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Problem vs Solution Split Grid */}
@@ -161,6 +203,19 @@ export function ProjectWindowModal({ project, onClose }: ProjectWindowModalProps
                     </p>
                   </div>
                 </div>
+
+                {/* Multi-Image Gallery Showcase */}
+                {((project.galleryImages && project.galleryImages.length > 0) || (project.columnGroups && project.columnGroups.length > 0)) && (
+                  <div className="space-y-4 pt-2">
+                    <ProjectGalleryGrid
+                      images={project.galleryImages}
+                      columnGroups={project.columnGroups}
+                      fullWidthImages={project.fullWidthImages}
+                      columns={project.galleryColumns || 2}
+                      title="SYSTEM SCREENSHOTS & INTERFACE GALLERY"
+                    />
+                  </div>
+                )}
 
                 {/* Detailed Overview Paragraph */}
                 <div className="space-y-3">

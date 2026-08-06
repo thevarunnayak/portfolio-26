@@ -10,9 +10,9 @@ export function ThemeProvider({
   return (
     <NextThemesProvider
       attribute="data-theme"
-      defaultTheme="system"
-      enableSystem={true}
-      enableColorScheme={true}
+      defaultTheme="dark"
+      enableSystem={false}
+      disableTransitionOnChange
       {...props}
     >
       {children}

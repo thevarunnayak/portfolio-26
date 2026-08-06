@@ -15,33 +15,37 @@ export function Preloader({ onComplete }: PreloaderProps) {
   useEffect(() => {
     const statusMessages = [
       'INITIALIZING CORE ENGINE...',
-      'PRELOADING FONTS & SATOSHI TYPE...',
+      'PRELOADING FONTS & GRAPHICS...',
       'COMPILING GLSL SHADER PIPELINE...',
       'HYDRATING STRUCTURED CONTENT...',
-      'PREPARING DIGITAL EXPERIENCE...'
+      'SYSTEM READY'
     ];
 
     let currentProgress = 0;
+
+    // Hyper-optimized fast progress animation (~150ms) for sub-second FCP & high performance score
     const interval = setInterval(() => {
-      currentProgress += Math.floor(Math.random() * 8) + 3;
+      currentProgress += Math.floor(Math.random() * 25) + 20;
+
       if (currentProgress >= 100) {
         currentProgress = 100;
         setProgress(100);
         setStatusText('SYSTEM READY');
         clearInterval(interval);
+
         setTimeout(() => {
           setIsFinished(true);
-          setTimeout(onComplete, 800);
-        }, 300);
+          setTimeout(onComplete, 120);
+        }, 50);
       } else {
         setProgress(currentProgress);
         const textIdx = Math.min(
-          Math.floor((currentProgress / 100) * statusMessages.length),
-          statusMessages.length - 1
+          Math.floor((currentProgress / 100) * (statusMessages.length - 1)),
+          statusMessages.length - 2
         );
         setStatusText(statusMessages[textIdx]);
       }
-    }, 45);
+    }, 12);
 
     return () => clearInterval(interval);
   }, [onComplete]);
@@ -52,74 +56,47 @@ export function Preloader({ onComplete }: PreloaderProps) {
         <motion.div
           key="preloader"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, y: -40, filter: 'blur(20px)' }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-between bg-[#0a0a0a] px-8 py-12 text-white"
+          exit={{ opacity: 0, filter: 'blur(8px)' }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed inset-0 z-[99999] flex flex-col items-center justify-between bg-[var(--bg-primary,#0a0a0a)] text-[var(--text-primary,#ffffff)] px-8 py-12 select-none pointer-events-none transition-colors duration-300"
         >
-          {/* Top minimal status indicator */}
-          <div className="flex w-full items-center justify-between font-mono text-xs text-neutral-400">
+          {/* Top minimal status bar */}
+          <div className="flex w-full items-center justify-between font-mono text-xs text-neutral-400 dark:text-neutral-400">
             <div className="flex items-center space-x-2">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-blue-500" />
-              <span className="tracking-wider">VARUN NAYAK // ARCHITECTURE</span>
+              <span className="h-2 w-2 animate-pulse rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+              <span className="tracking-wider text-[var(--text-primary)] font-bold">PANGALA VARUN NAYAK</span>
             </div>
-            <span className="tracking-widest text-neutral-500">2026.1.0</span>
+            <span className="tracking-widest opacity-60">2026.1.0</span>
           </div>
 
-          {/* Center animated logo mark */}
-          <div className="flex flex-col items-center justify-center space-y-6">
+          {/* Center Notion-Style Tile with Fascinate Font & 4px Letter Gap */}
+          <div className="relative flex flex-col items-center justify-center">
+            {/* Ambient Rotating Glow Aura */}
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="relative flex h-24 w-24 items-center justify-center"
-            >
-              <svg className="h-full w-full" viewBox="0 0 100 100" fill="none">
-                <motion.rect
-                  x="10"
-                  y="10"
-                  width="80"
-                  height="80"
-                  rx="20"
-                  stroke="#ffffff"
-                  strokeWidth="2"
-                  strokeOpacity="0.2"
-                />
-                <motion.path
-                  d="M30 35L50 65L70 35"
-                  stroke="#3b82f6"
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: progress / 100 }}
-                  transition={{ ease: 'easeOut' }}
-                />
-                <motion.path
-                  d="M30 65L50 35L70 65"
-                  stroke="#2dd4bf"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeOpacity="0.6"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: progress / 100 }}
-                />
-              </svg>
-            </motion.div>
+              animate={{ rotate: 360, scale: [0.95, 1.05, 0.95] }}
+              transition={{
+                rotate: { repeat: Infinity, duration: 3, ease: 'linear' },
+                scale: { repeat: Infinity, duration: 2, ease: 'easeInOut' }
+              }}
+              className="absolute h-40 w-40 rounded-full bg-gradient-to-tr from-blue-500/25 via-teal-400/20 to-indigo-500/25 blur-2xl opacity-80"
+            />
 
-            {/* Percentage Display */}
-            <div className="text-center">
-              <motion.span
-                className="font-mono text-6xl font-bold tracking-tight text-white md:text-7xl"
+            {/* Notion-Style Card Tile */}
+            <div className="relative flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-2xl sm:rounded-3xl bg-neutral-900/90 dark:bg-neutral-950/90 border-2 border-white/20 dark:border-white/25 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.5),0_0_20px_rgba(59,130,246,0.25)]">
+              {/* Fascinate Google Font Monogram with 4px Gap between V and N */}
+              <div
+                style={{ fontFamily: 'var(--font-fascinate), display, sans-serif' }}
+                className="relative z-10 flex items-center justify-center text-4xl sm:text-5xl font-normal text-white drop-shadow-[0_2px_12px_rgba(59,130,246,0.6)]"
               >
-                {progress}%
-              </motion.span>
+                <span>V</span>
+                <span className="ml-[4px]">N</span>
+              </div>
             </div>
           </div>
 
           {/* Bottom progress bar & status text */}
           <div className="w-full max-w-md space-y-3">
-            <div className="h-[2px] w-full overflow-hidden rounded-full bg-neutral-800">
+            <div className="h-[2px] w-full overflow-hidden rounded-full bg-neutral-500/20 dark:bg-neutral-800">
               <motion.div
                 className="h-full bg-gradient-to-r from-blue-500 via-teal-400 to-indigo-500"
                 style={{ width: `${progress}%` }}
@@ -127,8 +104,8 @@ export function Preloader({ onComplete }: PreloaderProps) {
               />
             </div>
             <div className="flex items-center justify-between font-mono text-[11px] text-neutral-400">
-              <span className="tracking-wider text-neutral-300">{statusText}</span>
-              <span className="text-neutral-500">{progress}/100</span>
+              <span className="tracking-wider text-[var(--text-primary)] opacity-80">{statusText}</span>
+              <span className="opacity-60 tabular-nums">{progress}/100</span>
             </div>
           </div>
         </motion.div>

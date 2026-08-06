@@ -1,4 +1,4 @@
-import { Inter, Geist_Mono, Plus_Jakarta_Sans } from 'next/font/google';
+import { Inter, Geist_Mono, Plus_Jakarta_Sans, Bitter, Fascinate } from 'next/font/google';
 
 export const inter = Inter({
   subsets: ['latin'],
@@ -12,10 +12,23 @@ export const geistMono = Geist_Mono({
   display: 'swap',
 });
 
-// Using Plus_Jakarta_Sans / Satoshi for geometric high-impact headings
 export const satoshi = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-satoshi',
   weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+});
+
+export const bitter = Bitter({
+  subsets: ['latin'],
+  variable: '--font-bitter',
+  weight: ['400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+});
+
+export const fascinate = Fascinate({
+  subsets: ['latin'],
+  variable: '--font-fascinate',
+  weight: '400',
   display: 'swap',
 });

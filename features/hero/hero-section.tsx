@@ -1,14 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { siteConfig } from '@/content/site';
-import { HeroParticles } from '@/components/canvas/hero-particles';
-import { HeroAvatar3D } from '@/components/canvas/hero-avatar-3d';
 import { Magnetic } from '@/components/motion/magnetic';
 import { useCursor } from '@/features/cursor/cursor-context';
 import { copyToClipboard } from '@/lib/utils';
-import { ArrowDownRight, Copy, Check, Calendar, MapPin, Sparkles, Terminal } from 'lucide-react';
+import { HeroAvatar3D } from '@/components/canvas/hero-avatar-3d';
+import { ArrowDownRight, Copy, Check, MapPin, Sparkles, Terminal } from 'lucide-react';
+
+const HeroParticles = dynamic(
+  () => import('@/components/canvas/hero-particles').then((m) => m.HeroParticles),
+  { ssr: false }
+);
 
 export function HeroSection() {
   const { setCursorState, resetCursorState } = useCursor();
@@ -33,9 +38,9 @@ export function HeroSection() {
       {/* Top Status & Availability Badges */}
       <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pb-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0.9, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.4 }}
           className="flex items-center gap-2 rounded-full bg-white/5 px-3.5 py-1.5 backdrop-blur-md border border-white/10"
         >
           <span className="relative flex h-2 w-2">
@@ -48,9 +53,9 @@ export function HeroSection() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0.9, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.4 }}
           className="flex items-center gap-2 font-mono text-xs text-neutral-400"
         >
           <MapPin className="h-3.5 w-3.5 text-blue-400" />
@@ -60,138 +65,100 @@ export function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Hero Grid Container: Typography on Left (7 cols), 3D Avatar Card on Right (5 cols) */}
-      <div className="relative z-10 my-auto grid grid-cols-1 items-center gap-10 lg:grid-cols-12 py-4 max-w-7xl w-full mx-auto">
-        {/* Left Column: Headline, Bio, and CTAs */}
-        <div className="space-y-6 lg:col-span-7">
+      {/* Main Hero Grid Content */}
+      <div className="relative z-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-12 my-auto py-8">
+        {/* Left Typography & Hero Message */}
+        <div className="space-y-8 lg:col-span-7">
+          <div className="space-y-4">
+            <motion.div
+              initial={{ opacity: 0.9, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
+              className="inline-flex items-center gap-2 font-mono text-xs font-semibold tracking-wider text-blue-400 uppercase"
+            >
+              <Sparkles className="h-4 w-4 text-blue-400" />
+              <span>{siteConfig.subRole}</span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0.95, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="text-5xl font-extrabold tracking-tight sm:text-7xl lg:text-8xl hero-title-main"
+            >
+              VARUN <br />
+              <span className="hero-title-gradient">NAYAK.</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0.9, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="max-w-2xl text-lg font-light text-neutral-300 leading-relaxed sm:text-xl"
+            >
+              {siteConfig.tagline}
+            </motion.p>
+          </div>
+
+          {/* Interactive CTAs */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0.9, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="inline-flex items-center gap-2 font-mono text-xs font-semibold tracking-widest text-blue-400 uppercase"
-          >
-            <Terminal className="h-4 w-4" />
-            <span>{siteConfig.role} // {siteConfig.subRole}</span>
-          </motion.div>
-
-          {/* Large Typography Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="text-4xl font-extrabold tracking-tight hero-title-main sm:text-6xl md:text-7xl lg:text-8xl uppercase leading-[0.95]"
-          >
-            SOFTWARE <br />
-            <span className="hero-title-gradient text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400">
-              ENGINEER
-            </span>
-          </motion.h1>
-
-          {/* Tagline Paragraph */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="max-w-xl text-base font-normal leading-relaxed text-neutral-300 sm:text-lg md:text-xl"
-          >
-            {siteConfig.tagline}
-          </motion.p>
-
-          {/* Bio Paragraph */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className="max-w-lg text-sm font-normal leading-relaxed text-neutral-400"
-          >
-            {siteConfig.bio}
-          </motion.p>
-
-          {/* Action CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            transition={{ duration: 0.4 }}
             className="flex flex-wrap items-center gap-4 pt-2"
           >
-            {/* Main Case Studies CTA */}
-            <Magnetic strength={0.2}>
+            <Magnetic>
               <a
                 href="#projects"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                onMouseEnter={() => setCursorState('button', 'Explore')}
+                onMouseEnter={() => setCursorState('button', 'Projects')}
                 onMouseLeave={resetCursorState}
-                className="group relative flex items-center gap-2 rounded-full bg-slate-900 dark:bg-white px-7 py-3.5 text-sm font-semibold text-white keep-white dark:text-black transition-all hover:bg-blue-500 hover:text-white shadow-xl"
+                className="group relative inline-flex items-center gap-3 overflow-hidden rounded-2xl bg-blue-600 px-7 py-3.5 font-mono text-sm font-bold text-white shadow-xl shadow-blue-500/25 transition-all hover:bg-blue-500 hover:shadow-blue-500/40 active:scale-95 keep-white"
               >
-                <span>Explore Case Studies</span>
-                <ArrowDownRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
+                <span>EXPLORE WORK</span>
+                <ArrowDownRight className="h-4 w-4 transition-transform group-hover:rotate-[-45deg]" />
               </a>
             </Magnetic>
 
-            {/* Copy Email CTA */}
-            <Magnetic strength={0.3}>
-              <button
-                onClick={handleCopyEmail}
-                onMouseEnter={() => setCursorState('button', copied ? 'Copied!' : 'Copy Email')}
-                onMouseLeave={resetCursorState}
-                className="flex items-center gap-2 rounded-full bg-white/5 px-6 py-3.5 text-sm font-medium text-neutral-200 hover:bg-white/10 border border-white/10 transition-all backdrop-blur-md"
-              >
-                {copied ? (
-                  <>
-                    <Check className="h-4 w-4 text-emerald-400" />
-                    <span className="font-mono text-xs text-emerald-400">Email Copied!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-4 w-4 text-neutral-400" />
-                    <span>{siteConfig.email}</span>
-                  </>
-                )}
-              </button>
-            </Magnetic>
-
-            {/* Schedule 1:1 Intro */}
-            {siteConfig.calendarUrl && (
-              <Magnetic strength={0.3}>
-                <a
-                  href={siteConfig.calendarUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onMouseEnter={() => setCursorState('link', 'Cal.com')}
-                  onMouseLeave={resetCursorState}
-                  className="flex items-center gap-2 rounded-full bg-white/5 px-6 py-3.5 text-sm font-medium text-neutral-300 hover:bg-white/10 hover:text-white border border-white/10 transition-all backdrop-blur-md"
-                >
-                  <Calendar className="h-4 w-4 text-blue-400" />
-                  <span>Book Intro</span>
-                </a>
-              </Magnetic>
-            )}
+            <button
+              onClick={handleCopyEmail}
+              onMouseEnter={() => setCursorState('button', copied ? 'Copied!' : 'Copy Email')}
+              onMouseLeave={resetCursorState}
+              className="group flex items-center gap-2 rounded-2xl bg-white/5 px-5 py-3.5 font-mono text-xs font-semibold text-neutral-300 hover:bg-white/10 hover:text-white border border-white/10 transition-all active:scale-95"
+            >
+              {copied ? (
+                <>
+                  <Check className="h-4 w-4 text-emerald-400" />
+                  <span className="text-emerald-400">COPIED TO CLIPBOARD</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="h-4 w-4 text-neutral-400 group-hover:text-blue-400 transition-colors" />
+                  <span>{siteConfig.email}</span>
+                </>
+              )}
+            </button>
           </motion.div>
         </div>
 
-        {/* Right Column: 3D Holographic Tilt Portrait Card */}
-        <div className="relative flex items-center justify-center lg:col-span-5">
+        {/* Right 3D Interactive Cybernetic Avatar Card (Statically imported for instant SSG rendering) */}
+        <div className="lg:col-span-5 flex justify-center lg:justify-end">
           <HeroAvatar3D />
         </div>
       </div>
 
-      {/* Bottom Scroll Indicator Pill */}
+      {/* Bottom Terminal Scroll Teaser Bar */}
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={{ opacity: 0.9 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 1 }}
-        className="relative z-10 flex items-center justify-between pt-6 border-t border-white/10 text-xs font-mono text-neutral-500"
+        transition={{ duration: 0.4 }}
+        className="relative z-10 flex items-center justify-between border-t border-white/10 pt-4 font-mono text-xs text-neutral-400"
       >
         <div className="flex items-center gap-2">
-          <Sparkles className="h-3.5 w-3.5 text-blue-400" />
-          <span>ENGINEERED WITH NEXT.JS 16 & THREE.JS</span>
+          <Terminal className="h-3.5 w-3.5 text-blue-400" />
+          <span>PORTFOLIO_SYSTEM_V2.6 // ACTIVE</span>
         </div>
-        <div className="flex items-center gap-1 text-neutral-400">
-          <span>SCROLL TO DISCOVER</span>
-          <span className="animate-bounce font-bold text-white">↓</span>
+        <div className="hidden sm:flex items-center gap-4">
+          <span>[SCROLL TO DISCOVER]</span>
         </div>
       </motion.div>
     </section>

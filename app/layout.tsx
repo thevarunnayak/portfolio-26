@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { satoshi, inter, geistMono } from '@/lib/fonts';
+import { satoshi, inter, geistMono, bitter, fascinate } from '@/lib/fonts';
 import { siteConfig } from '@/content/site';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { SmoothScrollProvider } from '@/components/providers/smooth-scroll-provider';
@@ -14,6 +14,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://varunnayak.com'),
   title: `${siteConfig.name} — ${siteConfig.role}`,
   description: `${siteConfig.role} & ${siteConfig.subRole}. ${siteConfig.tagline}`,
   icons: {
@@ -62,8 +63,17 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${satoshi.variable} ${inter.variable} ${geistMono.variable}`}
+      className={`${satoshi.variable} ${inter.variable} ${geistMono.variable} ${bitter.variable} ${fascinate.variable}`}
     >
+      <head>
+        <link
+          rel="preload"
+          href="/images/prof.jpg"
+          as="image"
+          type="image/jpeg"
+          fetchPriority="high"
+        />
+      </head>
       <body className="antialiased selection:bg-blue-500 selection:text-white">
         <ThemeProvider>
           <SmoothScrollProvider>

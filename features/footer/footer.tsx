@@ -41,10 +41,10 @@ export function Footer() {
     const particleCount = 60;
 
     const colors = [
-      'rgba(255, 255, 255, ',
       'rgba(59, 130, 246, ',
       'rgba(45, 212, 191, ',
-      'rgba(147, 197, 253, '
+      'rgba(147, 197, 253, ',
+      'rgba(168, 85, 247, '
     ];
 
     for (let i = 0; i < particleCount; i++) {
@@ -97,32 +97,32 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="relative w-full bg-neutral-950 text-neutral-400 font-mono text-xs border-t border-white/10 overflow-hidden select-none">
-      {/* Top Footer Bar: Full edge-to-edge width matching bottom typography */}
-      <div className="w-full px-6 sm:px-12 md:px-16 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-white/10 relative z-20">
+    <footer className="relative w-full bg-[var(--bg-primary)] text-[var(--text-secondary)] font-mono text-xs border-t border-[var(--border-subtle)] overflow-hidden select-none transition-colors duration-300">
+      {/* Top Footer Bar */}
+      <div className="w-full px-6 sm:px-12 md:px-16 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-[var(--border-subtle)] relative z-20">
         {/* Left: Copyright */}
-        <div className="text-neutral-400">
+        <div className="text-[var(--text-secondary)]">
           © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
         </div>
 
         {/* Right: Built with Next.js 16 */}
-        <div className="flex items-center gap-2 text-neutral-400">
-          <span className="flex h-2 w-2 rounded-full bg-blue-400 animate-pulse" />
+        <div className="flex items-center gap-2 text-[var(--text-secondary)]">
+          <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
           <span>BUILT WITH NEXT.JS 16</span>
         </div>
       </div>
 
       {/* Bottom Section: Full edge-to-edge width with giant typography */}
-      <div className="relative w-full px-4 sm:px-8 flex items-end justify-center overflow-hidden bg-gradient-to-b from-neutral-950 via-black to-neutral-950 pt-4 sm:pt-6">
+      <div className="relative w-full px-4 sm:px-8 flex items-end justify-center overflow-hidden bg-[var(--bg-primary)] pt-4 sm:pt-6">
         {/* Falling Particle Canvas */}
         <canvas
           ref={canvasRef}
-          className="absolute inset-0 w-full h-full pointer-events-none z-10 opacity-90"
+          className="absolute inset-0 w-full h-full pointer-events-none z-10 opacity-75"
         />
 
-        {/* Giant Metallic Typography - Wall-to-Wall full width */}
+        {/* Giant Metallic Typography - Wall-to-Wall full width matching theme colors */}
         <div className="relative z-0 translate-y-[22%] pointer-events-none text-center w-full leading-none">
-          <h2 className="text-[13vw] sm:text-[14vw] font-black uppercase tracking-tighter leading-none bg-gradient-to-b from-white via-neutral-200 to-transparent bg-clip-text text-transparent opacity-95 drop-shadow-2xl">
+          <h2 className="text-[13vw] sm:text-[14vw] font-black uppercase tracking-tighter leading-none bg-gradient-to-b from-[var(--text-primary)] via-[var(--text-secondary)] to-transparent bg-clip-text text-transparent opacity-90 drop-shadow-2xl">
             VARUN NAYAK
           </h2>
         </div>

@@ -2,13 +2,22 @@ import { TechSkill } from '@/types';
 
 export const skillsData: TechSkill[] = [
   {
-    name: 'React 19 & React Native',
+    name: 'React.js & Modern React 19',
     category: 'Frameworks & Mobile',
     proficiency: 'Expert',
-    experienceYears: 5,
-    featuredIn: ['Odyssey', 'Robosoft Technologies', 'IISc Bangalore'],
-    description: 'Expertise in Concurrent React 19, Server Components, Custom Hooks, Reanimated 3, Skia graphics, and cross-platform native modules.',
+    experienceYears: 4,
+    featuredIn: ['Robosoft Technologies', 'Portfolio 2026', 'Meta/Scrimba React Specialization'],
+    description: 'Expertise in Concurrent React 19, Server Components, Custom Hooks, Redux Toolkit, Context API, and state machine architecture.',
     iconName: 'Atom'
+  },
+  {
+    name: 'React Native',
+    category: 'Frameworks & Mobile',
+    proficiency: 'Beginner',
+    experienceYears: 1,
+    featuredIn: ['Odyssey Mobile App'],
+    description: 'Cross-platform mobile interfaces, Expo workflows, Reanimated animations, and basic native mobile UI components.',
+    iconName: 'Smartphone'
   },
   {
     name: 'Next.js 16 (App Router)',
@@ -108,5 +117,14 @@ export const skillsData: TechSkill[] = [
     featuredIn: ['Robosoft Reusable Library', 'Portfolio System'],
     description: 'Component API design, tokenization (Figma to CSS/Tailwind), accessibility WCAG 2.1 AA, and micro-frontend encapsulation.',
     iconName: 'LayoutGrid'
+  },
+  {
+    name: 'Figma & UI/UX Prototyping',
+    category: 'Design & Architecture',
+    proficiency: 'Beginner',
+    experienceYears: 1,
+    featuredIn: ['Design Systems', 'Odyssey App UI', 'Automotive Cockpit HMI'],
+    description: 'Basic wireframing, component inspection, layout adjustments, and Figma-to-Code developer handoffs.',
+    iconName: 'Palette'
   }
 ];

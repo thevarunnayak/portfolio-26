@@ -73,11 +73,14 @@ export interface ProjectCaseStudy {
   slug: string;
   title: string;
   tagline: string;
-  category: 'Full-Stack' | 'Mobile & Cross-Platform' | 'Real-Time' | 'Productivity' | 'Healthcare';
+  category: 'Full-Stack' | 'Mobile & Cross-Platform' | 'Real-Time' | 'Productivity' | 'Healthcare' | '3D & Graphics' | 'Frontend & E-Commerce' | 'Frontend';
   featured: boolean;
   period: string;
   heroImage: string;
   galleryImages: string[];
+  columnGroups?: string[][];
+  galleryColumns?: number;
+  fullWidthImages?: string[];
   overview: string;
   problem: string;
   solution: string;
@@ -94,7 +97,7 @@ export interface ProjectCaseStudy {
 export interface TechSkill {
   name: string;
   category: 'Frontend Core' | 'Frameworks & Mobile' | 'Backend & Cloud' | 'Graphics & Physics' | 'Design & Architecture';
-  proficiency: 'Expert' | 'Advanced' | 'Proficient' | 'Intermediate' | 'Foundational';
+  proficiency: 'Expert' | 'Advanced' | 'Proficient' | 'Intermediate' | 'Foundational' | 'Beginner';
   experienceYears: number;
   featuredIn: string[];
   description: string;
@@ -114,6 +117,8 @@ export interface CertificationItem {
   issueDate: string;
   credentialId?: string;
   verifyUrl: string;
+  credlyUrl?: string;
+  badgeImage?: string;
   summary: string;
   coursesCompleted?: string[];
   keyLearnings: string[];
@@ -127,6 +132,7 @@ export interface PlaygroundItem {
   category: string;
   tech: string[];
   interactiveDemoId: string;
+  previewImage?: string;
   githubLink?: string;
   liveDemoUrl?: string;
 }

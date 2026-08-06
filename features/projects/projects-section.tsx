@@ -1,23 +1,20 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { projectsData } from '@/content/projects';
 import { ProjectCaseStudy } from '@/types';
 import { ProjectWindowModal } from './project-window-modal';
 import { useCursor } from '@/features/cursor/cursor-context';
-import { Layers, ArrowUpRight, Monitor, Cpu, Sparkles, Terminal } from 'lucide-react';
+import { Layers, ArrowUpRight } from 'lucide-react';
 
 export function ProjectsSection() {
   const { setCursorState, resetCursorState } = useCursor();
   const [selectedProject, setSelectedProject] = useState<ProjectCaseStudy | null>(null);
-  const [activeCategory, setActiveCategory] = useState<string>('All');
 
-  const categories = ['All', 'Mobile & Cross-Platform', 'Productivity', 'Real-Time', 'Full-Stack', 'Healthcare'];
-
-  const filteredProjects = activeCategory === 'All'
-    ? projectsData
-    : projectsData.filter((p) => p.category === activeCategory);
+  // Show top 4 featured projects on home page
+  const featuredProjects = projectsData.filter((project) => project.featured).slice(0, 4);
 
   return (
     <section
@@ -30,7 +27,7 @@ export function ProjectsSection() {
           <div className="space-y-3">
             <div className="flex items-center gap-2 font-mono text-xs font-semibold tracking-wider text-blue-400 uppercase">
               <Layers className="h-4 w-4" />
-              <span>FEATURED CASE STUDIES</span>
+              <span>FEATURED CASE STUDIES & ARCHITECTURE</span>
             </div>
             <h2 className="text-4xl font-extrabold tracking-tight section-title-main sm:text-5xl lg:text-6xl uppercase">
               ENGINEERED <br />
@@ -38,30 +35,13 @@ export function ProjectsSection() {
             </h2>
           </div>
           <p className="max-w-md text-sm text-neutral-400 md:text-right">
-            Click any product to launch its full desktop window case study view with architecture flowcharts, source code specs, and live performance benchmarks.
+            Click any product to launch its interactive desktop window view with system architecture flowcharts, metrics, and live source specs.
           </p>
         </div>
 
-        {/* Category Filters */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 font-mono text-xs">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`rounded-full px-4 py-2 transition-all whitespace-nowrap ${
-                activeCategory === category
-                  ? 'bg-blue-500 text-white keep-white font-semibold shadow-lg shadow-blue-500/20'
-                  : 'bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white border border-white/10'
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-
-        {/* Desktop-Window Style Project Cards Grid */}
+        {/* 4 Featured Desktop-Window Style Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredProjects.map((project, index) => (
+          {featuredProjects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 30 }}
@@ -81,12 +61,24 @@ export function ProjectsSection() {
                   <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
                 </div>
                 <span className="font-mono text-xs text-neutral-400 group-hover:text-blue-400 transition-colors">
-                  {project.title}.app
+                  {project.title}
                 </span>
                 <span className="font-mono text-[10px] text-neutral-500 uppercase">
                   {project.category}
                 </span>
               </div>
+
+              {/* Hero Image Banner Preview (Immersive Full-Bleed Cover) */}
+              {project.heroImage && (
+                <div className="relative w-full aspect-[16/9] overflow-hidden border-b border-white/10 bg-neutral-950 flex items-center justify-center">
+                  <img
+                    src={project.heroImage}
+                    alt={project.title}
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/30 to-transparent opacity-80" />
+                </div>
+              )}
 
               {/* Card Body */}
               <div className="p-6 sm:p-8 space-y-6 flex-1 flex flex-col justify-between">
@@ -95,27 +87,29 @@ export function ProjectsSection() {
                     <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors">
                       {project.title}
                     </h3>
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 group-hover:bg-blue-500 group-hover:text-white transition-all text-neutral-400">
-                      <ArrowUpRight className="h-4 w-4" />
-                    </div>
+                    <a
+                      href={project.liveUrl || '#'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (!project.liveUrl) {
+                          e.preventDefault();
+                          setSelectedProject(project);
+                        }
+                      }}
+                      onMouseEnter={() => setCursorState('button', 'Visit Site')}
+                      onMouseLeave={resetCursorState}
+                      className="flex items-center gap-1.5 rounded-full bg-white/5 hover:bg-blue-600 px-3.5 py-1.5 text-xs font-mono text-neutral-300 hover:text-white border border-white/10 hover:border-blue-500 transition-all duration-300 shadow-sm shrink-0"
+                    >
+                      <span className="font-semibold text-[11px]">Visit Site</span>
+                      <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </a>
                   </div>
                   <p className="text-sm font-normal text-neutral-300 leading-relaxed">
                     {project.tagline}
                   </p>
                 </div>
-
-                {/* Key Metric Highlights */}
-                {project.metrics && project.metrics.length > 0 && (
-                  <div className="rounded-xl bg-black/40 p-4 border border-white/5 flex items-center justify-between font-mono text-xs">
-                    <div>
-                      <span className="text-neutral-500 block text-[10px] uppercase">{project.metrics[0].label}</span>
-                      <span className="text-blue-400 font-bold text-base">{project.metrics[0].value}</span>
-                    </div>
-                    <span className="text-neutral-500 text-[11px] text-right max-w-[150px] truncate">
-                      {project.metrics[0].description}
-                    </span>
-                  </div>
-                )}
 
                 {/* Tech Stack Pills */}
                 <div className="flex flex-wrap gap-2 pt-2">
@@ -131,6 +125,20 @@ export function ProjectsSection() {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* CTA Button to Full Projects Archive Route */}
+        <div className="flex items-center justify-center pt-8 border-t border-white/5">
+          <Link
+            href="/projects"
+            onMouseEnter={() => setCursorState('button', 'Archive')}
+            onMouseLeave={resetCursorState}
+            className="group flex items-center gap-3 rounded-2xl bg-blue-600 px-8 py-4 font-mono text-xs font-bold text-white! hover:bg-blue-500 shadow-xl shadow-blue-500/25 transition-all keep-white"
+          >
+            <Layers className="h-4 w-4 text-white!" />
+            <span className="text-white!">EXPLORE OTHER PROJECTS</span>
+            <ArrowUpRight className="h-4 w-4 text-white! transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+          </Link>
         </div>
       </div>
 

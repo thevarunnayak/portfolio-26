@@ -6,6 +6,7 @@ export interface PlaygroundDetail {
   developerPurpose: string;
   techStack: string[];
   architectureInsights: string[];
+  aiPrompt?: string;
   liveDemoUrl: string;
   githubUrl: string;
 }
@@ -70,5 +71,24 @@ export const playgroundDetails: PlaygroundDetail[] = [
     ],
     liveDemoUrl: 'https://audio.varunnayak.com',
     githubUrl: 'https://github.com/thevarunnayak/web-audio-spectrum'
+  },
+  {
+    id: 'exp-3d-car-configurator',
+    title: 'Interactive 3D Car Configurator & Scene Studio',
+    category: '3D WebGL Configurator Engine',
+    libraryUsed: 'Three.js & Angular / React WebGL (OrbitControls & MeshStandardMaterial)',
+    developerPurpose: 'Engineered as a proof-of-concept interactive 3D product configurator. Demonstrates real-time PBR material color updates, studio lighting environments, camera matrix interpolation presets, and wireframe mesh debugging.',
+    techStack: ['Three.js', 'Angular / React', 'WebGL', 'OrbitControls', 'GLSL Shaders'],
+    architectureInsights: [
+      'Configures dynamic studio environment light maps (Studio Light, Dark Studio, Midnight) with real-time shadow planes.',
+      'Interpolates camera matrix vectors for smooth 60fps transitions across 6 camera angle presets (Isometric, Front, Rear, Top, Left, Right).',
+      'Provides live mesh debugging via wireframe mode toggles and PBR specular roughness/metalness uniforms.'
+    ],
+    liveDemoUrl: 'https://car-angular.vercel.app',
+    githubUrl: 'https://github.com/thevarunnayak/car-angular'
   }
 ];
+
+export function getPlaygroundDetailById(id: string): PlaygroundDetail | undefined {
+  return playgroundDetails.find((item) => item.id === id);
+}

@@ -14,7 +14,7 @@ interface NavbarProps {
 }
 
 export function Navbar({ onOpenCommandMenu }: NavbarProps) {
-  const { resolvedTheme, toggleTheme } = useThemeService();
+  const { resolvedTheme, toggleTheme, isMounted } = useThemeService();
   const { setCursorState, resetCursorState } = useCursor();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -72,7 +72,7 @@ export function Navbar({ onOpenCommandMenu }: NavbarProps) {
           className="fixed top-4 sm:top-6 inset-x-0 z-40 flex justify-center px-3 sm:px-4"
         >
           <nav className="glass-panel flex items-center justify-between gap-2 sm:gap-3 rounded-full px-3 sm:px-4 py-2 shadow-2xl backdrop-blur-xl border border-white/10 max-w-5xl w-full">
-            {/* Logo Mark */}
+            {/* Logo Mark with 28px Fascinate Font VN Monogram (90% height of 32px avatar, 0 gap) */}
             <a
               href="#hero"
               onClick={(e) => handleNavClick(e, '#hero')}
@@ -80,16 +80,19 @@ export function Navbar({ onOpenCommandMenu }: NavbarProps) {
               onMouseLeave={resetCursorState}
               className="group flex items-center gap-2.5 px-2 py-1 rounded-full text-white hover:text-blue-400 transition-colors shrink-0"
             >
-              <div className="relative flex h-8 w-8 items-center justify-center rounded-full overflow-hidden border border-white/20 shadow-md group-hover:border-blue-400 group-hover:scale-105 transition-all">
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-full overflow-hidden border border-white/20 shadow-md group-hover:border-blue-400 group-hover:scale-105 transition-all shrink-0">
                 <img
                   src="/images/prof.jpg"
                   alt="Varun Nayak"
                   className="h-full w-full object-cover object-center"
                 />
               </div>
-              <span className="hidden font-mono text-xs font-semibold tracking-tight sm:inline-block">
-                {siteConfig.shortName}
-              </span>
+              <div
+                style={{ fontFamily: 'var(--font-fascinate), display, sans-serif' }}
+                className="text-[28px] leading-none font-normal text-white group-hover:text-blue-400 transition-colors flex items-center select-none"
+              >
+                <span>VN</span>
+              </div>
             </a>
 
             {/* Desktop Navigation Items */}
@@ -128,68 +131,67 @@ export function Navbar({ onOpenCommandMenu }: NavbarProps) {
               <Magnetic strength={0.2}>
                 <button
                   onClick={onOpenCommandMenu}
-                  onMouseEnter={() => setCursorState('button', 'Cmd+K')}
+                  onMouseEnter={() => setCursorState('button', 'Search (⌘K)')}
                   onMouseLeave={resetCursorState}
-                  className="flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 sm:px-3 py-1.5 text-xs text-neutral-300 hover:bg-white/10 hover:text-white border border-white/10 transition-all"
-                  aria-label="Open Command Menu"
+                  className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
                 >
-                  <Command className="h-3.5 w-3.5 text-neutral-400" />
-                  <span className="hidden font-mono text-[10px] sm:inline-block text-neutral-400">
-                    K
-                  </span>
+                  <Command className="h-3.5 w-3.5 text-blue-400" />
+                  <span className="hidden sm:inline-block">Search</span>
+                  <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded bg-white/10 px-1.5 py-0.5 font-mono text-[10px] text-neutral-400">
+                    ⌘K
+                  </kbd>
                 </button>
               </Magnetic>
 
-              {/* Theme Toggle */}
+              {/* Theme Toggle Button */}
               <Magnetic strength={0.2}>
                 <button
                   onClick={toggleTheme}
-                  onMouseEnter={() => setCursorState('button', 'Theme')}
+                  onMouseEnter={() => setCursorState('button', 'Toggle Theme')}
                   onMouseLeave={resetCursorState}
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-neutral-300 hover:bg-white/10 hover:text-white border border-white/10 transition-all"
-                  aria-label="Toggle Theme"
+                  aria-label="Toggle theme"
+                  className="flex h-8 w-8 items-center justify-center rounded-full text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
                 >
-                  {resolvedTheme === 'dark' ? (
-                    <Sun className="h-3.5 w-3.5 text-amber-400" />
+                  {isMounted && resolvedTheme === 'dark' ? (
+                    <Sun className="h-4 w-4 text-amber-400" />
                   ) : (
-                    <Moon className="h-3.5 w-3.5 text-blue-400" />
+                    <Moon className="h-4 w-4 text-blue-400" />
                   )}
                 </button>
               </Magnetic>
 
-              {/* Mobile / Tablet Menu Button */}
+              {/* Mobile Hamburger Trigger */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-neutral-300 lg:hidden border border-white/10"
-                aria-label="Toggle Navigation Menu"
+                aria-label="Toggle navigation menu"
+                className="flex lg:hidden h-8 w-8 items-center justify-center rounded-full text-neutral-400 hover:text-white bg-white/5 border border-white/10 transition-all"
               >
                 {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
               </button>
             </div>
           </nav>
 
-          {/* Responsive Mobile / Tablet Overlay Menu */}
+          {/* Mobile Drawer Menu */}
           <AnimatePresence>
             {mobileMenuOpen && (
               <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="absolute top-16 left-4 right-4 rounded-2xl glass-panel p-4 border border-white/10 bg-neutral-900/95 backdrop-blur-2xl shadow-2xl lg:hidden max-h-[80vh] overflow-y-auto"
+                initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="absolute top-16 inset-x-4 max-w-md mx-auto rounded-3xl glass-panel p-4 shadow-2xl backdrop-blur-2xl border border-white/15 flex flex-col gap-2 z-50 lg:hidden"
               >
-                <div className="flex flex-col space-y-1">
-                  {navigationItems.map((item) => (
-                    <a
-                      key={item.id}
-                      href={item.href}
-                      onClick={(e) => handleNavClick(e, item.href)}
-                      className="flex items-center justify-between rounded-xl px-4 py-2.5 text-sm font-medium text-neutral-300 hover:bg-white/10 hover:text-white transition-all"
-                    >
-                      <span>{item.label}</span>
-                      <ArrowUpRight className="h-4 w-4 text-neutral-500" />
-                    </a>
-                  ))}
-                </div>
+                {navigationItems.map((item) => (
+                  <a
+                    key={item.id}
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    className="px-4 py-2.5 rounded-2xl text-sm font-medium text-neutral-300 hover:text-white hover:bg-white/10 transition-all flex items-center justify-between"
+                  >
+                    <span>{item.label}</span>
+                    <ArrowUpRight className="h-4 w-4 text-neutral-500" />
+                  </a>
+                ))}
               </motion.div>
             )}
           </AnimatePresence>

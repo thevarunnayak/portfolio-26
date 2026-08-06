@@ -92,9 +92,9 @@ export function ExperienceSection() {
                               </span>
                             )}
                             {item.award && (
-                              <span className="flex items-center gap-1 rounded-full bg-amber-500/15 px-3 py-0.5 font-mono text-[10px] font-bold text-amber-400 border border-amber-500/30 shadow-sm">
-                                <Sparkles className="h-3 w-3 text-amber-400" />
-                                <span>{item.award}</span>
+                              <span className="flex items-center gap-1 rounded-full bg-amber-100 text-amber-950 dark:bg-amber-500/15 dark:text-amber-400 border border-amber-300 dark:border-amber-500/30 px-3.5 py-1 font-mono text-[10px] font-extrabold shadow-sm">
+                                <Sparkles className="h-3.5 w-3.5 text-amber-950 dark:text-amber-400" />
+                                <span className="text-amber-950 dark:text-amber-400">{item.award}</span>
                               </span>
                             )}
                           </div>
@@ -140,58 +140,63 @@ export function ExperienceSection() {
                       {/* Impact Metrics Grid */}
                       {item.impact && item.impact.length > 0 && (
                         <div className="space-y-3">
-                          <h4 className="flex items-center gap-2 font-mono text-xs font-semibold text-neutral-400 uppercase tracking-wider">
-                            <Sparkles className="h-3.5 w-3.5 text-blue-400" />
-                            KEY IMPACT METRICS
+                          <h4 className="font-mono text-xs font-semibold text-blue-400 uppercase tracking-wider flex items-center gap-2">
+                            <Sparkles className="h-3.5 w-3.5" />
+                            KEY ARCHITECTURAL ACHIEVEMENTS & METRICS
                           </h4>
-                          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
                             {item.impact.map((metric, idx) => (
                               <div
                                 key={idx}
-                                className="rounded-2xl bg-white/5 p-4 border border-white/10 space-y-1"
+                                className="rounded-2xl bg-white/5 p-4 border border-white/10 flex flex-col justify-between space-y-2"
                               >
-                                <span className="font-mono text-3xl font-extrabold text-blue-400">
+                                <span className="font-mono text-xs text-neutral-400 uppercase">
+                                  {metric.label}
+                                </span>
+                                <span className="font-mono text-xl font-extrabold text-blue-400">
                                   {metric.metric}
                                 </span>
-                                <p className="font-bold text-xs text-white uppercase">{metric.label}</p>
-                                <p className="text-xs text-neutral-400 leading-snug">{metric.detail}</p>
                               </div>
                             ))}
                           </div>
                         </div>
                       )}
 
-                      {/* Responsibilities list */}
-                      <div className="space-y-3">
-                        <h4 className="font-mono text-xs font-semibold text-neutral-400 uppercase tracking-wider">
-                          CORE RESPONSIBILITIES & ARCHITECTURE
-                        </h4>
-                        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                          {item.responsibilities.map((resp, idx) => (
-                            <li key={idx} className="flex items-start gap-2.5 text-xs text-neutral-300 leading-relaxed">
-                              <CheckCircle2 className="h-4 w-4 shrink-0 text-blue-400 mt-0.5" />
-                              <span>{resp}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Tech Stack Pills */}
-                      <div className="space-y-3">
-                        <h4 className="font-mono text-xs font-semibold text-neutral-400 uppercase tracking-wider">
-                          TECHNOLOGIES & TOOLING
-                        </h4>
-                        <div className="flex flex-wrap gap-2">
-                          {item.techStack.map((tech, idx) => (
-                            <span
-                              key={idx}
-                              className="rounded-full bg-white/5 px-3 py-1 font-mono text-xs text-neutral-300 border border-white/10"
-                            >
-                              {tech}
-                            </span>
-                          ))}
+                      {/* Key Deliverables Bullet Points */}
+                      {item.responsibilities && (
+                        <div className="space-y-3">
+                          <h4 className="font-mono text-xs font-semibold text-neutral-400 uppercase tracking-wider">
+                            CORE RESPONSIBILITIES & DELIVERABLES
+                          </h4>
+                          <ul className="space-y-2.5 font-normal text-sm text-neutral-300">
+                            {item.responsibilities.map((resp, idx) => (
+                              <li key={idx} className="flex items-start gap-3">
+                                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                                <span>{resp}</span>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
-                      </div>
+                      )}
+
+                      {/* Tech Stack Chips */}
+                      {item.techStack && (
+                        <div className="space-y-3">
+                          <h4 className="font-mono text-xs font-semibold text-neutral-400 uppercase tracking-wider">
+                            TECHNOLOGIES & ARCHITECTURE
+                          </h4>
+                          <div className="flex flex-wrap gap-2">
+                            {item.techStack.map((skill, idx) => (
+                              <span
+                                key={idx}
+                                className="rounded-full bg-white/5 px-3.5 py-1 font-mono text-xs text-neutral-300 border border-white/10"
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>

@@ -9,8 +9,8 @@ export const socialLinks: SocialLink[] = [
   },
   {
     platform: 'LinkedIn',
-    url: 'https://linkedin.com/in/varunnayak',
-    handle: 'varunnayak',
+    url: 'https://linkedin.com/in/pvarunnayak',
+    handle: 'pvarunnayak',
     iconName: 'Linkedin'
   },
   {
