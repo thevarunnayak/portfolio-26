@@ -13,9 +13,9 @@ export function ResumeSection() {
   return (
     <section
       id="resume"
-      className="relative w-full bg-noise px-6 py-28 md:px-12 lg:px-24 border-t border-white/5"
+      className="relative w-full bg-noise px-6 py-14 md:py-28 md:px-12 lg:px-24 border-t border-white/5"
     >
-      <div className="mx-auto max-w-6xl space-y-16">
+      <div className="mx-auto max-w-6xl space-y-10 md:space-y-16">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
           <div className="space-y-3">

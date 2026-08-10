@@ -198,6 +198,21 @@ section {
   background-color: #ffffff;
 }
 
+/* keep-dark: opt specific elements out of all light-mode overrides */
+[data-theme='light'] .keep-dark.bg-neutral-950\/80,
+[data-theme='light'] .keep-dark.bg-neutral-950 {
+  background-color: rgb(10 10 10 / 0.8)!important;
+}
+[data-theme='light'] .keep-dark.bg-white\/10 {
+  background-color: rgb(255 255 255 / 0.1)!important;
+}
+[data-theme='light'] .keep-dark.bg-white\/5 {
+  background-color: rgb(255 255 255 / 0.05)!important;
+}
+[data-theme='light'] .keep-dark.border-white\/10 {
+  border-color: rgb(255 255 255 / 0.1)!important;
+}
+
 [data-theme='light'] .border-white\/10,
 [data-theme='light'] .border-white\/5,
 [data-theme='light'] .border-white\/15,

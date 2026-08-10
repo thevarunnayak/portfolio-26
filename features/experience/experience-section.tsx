@@ -18,9 +18,9 @@ export function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="relative w-full bg-noise px-6 py-28 md:px-12 lg:px-24 border-t border-white/5"
+      className="relative w-full bg-noise px-6 py-14 md:py-28 md:px-12 lg:px-24 border-t border-white/5"
     >
-      <div className="mx-auto max-w-6xl space-y-16">
+      <div className="mx-auto max-w-6xl space-y-10 md:space-y-16">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
           <div className="space-y-3">
@@ -75,41 +75,41 @@ export function ExperienceSection() {
                       onClick={() => toggleExpand(item.id)}
                       onMouseEnter={() => setCursorState('button', isExpanded ? 'Collapse' : 'Expand')}
                       onMouseLeave={resetCursorState}
-                      className="flex flex-col cursor-pointer p-6 sm:p-8 md:flex-row md:items-center justify-between gap-6"
+                      className="flex flex-col cursor-pointer p-4 sm:p-6 md:flex-row md:p-8 md:items-center justify-between gap-4 sm:gap-6"
                     >
-                      <div className="flex items-start gap-4">
+                      <div className="flex items-start gap-3">
                         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/5 font-mono text-sm font-bold text-white border border-white/10 shadow-inner">
                           {item.logoText}
                         </div>
                         <div className="space-y-1">
-                          <div className="flex flex-wrap items-center gap-3">
-                            <h3 className="text-xl font-bold text-white sm:text-2xl">
+                          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                            <h3 className="text-base font-bold text-white sm:text-xl md:text-2xl">
                               {item.company}
                             </h3>
                             {item.isCurrent && (
-                              <span className="rounded-full bg-blue-500/10 px-3 py-0.5 font-mono text-[10px] font-semibold text-blue-400 border border-blue-500/20">
+                              <span className="rounded-full bg-blue-500/10 px-2 py-0.5 font-mono text-[9px] sm:text-[10px] font-semibold text-blue-400 border border-blue-500/20">
                                 CURRENT ROLE
                               </span>
                             )}
                             {item.award && (
-                              <span className="flex items-center gap-1 rounded-full bg-amber-100 text-amber-950 dark:bg-amber-500/15 dark:text-amber-400 border border-amber-300 dark:border-amber-500/30 px-3.5 py-1 font-mono text-[10px] font-extrabold shadow-sm">
-                                <Sparkles className="h-3.5 w-3.5 text-amber-950 dark:text-amber-400" />
+                              <span className="flex items-center gap-1 rounded-full bg-amber-100 text-amber-950 dark:bg-amber-500/15 dark:text-amber-400 border border-amber-300 dark:border-amber-500/30 px-2.5 sm:px-3.5 py-0.5 sm:py-1 font-mono text-[9px] sm:text-[10px] font-extrabold shadow-sm">
+                                <Sparkles className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-amber-950 dark:text-amber-400" />
                                 <span className="text-amber-950 dark:text-amber-400">{item.award}</span>
                               </span>
                             )}
                           </div>
-                          <p className="font-mono text-sm text-neutral-400">{item.role}</p>
+                          <p className="font-mono text-xs sm:text-sm text-neutral-400">{item.role}</p>
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between md:justify-end gap-6 font-mono text-xs text-neutral-400">
+                      <div className="flex items-center justify-between md:justify-end gap-4 font-mono text-xs text-neutral-400">
                         <div className="flex flex-col items-start md:items-end gap-1">
-                          <div className="flex items-center gap-1.5 text-neutral-300">
-                            <Calendar className="h-3.5 w-3.5 text-blue-400" />
+                          <div className="flex items-center gap-1.5 text-neutral-300 text-[11px] sm:text-xs">
+                            <Calendar className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-blue-400" />
                             <span>{item.period}</span>
                           </div>
-                          <div className="flex items-center gap-1.5 text-neutral-500">
-                            <MapPin className="h-3.5 w-3.5" />
+                          <div className="flex items-center gap-1.5 text-neutral-500 text-[11px] sm:text-xs">
+                            <MapPin className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                             <span>{item.location}</span>
                           </div>
                         </div>
@@ -121,7 +121,7 @@ export function ExperienceSection() {
                     </div>
 
                     {/* Summary teaser line */}
-                    <div className="px-6 pb-6 sm:px-8 font-normal text-sm text-neutral-300">
+                    <div className="px-4 pb-4 sm:px-8 sm:pb-6 font-normal text-xs sm:text-sm text-neutral-300">
                       {item.summary}
                     </div>
                   </div>
@@ -153,7 +153,7 @@ export function ExperienceSection() {
                                 <span className="font-mono text-xs text-neutral-400 uppercase">
                                   {metric.label}
                                 </span>
-                                <span className="font-mono text-xl font-extrabold text-blue-400">
+                                <span className="font-mono text-base sm:text-xl font-extrabold text-blue-400">
                                   {metric.metric}
                                 </span>
                               </div>
@@ -168,7 +168,7 @@ export function ExperienceSection() {
                           <h4 className="font-mono text-xs font-semibold text-neutral-400 uppercase tracking-wider">
                             CORE RESPONSIBILITIES & DELIVERABLES
                           </h4>
-                          <ul className="space-y-2.5 font-normal text-sm text-neutral-300">
+                          <ul className="space-y-2.5 font-normal text-xs sm:text-sm text-neutral-300">
                             {item.responsibilities.map((resp, idx) => (
                               <li key={idx} className="flex items-start gap-3">
                                 <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />

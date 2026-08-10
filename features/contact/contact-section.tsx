@@ -35,7 +35,7 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative w-full bg-noise px-6 py-28 md:px-12 lg:px-24 border-t border-white/5"
+      className="relative w-full bg-noise px-6 py-14 md:py-28 md:px-12 lg:px-24 border-t border-white/5"
     >
       <div className="mx-auto max-w-5xl space-y-12 text-center">
         {/* Section Header */}

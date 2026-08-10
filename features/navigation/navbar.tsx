@@ -7,7 +7,7 @@ import { navigationItems } from '@/content/navigation';
 import { siteConfig } from '@/content/site';
 import { useCursor } from '@/features/cursor/cursor-context';
 import { Magnetic } from '@/components/motion/magnetic';
-import { Sun, Moon, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Sun, Moon, Search, Menu, X, ArrowUpRight } from 'lucide-react';
 
 interface NavbarProps {
   onOpenCommandMenu?: () => void;
@@ -135,6 +135,9 @@ export function Navbar({ onOpenCommandMenu }: NavbarProps) {
                   onMouseLeave={resetCursorState}
                   className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
                 >
+                  {/* Mobile: search icon only */}
+                  <Search className="h-3.5 w-3.5 sm:hidden text-blue-400" />
+                  {/* Desktop: text + ⌘K badge */}
                   <span className="hidden sm:inline-block">Search</span>
                   <kbd className="hidden sm:inline-flex items-center gap-0 rounded bg-white/10 px-1.5 py-0.5 font-mono text-xs text-neutral-400">
                     ⌘K
