@@ -25,7 +25,7 @@ export const playgroundData: PlaygroundItem[] = [
     id: 'exp-data-stream',
     title: 'Real-Time Pub/Sub Data Stream Synthesizer',
     description: 'Live event stream simulator demonstrating WebSocket pub/sub packet channels, RxJS buffer transformations, and reactive state machine transitions.',
-    category: 'Data Architecture (RxJS/WebSockets)',
+    category: 'RxJS/WebSockets',
     tech: ['RxJS', 'WebSockets', 'React State', 'Canvas 2D'],
     interactiveDemoId: 'data-stream',
     previewImage: '/images/playground/data-stream.svg',

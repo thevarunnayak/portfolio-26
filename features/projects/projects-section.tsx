@@ -57,7 +57,7 @@ export function ProjectsSection() {
               <div className="flex items-center justify-between px-6 py-3 bg-black/60 border-b border-white/10">
                 <div className="flex items-center gap-2">
                   <span className="h-3 w-3 rounded-full bg-red-500/80" />
-                  <span className="h-3 w-3 rounded-full bg-yellow-500/80" />
+                  <span className="h-3 w-3 rounded-full bg-yellow-500/80 hidden md:block" />
                   <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
                 </div>
                 <span className="font-mono text-xs text-neutral-400 group-hover:text-blue-400 transition-colors">

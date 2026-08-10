@@ -174,7 +174,7 @@ export function SkillsSection() {
                       <span className="font-mono text-xs font-semibold text-blue-400 uppercase tracking-wider">
                         [{selectedSkill.category}]
                       </span>
-                      <h3 className="text-2xl font-extrabold text-white mt-0.5">
+                      <h3 className="text-lg md:text-2xl font-extrabold text-white mt-0.5">
                         {selectedSkill.name}
                       </h3>
                     </div>

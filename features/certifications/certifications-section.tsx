@@ -101,7 +101,8 @@ export function CertificationsSection() {
                       onMouseLeave={resetCursorState}
                       className="flex items-center gap-1.5 rounded-full bg-white/5 px-4 py-2 text-blue-400 hover:bg-blue-500 hover:text-white border border-white/10 transition-all"
                     >
-                      <span>Verify Certificate</span>
+                      <span className='md:block hidden'>Verify Certificate</span>
+                      <span className='md:hidden block'>Certificate</span>
                       <ExternalLink className="h-3.5 w-3.5" />
                     </a>
 

@@ -123,7 +123,7 @@ export function PlaygroundSection() {
                   className="glass-panel glass-panel-hover overflow-hidden rounded-3xl p-6 sm:p-8 space-y-6 flex flex-col justify-between"
                 >
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between font-mono text-xs">
+                    <div className="flex md:items-center justify-between font-mono text-xs flex-col md:flex-row gap-2 items-start">
                       <span className="rounded-full bg-blue-500/20 px-3 py-1 text-blue-400 border border-blue-500/30">
                         {exp.category}
                       </span>
