@@ -1,24 +1,24 @@
 import { SocialLink } from '@/types';
 
 export const socialLinks: SocialLink[] = [
-  {
-    platform: 'GitHub',
-    url: 'https://github.com/thevarunnayak',
-    handle: '@thevarunnayak',
-    iconName: 'Github'
-  },
+  // {
+  //   platform: 'GitHub',
+  //   url: 'https://github.com/thevarunnayak',
+  //   handle: '@thevarunnayak',
+  //   iconName: 'Github'
+  // },
   {
     platform: 'LinkedIn',
     url: 'https://linkedin.com/in/pvarunnayak',
     handle: 'pvarunnayak',
     iconName: 'Linkedin'
   },
-  {
-    platform: 'Twitter / X',
-    url: 'https://twitter.com/varunnayak',
-    handle: '@varunnayak',
-    iconName: 'Twitter'
-  },
+  // {
+  //   platform: 'Twitter / X',
+  //   url: 'https://twitter.com/thevarunnayak',
+  //   handle: '@varunnayak',
+  //   iconName: 'Twitter'
+  // },
   {
     platform: 'Email',
     url: 'mailto:iamvarunnayak@gmail.com',
