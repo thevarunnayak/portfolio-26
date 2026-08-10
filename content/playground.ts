@@ -9,8 +9,7 @@ export const playgroundData: PlaygroundItem[] = [
     tech: ['Three.js', 'React Three Fiber', 'Drei', 'GLSL Shaders'],
     interactiveDemoId: 'threejs-lab',
     previewImage: '/images/playground/threejs-lab.svg',
-    githubLink: 'https://github.com/thevarunnayak/threejs-shader-lab',
-    liveDemoUrl: 'https://threejs-lab.varunnayak.com'
+    liveDemoUrl: 'https://geometrylab.vercel.app/'
   },
   {
     id: 'exp-motion-physics',
@@ -20,8 +19,7 @@ export const playgroundData: PlaygroundItem[] = [
     tech: ['Framer Motion', 'GSAP', 'TypeScript', 'Spring Physics'],
     interactiveDemoId: 'motion-physics',
     previewImage: '/images/playground/motion-physics.svg',
-    githubLink: 'https://github.com/thevarunnayak/motion-physics-engine',
-    liveDemoUrl: 'https://motion.varunnayak.com'
+    liveDemoUrl: 'https://motionphysicslab.vercel.app/'
   },
   {
     id: 'exp-data-stream',
@@ -31,8 +29,7 @@ export const playgroundData: PlaygroundItem[] = [
     tech: ['RxJS', 'WebSockets', 'React State', 'Canvas 2D'],
     interactiveDemoId: 'data-stream',
     previewImage: '/images/playground/data-stream.svg',
-    githubLink: 'https://github.com/thevarunnayak/rxjs-stream-synthesizer',
-    liveDemoUrl: 'https://stream.varunnayak.com'
+    liveDemoUrl: 'https://streamsynth.vercel.app/'
   },
   {
     id: 'exp-audio-visualizer',
@@ -42,8 +39,7 @@ export const playgroundData: PlaygroundItem[] = [
     tech: ['Web Audio API', 'Canvas 2D', 'FFT Oscilloscope', 'TypeScript'],
     interactiveDemoId: 'audio-visualizer',
     previewImage: '/images/playground/audio-visualizer.svg',
-    githubLink: 'https://github.com/thevarunnayak/web-audio-spectrum',
-    liveDemoUrl: 'https://audio.varunnayak.com'
+    liveDemoUrl: 'https://audiosgnallab.vercel.app/'
   },
   {
     id: 'exp-3d-car-configurator',
@@ -53,8 +49,7 @@ export const playgroundData: PlaygroundItem[] = [
     tech: ['Three.js', 'Angular / React', 'WebGL', 'OrbitControls', 'GLSL Shaders'],
     interactiveDemoId: '3d-car-configurator',
     previewImage: '/projects/car-configurator.png',
-    githubLink: 'https://github.com/thevarunnayak/car-angular',
-    liveDemoUrl: 'https://car-angular.vercel.app'
+    liveDemoUrl: 'https://car-angular.vercel.app/'
   }
 ];
 
