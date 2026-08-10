@@ -43,12 +43,12 @@ export function ResumeSection() {
         </div>
 
         {/* View Selector Tabs */}
-        <div className="flex items-center gap-4 font-mono text-xs">
+        <div className="flex md:items-center gap-4 font-mono text-xs md:flex-row flex-col items-start">
           <button
             onClick={() => setActiveView('preview')}
-            className={`px-4 py-2 rounded-full transition-all ${
+            className={`px-4 py-2 rounded-full transition-all  border border-white/20 ${
               activeView === 'preview'
-                ? 'bg-white/10 text-white border border-white/20'
+                ? 'bg-white/10 text-white'
                 : 'text-neutral-400 hover:text-white'
             }`}
           >
@@ -56,9 +56,9 @@ export function ResumeSection() {
           </button>
           <button
             onClick={() => setActiveView('ats')}
-            className={`px-4 py-2 rounded-full transition-all ${
+            className={`px-4 py-2 rounded-full transition-all border border-white/20 ${
               activeView === 'ats'
-                ? 'bg-white/10 text-white border border-white/20'
+                ? 'bg-white/10 text-white'
                 : 'text-neutral-400 hover:text-white'
             }`}
           >

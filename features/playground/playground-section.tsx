@@ -73,15 +73,15 @@ export function PlaygroundSection() {
 
         {/* Tab Selector Navigation Header */}
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
-          <div className="flex items-center gap-3">
+          <div className="w-full flex items-center gap-3 flex-col md:flex-row">
             <button
               onClick={() => setActiveTab('demos')}
               onMouseEnter={() => setCursorState('button', 'Demos')}
               onMouseLeave={resetCursorState}
-              className={`flex items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-semibold transition-all ${
+              className={`w-full md:w-fit flex items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-semibold transition-all ${
                 activeTab === 'demos'
                   ? 'bg-blue-600 text-white! shadow-lg shadow-blue-500/20'
-                  : 'text-neutral-400 hover:text-white'
+                  : 'text-neutral-400 hover:text-white border border-blue-600/20'
               }`}
             >
               <Code2 className="h-3.5 w-3.5" />
@@ -94,10 +94,10 @@ export function PlaygroundSection() {
               onClick={() => setActiveTab('articles')}
               onMouseEnter={() => setCursorState('button', 'Articles')}
               onMouseLeave={resetCursorState}
-              className={`flex items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-semibold transition-all ${
+              className={`w-full md:w-fit flex items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-semibold transition-all ${
                 activeTab === 'articles'
                   ? 'bg-blue-600 text-white! shadow-lg shadow-blue-500/20'
-                  : 'text-neutral-400 hover:text-white'
+                  : 'text-neutral-400 hover:text-white border border-blue-600/20'
               }`}
             >
               <BookOpen className="h-3.5 w-3.5" />
@@ -202,7 +202,8 @@ export function PlaygroundSection() {
                       className="flex items-center justify-center gap-2 rounded-xl bg-white/5 py-3 font-mono text-xs font-bold text-neutral-200 hover:bg-blue-600 hover:text-white border border-white/10 transition-all shadow-md active:scale-98 group"
                     >
                       <Code2 className="h-4 w-4 text-blue-400 group-hover:text-white" />
-                      <span>Inspect Lab Spec & Launch Canvas</span>
+                      <span className='md:block hidden'>Inspect Lab Spec & Launch Canvas</span>
+                      <span className='block md:hidden'>Inspect Lab Spec</span>
                       <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </div>

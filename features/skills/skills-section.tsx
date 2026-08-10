@@ -85,7 +85,7 @@ export function SkillsSection() {
             </h2>
           </div>
           <p className="max-w-md text-sm text-neutral-400 md:text-right">
-            No superficial percentages or arbitrary progress bars. Hover any technology node to inspect experience depth, project deployments, and architectural capabilities.
+            Explore the technologies behind my work, with insights into experience, projects, deployments, and architectural capabilities.
           </p>
         </div>
 

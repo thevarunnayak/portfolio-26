@@ -101,7 +101,7 @@ export function Footer() {
       {/* Top Footer Bar */}
       <div className="w-full px-6 sm:px-12 md:px-16 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-[var(--border-subtle)] relative z-20">
         {/* Left: Copyright */}
-        <div className="text-[var(--text-secondary)]">
+        <div className="text-[var(--text-secondary)] text-center">
           © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
         </div>
 
