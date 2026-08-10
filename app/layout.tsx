@@ -18,9 +18,7 @@ export const metadata: Metadata = {
   title: `${siteConfig.name} — ${siteConfig.role}`,
   description: `${siteConfig.role} & ${siteConfig.subRole}. ${siteConfig.tagline}`,
   icons: {
-    icon: '/images/prof.jpg',
-    shortcut: '/images/prof.jpg',
-    apple: '/images/prof.jpg',
+    apple: [{ url: '/images/prof.jpg', sizes: '800x800', type: 'image/jpeg' }],
   },
   keywords: [
     'Software Engineer',

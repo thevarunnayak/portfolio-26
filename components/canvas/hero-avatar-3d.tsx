@@ -88,7 +88,7 @@ export function HeroAvatar3D() {
           <div className="relative z-10 flex items-center justify-between px-4 py-3 bg-neutral-900/90 keep-dark backdrop-blur-md border-b border-white/10 keep-white rounded-t-[20px]">
             <div className="flex items-center gap-2 font-mono text-[11px] font-semibold text-white keep-white">
               <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-white keep-white">VARUN NAYAK</span>
+              <span className="text-white keep-white!">VARUN NAYAK</span>
             </div>
             <div className="flex items-center gap-1 font-mono text-[10px] text-blue-400 bg-blue-500/20 px-2 py-0.5 rounded-full border border-blue-500/30">
               <ShieldCheck className="h-3 w-3 text-blue-400" />

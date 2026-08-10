@@ -155,7 +155,7 @@ export function HeroSection() {
       >
         <div className="flex items-center gap-2">
           <Terminal className="h-3.5 w-3.5 text-blue-400" />
-          <span>PORTFOLIO_SYSTEM_V2.6 // ACTIVE</span>
+          <span>PORTFOLIO_SYSTEM // ACTIVE</span>
         </div>
         <div className="flex items-center gap-2 font-mono text-xs sm:text-sm font-bold tracking-wider text-neutral-200">
           <span>SCROLL TO DISCOVER</span>

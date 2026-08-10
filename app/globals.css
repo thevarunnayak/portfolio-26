@@ -210,6 +210,13 @@ section {
   background-color: rgba(15, 23, 42, 0.05);
 }
 
+/* Tech stack pills – explicit light-mode styles */
+[data-theme='light'] .tech-pill {
+  background-color: #e2e8f0!important;
+  border-color: #cbd5e1!important;
+  color: #1e293b!important;
+}
+
 [data-theme='light'] footer {
   background-color: #f1f5f9;
   border-color: rgba(15, 23, 42, 0.08);

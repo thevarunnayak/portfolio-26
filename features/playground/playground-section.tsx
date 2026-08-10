@@ -80,7 +80,7 @@ export function PlaygroundSection() {
               onMouseLeave={resetCursorState}
               className={`flex items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-semibold transition-all ${
                 activeTab === 'demos'
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+                  ? 'bg-blue-600 text-white! shadow-lg shadow-blue-500/20'
                   : 'text-neutral-400 hover:text-white'
               }`}
             >
@@ -96,7 +96,7 @@ export function PlaygroundSection() {
               onMouseLeave={resetCursorState}
               className={`flex items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-semibold transition-all ${
                 activeTab === 'articles'
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+                  ? 'bg-blue-600 text-white! shadow-lg shadow-blue-500/20'
                   : 'text-neutral-400 hover:text-white'
               }`}
             >

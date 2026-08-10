@@ -116,7 +116,7 @@ export function ProjectsSection() {
                   {project.techStack.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="rounded-full bg-white/5 px-3 py-1 font-mono text-[11px] text-neutral-400 border border-white/10"
+                      className="tech-pill rounded-full bg-white/5 px-3 py-1 font-mono text-[11px] text-neutral-400 border border-white/10"
                     >
                       {tech}
                     </span>

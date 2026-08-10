@@ -42,7 +42,7 @@ export function PillBadge({
   }
 
   return (
-    <span className={`rounded-full bg-white/5 px-3 py-1 font-mono text-[11px] text-neutral-300 border border-white/10 ${className}`}>
+    <span className={`tech-pill rounded-full bg-white/5 px-3 py-1 font-mono text-[11px] text-neutral-300 border border-white/10 ${className}`}>
       {label}
     </span>
   );
