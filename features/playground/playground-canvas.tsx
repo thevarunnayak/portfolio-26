@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, OrbitControls, Center } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
@@ -461,16 +461,32 @@ function ProceduralSportsCarMesh({ color, wireframe }: { color: string; wirefram
   );
 }
 
-function GLTFCarModel({ color, wireframe }: { color: string; wireframe: boolean }) {
-  const gltf = useLoader(GLTFLoader, '/models/car.glb', (loader) => {
+function CarMesh({ color, wireframe }: { color: string; wireframe: boolean }) {
+  const [modelScene, setModelScene] = React.useState<THREE.Group | null>(null);
+  const groupRef = useRef<THREE.Group>(null!);
+
+  React.useEffect(() => {
+    const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
     loader.setDRACOLoader(dracoLoader);
     loader.setCrossOrigin('anonymous');
-  });
 
-  const scene = gltf.scene;
-  const groupRef = useRef<THREE.Group>(null!);
+    loader.load(
+      '/models/car.glb',
+      (gltf) => {
+        setModelScene(gltf.scene);
+      },
+      undefined,
+      (err) => {
+        console.warn('GLTFLoader texture warning:', err);
+      }
+    );
+
+    return () => {
+      dracoLoader.dispose();
+    };
+  }, []);
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
@@ -480,7 +496,8 @@ function GLTFCarModel({ color, wireframe }: { color: string; wireframe: boolean 
   });
 
   const clonedScene = React.useMemo(() => {
-    const clone = scene.clone(true);
+    if (!modelScene) return null;
+    const clone = modelScene.clone(true);
     
     // Calculate bounding box to normalize model dimensions to ~3.5 units
     const box = new THREE.Box3().setFromObject(clone);
@@ -546,7 +563,11 @@ function GLTFCarModel({ color, wireframe }: { color: string; wireframe: boolean 
     });
 
     return clone;
-  }, [scene, color, wireframe]);
+  }, [modelScene, color, wireframe]);
+
+  if (!clonedScene) {
+    return <ProceduralSportsCarMesh color={color} wireframe={wireframe} />;
+  }
 
   return (
     <group ref={groupRef}>
@@ -554,44 +575,6 @@ function GLTFCarModel({ color, wireframe }: { color: string; wireframe: boolean 
         <primitive object={clonedScene} />
       </Center>
     </group>
-  );
-}
-
-// Preload GLTF model for fast initial display
-try {
-  useLoader.preload(GLTFLoader, '/models/car.glb');
-} catch {
-  // Preload fallback if unavailable
-}
-
-class CarErrorBoundary extends React.Component<
-  { fallback: React.ReactNode; children: React.ReactNode },
-  { hasError: boolean }
-> {
-  constructor(props: { fallback: React.ReactNode; children: React.ReactNode }) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return this.props.fallback;
-    }
-    return this.props.children;
-  }
-}
-
-function CarMesh({ color, wireframe }: { color: string; wireframe: boolean }) {
-  return (
-    <CarErrorBoundary fallback={<ProceduralSportsCarMesh color={color} wireframe={wireframe} />}>
-      <React.Suspense fallback={<ProceduralSportsCarMesh color={color} wireframe={wireframe} />}>
-        <GLTFCarModel color={color} wireframe={wireframe} />
-      </React.Suspense>
-    </CarErrorBoundary>
   );
 }
 
