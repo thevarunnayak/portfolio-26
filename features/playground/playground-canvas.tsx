@@ -2,29 +2,8 @@
 
 import React, { useRef, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, OrbitControls, Center } from '@react-three/drei';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import { Float, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
-
-// Safely defer URL.revokeObjectURL for GLTFLoader bufferView textures to allow browser image decoding
-if (typeof window !== 'undefined' && !(window as Window & { __safeBlobRevokePatched?: boolean }).__safeBlobRevokePatched) {
-  (window as Window & { __safeBlobRevokePatched?: boolean }).__safeBlobRevokePatched = true;
-  const originalRevoke = URL.revokeObjectURL;
-  URL.revokeObjectURL = function (url: string) {
-    if (typeof url === 'string' && url.startsWith('blob:')) {
-      setTimeout(() => {
-        try {
-          originalRevoke.call(URL, url);
-        } catch {
-          // Ignore revocation exceptions
-        }
-      }, 10000);
-    } else {
-      originalRevoke.call(URL, url);
-    }
-  };
-}
 
 /* 1. Multi-Geometry WebGL Scene (Three.js & R3F) */
 function MultiGeometryScene() {
@@ -462,120 +441,7 @@ function ProceduralSportsCarMesh({ color, wireframe }: { color: string; wirefram
 }
 
 function CarMesh({ color, wireframe }: { color: string; wireframe: boolean }) {
-  const [modelScene, setModelScene] = React.useState<THREE.Group | null>(null);
-  const groupRef = useRef<THREE.Group>(null!);
-
-  React.useEffect(() => {
-    const loader = new GLTFLoader();
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
-    loader.setDRACOLoader(dracoLoader);
-    loader.setCrossOrigin('anonymous');
-
-    loader.load(
-      '/models/car.glb',
-      (gltf) => {
-        setModelScene(gltf.scene);
-      },
-      undefined,
-      (err) => {
-        console.warn('GLTFLoader texture warning:', err);
-      }
-    );
-
-    return () => {
-      dracoLoader.dispose();
-    };
-  }, []);
-
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    if (groupRef.current) {
-      groupRef.current.position.y = Math.sin(t * 1.5) * 0.03;
-    }
-  });
-
-  const clonedScene = React.useMemo(() => {
-    if (!modelScene) return null;
-    const clone = modelScene.clone(true);
-    
-    // Calculate bounding box to normalize model dimensions to ~3.5 units
-    const box = new THREE.Box3().setFromObject(clone);
-    const size = new THREE.Vector3();
-    box.getSize(size);
-    const maxDim = Math.max(size.x, size.y, size.z);
-    const targetScale = maxDim > 0 ? 3.5 / maxDim : 1;
-    
-    clone.scale.setScalar(targetScale);
-
-    clone.traverse((child) => {
-      if ((child as THREE.Mesh).isMesh) {
-        const mesh = child as THREE.Mesh;
-        if (mesh.material) {
-          const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
-          const clonedMaterials = materials.map((m) => {
-            const mat = (m as THREE.MeshStandardMaterial).clone();
-            mat.wireframe = wireframe;
-
-            const name = (mesh.name + ' ' + (m.name || '')).toLowerCase();
-
-            const isNonBodyPart =
-              name.includes('wheel') ||
-              name.includes('tire') ||
-              name.includes('rim') ||
-              name.includes('glass') ||
-              name.includes('window') ||
-              name.includes('windshield') ||
-              name.includes('light') ||
-              name.includes('interior') ||
-              name.includes('seat') ||
-              name.includes('dashboard') ||
-              name.includes('brake') ||
-              name.includes('chrome') ||
-              name.includes('black') ||
-              name.includes('rubber') ||
-              name.includes('mirror') ||
-              name.includes('grille') ||
-              name.includes('exhaust');
-
-            const isBodyPaint =
-              name.includes('body') ||
-              name.includes('paint') ||
-              name.includes('chassis') ||
-              name.includes('car_body') ||
-              name.includes('exterior') ||
-              name.includes('fender') ||
-              name.includes('hood') ||
-              name.includes('door') ||
-              name.includes('roof');
-
-            // Recolor only body paint meshes; preserve original textures & non-body materials
-            if ((isBodyPaint || (!isNonBodyPart && !mat.map)) && color) {
-              mat.color = new THREE.Color(color);
-            }
-
-            return mat;
-          });
-
-          mesh.material = Array.isArray(mesh.material) ? clonedMaterials : clonedMaterials[0];
-        }
-      }
-    });
-
-    return clone;
-  }, [modelScene, color, wireframe]);
-
-  if (!clonedScene) {
-    return <ProceduralSportsCarMesh color={color} wireframe={wireframe} />;
-  }
-
-  return (
-    <group ref={groupRef}>
-      <Center>
-        <primitive object={clonedScene} />
-      </Center>
-    </group>
-  );
+  return <ProceduralSportsCarMesh color={color} wireframe={wireframe} />;
 }
 
 function CarConfiguratorDemo() {
