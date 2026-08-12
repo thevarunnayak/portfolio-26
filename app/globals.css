@@ -270,8 +270,15 @@ section {
 
 /* Accessibility: High-Contrast Focus Visible Ring */
 :focus-visible {
-  outline: 2px solid var(--accent-color) !important;
-  outline-offset: 2px !important;
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+input:focus,
+input:focus-visible,
+.outline-none:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* Accessibility: Reduced Motion Preference Support */

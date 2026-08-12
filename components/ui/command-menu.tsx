@@ -87,7 +87,7 @@ export function CommandMenu({ isOpen, onClose }: CommandMenuProps) {
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Type a command or section name..."
               aria-label="Search sections or actions"
-              className="w-full bg-transparent text-sm text-white placeholder-neutral-500 focus:outline-none font-mono"
+              className="w-full bg-transparent text-sm text-white placeholder-neutral-500 focus:outline-none focus-visible:outline-none outline-none font-mono"
               autoFocus
             />
             <button
