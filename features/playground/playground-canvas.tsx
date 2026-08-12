@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, OrbitControls, useGLTF, Center } from '@react-three/drei';
+import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { Float, OrbitControls, Center } from '@react-three/drei';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import * as THREE from 'three';
 
 /* 1. Multi-Geometry WebGL Scene (Three.js & R3F) */
@@ -441,7 +443,14 @@ function ProceduralSportsCarMesh({ color, wireframe }: { color: string; wirefram
 }
 
 function GLTFCarModel({ color, wireframe }: { color: string; wireframe: boolean }) {
-  const { scene } = useGLTF('/models/car.glb');
+  const gltf = useLoader(GLTFLoader, '/models/car.glb', (loader) => {
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+    loader.setDRACOLoader(dracoLoader);
+    loader.setCrossOrigin('anonymous');
+  });
+
+  const scene = gltf.scene;
   const groupRef = useRef<THREE.Group>(null!);
 
   useFrame((state) => {
@@ -531,7 +540,7 @@ function GLTFCarModel({ color, wireframe }: { color: string; wireframe: boolean 
 
 // Preload GLTF model for fast initial display
 try {
-  useGLTF.preload('/models/car.glb');
+  useLoader.preload(GLTFLoader, '/models/car.glb');
 } catch {
   // Preload fallback if unavailable
 }
