@@ -1,14 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { siteConfig } from '@/content/site';
 import { Magnetic } from '@/components/motion/magnetic';
 import { useCursor } from '@/features/cursor/cursor-context';
-import { copyToClipboard } from '@/lib/utils';
 import { HeroAvatar3D } from '@/components/canvas/hero-avatar-3d';
-import { ArrowDownRight, ArrowDown, Copy, Check, MapPin, Sparkles, Terminal } from 'lucide-react';
+import { ArrowDownRight, ArrowDown, Mail, Download, MapPin, Sparkles, Terminal } from 'lucide-react';
 
 const HeroParticles = dynamic(
   () => import('@/components/canvas/hero-particles').then((m) => m.HeroParticles),
@@ -17,15 +16,6 @@ const HeroParticles = dynamic(
 
 export function HeroSection() {
   const { setCursorState, resetCursorState } = useCursor();
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyEmail = async () => {
-    const success = await copyToClipboard(siteConfig.email);
-    if (success) {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
 
   return (
     <section
@@ -112,32 +102,40 @@ export function HeroSection() {
                 href="#projects"
                 onMouseEnter={() => setCursorState('button', 'Projects')}
                 onMouseLeave={resetCursorState}
-                className="group relative inline-flex items-center gap-3 overflow-hidden rounded-2xl bg-blue-600 px-7 py-3.5 font-mono text-sm font-bold text-white shadow-xl shadow-blue-500/25 transition-all hover:bg-blue-500 hover:shadow-blue-500/40 active:scale-95 keep-white"
+                aria-label="Explore Varun's project portfolio"
+                className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-blue-600 px-6 py-3.5 font-mono text-xs md:text-sm font-bold text-white shadow-xl shadow-blue-500/25 transition-all hover:bg-blue-500 hover:shadow-blue-500/40 active:scale-95 keep-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500"
               >
                 <span>EXPLORE WORK</span>
                 <ArrowDownRight className="h-4 w-4 transition-transform group-hover:rotate-[-45deg]" />
               </a>
             </Magnetic>
 
-            <button
-              onClick={handleCopyEmail}
-              onMouseEnter={() => setCursorState('button', copied ? 'Copied!' : 'Copy Email')}
-              onMouseLeave={resetCursorState}
-              aria-label="Copy Varun's email address to clipboard"
-              className="group flex items-center gap-2 rounded-2xl bg-white/5 px-5 py-3.5 font-mono text-xs font-semibold text-neutral-300 hover:bg-white/10 hover:text-white border border-white/10 transition-all active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500"
-            >
-              {copied ? (
-                <>
-                  <Check className="h-4 w-4 text-emerald-400" />
-                  <span className="text-emerald-400">COPIED TO CLIPBOARD</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="h-4 w-4 text-neutral-400 group-hover:text-blue-400 transition-colors" />
-                  <span>{siteConfig.email}</span>
-                </>
-              )}
-            </button>
+            <Magnetic>
+              <a
+                href="#contact"
+                onMouseEnter={() => setCursorState('button', 'Contact')}
+                onMouseLeave={resetCursorState}
+                aria-label="Get in touch with Varun"
+                className="group inline-flex items-center gap-2.5 rounded-2xl bg-white/5 px-6 py-3.5 font-mono text-xs md:text-sm font-bold text-neutral-300 hover:bg-white/10 hover:text-white border border-white/10 shadow-lg transition-all active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500"
+              >
+                <Mail className="h-4 w-4 text-neutral-400 group-hover:text-blue-400 transition-colors" aria-hidden="true" />
+                <span>GET IN TOUCH</span>
+              </a>
+            </Magnetic>
+
+            <Magnetic>
+              <a
+                href="/Varun_Resume.pdf"
+                download="Varun_Resume.pdf"
+                onMouseEnter={() => setCursorState('button', 'Resume PDF')}
+                onMouseLeave={resetCursorState}
+                aria-label="Download Varun's Resume PDF file"
+                className="group inline-flex items-center gap-2.5 rounded-2xl bg-white/5 px-6 py-3.5 font-mono text-xs md:text-sm font-bold text-neutral-300 hover:bg-white/10 hover:text-white border border-white/10 shadow-lg transition-all active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500"
+              >
+                <Download className="h-4 w-4 text-neutral-400 group-hover:text-blue-400 transition-colors" aria-hidden="true" />
+                <span>DOWNLOAD RESUME</span>
+              </a>
+            </Magnetic>
           </motion.div>
         </div>
 
