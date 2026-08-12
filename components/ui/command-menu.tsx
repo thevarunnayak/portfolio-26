@@ -6,6 +6,7 @@ import { navigationItems } from '@/content/navigation';
 import { siteConfig } from '@/content/site';
 import { copyToClipboard } from '@/lib/utils';
 import { useThemeService } from '@/lib/theme-service';
+import { useSmoothScroll } from '@/components/providers/smooth-scroll-provider';
 import { Search, X, Mail, Sun, Moon, ArrowRight, Check } from 'lucide-react';
 
 interface CommandMenuProps {
@@ -17,12 +18,15 @@ export function CommandMenu({ isOpen, onClose }: CommandMenuProps) {
   const [query, setQuery] = useState('');
   const [copied, setCopied] = useState(false);
   const { resolvedTheme, toggleTheme } = useThemeService();
+  const { lenis } = useSmoothScroll();
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      if (lenis) lenis.stop();
     } else {
       document.body.style.overflow = '';
+      if (lenis) lenis.start();
     }
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -38,9 +42,10 @@ export function CommandMenu({ isOpen, onClose }: CommandMenuProps) {
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       document.body.style.overflow = '';
+      if (lenis) lenis.start();
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, lenis, onClose]);
 
   if (!isOpen) return null;
 
@@ -59,7 +64,10 @@ export function CommandMenu({ isOpen, onClose }: CommandMenuProps) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-black/70 backdrop-blur-md">
+      <div
+        data-lenis-prevent
+        className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-black/70 backdrop-blur-md"
+      >
         <motion.div
           role="dialog"
           aria-modal="true"
@@ -92,7 +100,11 @@ export function CommandMenu({ isOpen, onClose }: CommandMenuProps) {
           </div>
 
           {/* Command List */}
-          <div className="p-2 max-h-80 overflow-y-auto space-y-1 font-mono text-xs">
+          <div
+            data-lenis-prevent
+            className="p-2 max-h-80 overflow-y-auto space-y-1 font-mono text-xs focus:outline-none"
+            style={{ overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}
+          >
             <div className="px-3 py-1.5 text-[10px] text-neutral-500 uppercase tracking-wider">
               SECTION NAVIGATION
             </div>
