@@ -3,6 +3,7 @@ import { SiteConfig } from '@/types';
 export const siteConfig: SiteConfig = {
   name: "Pangala Varun Nayak",
   shortName: "Varun",
+  url: "https://varunnayak.in",
   role: "Frontend & Full Stack Software Engineer",
   subRole: "React.js, Next.js, Angular & React Native",
   tagline: "Frontend and Full Stack Software Engineer with 3+ years of experience building enterprise web and mobile applications.",

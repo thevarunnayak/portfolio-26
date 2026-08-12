@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { projectsData } from '@/content/projects';
@@ -71,9 +72,11 @@ export function ProjectsSection() {
               {/* Hero Image Banner Preview (Immersive Full-Bleed Cover) */}
               {project.heroImage && (
                 <div className="relative w-full aspect-[16/9] overflow-hidden border-b border-white/10 bg-neutral-950 flex items-center justify-center">
-                  <img
+                  <Image
                     src={project.heroImage}
                     alt={project.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/30 to-transparent opacity-80" />

@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useThemeService } from '@/lib/theme-service';
 import { navigationItems } from '@/content/navigation';
-import { siteConfig } from '@/content/site';
 import { useCursor } from '@/features/cursor/cursor-context';
 import { Magnetic } from '@/components/motion/magnetic';
 import { Sun, Moon, Search, Menu, X, ArrowUpRight } from 'lucide-react';
@@ -71,19 +71,26 @@ export function Navbar({ onOpenCommandMenu }: NavbarProps) {
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="fixed top-4 sm:top-6 inset-x-0 z-40 flex justify-center px-3 sm:px-4"
         >
-          <nav className="glass-panel flex items-center justify-between gap-2 sm:gap-3 rounded-full px-3 sm:px-4 py-2 shadow-2xl backdrop-blur-xl border border-white/10 max-w-5xl w-full">
-            {/* Logo Mark with 28px Fascinate Font VN Monogram (90% height of 32px avatar, 0 gap) */}
+          <nav
+            aria-label="Main Navigation"
+            className="glass-panel flex items-center justify-between gap-2 sm:gap-3 rounded-full px-3 sm:px-4 py-2 shadow-2xl backdrop-blur-xl border border-white/10 max-w-5xl w-full"
+          >
+            {/* Logo Mark with 28px Fascinate Font VN Monogram */}
             <a
               href="#hero"
               onClick={(e) => handleNavClick(e, '#hero')}
               onMouseEnter={() => setCursorState('link', 'Varun')}
               onMouseLeave={resetCursorState}
-              className="group flex items-center gap-2.5 px-2 py-1 rounded-full text-white hover:text-blue-400 transition-colors shrink-0"
+              aria-label="Varun Nayak Homepage"
+              className="group flex items-center gap-2.5 px-2 py-1 rounded-full text-white hover:text-blue-400 transition-colors shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500"
             >
               <div className="relative flex h-8 w-8 items-center justify-center rounded-full overflow-hidden border border-white/20 shadow-md group-hover:border-blue-400 group-hover:scale-105 transition-all shrink-0">
-                <img
+                <Image
                   src="/images/prof.jpg"
                   alt="Varun Nayak"
+                  width={32}
+                  height={32}
+                  priority
                   className="h-full w-full object-cover object-center"
                 />
               </div>
@@ -106,7 +113,7 @@ export function Navbar({ onOpenCommandMenu }: NavbarProps) {
                     onClick={(e) => handleNavClick(e, item.href)}
                     onMouseEnter={() => setCursorState('button', item.label)}
                     onMouseLeave={resetCursorState}
-                    className={`relative px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
+                    className={`relative px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500 ${
                       isActive
                         ? 'text-white font-semibold'
                         : 'text-neutral-400 hover:text-white hover:bg-white/5'
@@ -133,10 +140,11 @@ export function Navbar({ onOpenCommandMenu }: NavbarProps) {
                   onClick={onOpenCommandMenu}
                   onMouseEnter={() => setCursorState('button', 'Search (⌘K)')}
                   onMouseLeave={resetCursorState}
-                  className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
+                  aria-label="Open command palette (Press Command K)"
+                  className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500"
                 >
                   {/* Mobile: search icon only */}
-                  <Search className="h-3.5 w-3.5 sm:hidden text-blue-400" />
+                  <Search className="h-3.5 w-3.5 sm:hidden text-blue-400" aria-hidden="true" />
                   {/* Desktop: text + ⌘K badge */}
                   <span className="hidden sm:inline-block">Search</span>
                   <kbd className="hidden sm:inline-flex items-center gap-0 rounded bg-white/10 px-1.5 py-0.5 font-mono text-xs text-neutral-400">
@@ -152,12 +160,12 @@ export function Navbar({ onOpenCommandMenu }: NavbarProps) {
                   onMouseEnter={() => setCursorState('button', 'Toggle Theme')}
                   onMouseLeave={resetCursorState}
                   aria-label="Toggle theme"
-                  className="flex h-8 w-8 items-center justify-center rounded-full text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
+                  className="flex h-8 w-8 items-center justify-center rounded-full text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500"
                 >
                   {isMounted && resolvedTheme === 'dark' ? (
-                    <Sun className="h-4 w-4 text-amber-400" />
+                    <Sun className="h-4 w-4 text-amber-400" aria-hidden="true" />
                   ) : (
-                    <Moon className="h-4 w-4 text-blue-400" />
+                    <Moon className="h-4 w-4 text-blue-400" aria-hidden="true" />
                   )}
                 </button>
               </Magnetic>
@@ -166,9 +174,11 @@ export function Navbar({ onOpenCommandMenu }: NavbarProps) {
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label="Toggle navigation menu"
-                className="flex lg:hidden h-8 w-8 items-center justify-center rounded-full text-neutral-400 hover:text-white bg-white/5 border border-white/10 transition-all"
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-navigation-drawer"
+                className="flex lg:hidden h-8 w-8 items-center justify-center rounded-full text-neutral-400 hover:text-white bg-white/5 border border-white/10 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500"
               >
-                {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+                {mobileMenuOpen ? <X className="h-4 w-4" aria-hidden="true" /> : <Menu className="h-4 w-4" aria-hidden="true" />}
               </button>
             </div>
           </nav>

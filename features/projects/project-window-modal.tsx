@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ProjectCaseStudy } from '@/types';
 import { useCursor } from '@/features/cursor/cursor-context';
 import { GithubIcon } from '@/components/ui/icons';
-import { X, Maximize2, ExternalLink, Layers, Cpu, CheckCircle, Code2, Sparkles } from 'lucide-react';
+import { X, Maximize2, ExternalLink, Code2 } from 'lucide-react';
 import { useSmoothScroll } from '@/components/providers/smooth-scroll-provider';
 import { ProjectGalleryGrid } from '@/components/ui/project-gallery-grid';
 
@@ -51,6 +52,9 @@ export function ProjectWindowModal({ project, onClose }: ProjectWindowModalProps
         className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/80 backdrop-blur-xl"
       >
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="project-modal-title"
           initial={{ opacity: 0, scale: 0.92, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.92, y: 30 }}
@@ -69,20 +73,20 @@ export function ProjectWindowModal({ project, onClose }: ProjectWindowModalProps
             <div className="flex items-center gap-2">
               <button
                 onClick={onClose}
-                className="h-3.5 w-3.5 rounded-full bg-red-500 hover:bg-red-600 transition-colors flex items-center justify-center group"
-                aria-label="Close Window"
+                className="h-3.5 w-3.5 rounded-full bg-red-500 hover:bg-red-600 transition-colors flex items-center justify-center group focus-visible:outline focus-visible:outline-2 focus-visible:outline-red-500"
+                aria-label="Close project modal"
               >
                 <X className="h-2.5 w-2.5 text-black opacity-0 group-hover:opacity-100" />
               </button>
               <button
                 onClick={() => setIsFullscreen(!isFullscreen)}
                 className="h-3.5 w-3.5 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors"
-                aria-label="Minimize Window"
+                aria-label="Minimize project modal"
               />
               <button
                 onClick={() => setIsFullscreen(!isFullscreen)}
-                className="h-3.5 w-3.5 rounded-full bg-emerald-500 hover:bg-emerald-600 transition-colors flex items-center justify-center group"
-                aria-label="Fullscreen Window"
+                className="h-3.5 w-3.5 rounded-full bg-emerald-500 hover:bg-emerald-600 transition-colors flex items-center justify-center group focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-500"
+                aria-label="Toggle fullscreen view"
               >
                 <Maximize2 className="h-2.5 w-2.5 text-black opacity-0 group-hover:opacity-100" />
               </button>
@@ -90,7 +94,7 @@ export function ProjectWindowModal({ project, onClose }: ProjectWindowModalProps
 
             {/* Window Title & Tag */}
             <div className="flex items-center gap-2 font-mono text-xs text-neutral-300">
-              <span className="text-blue-400 font-bold">{project.title}</span>
+              <span id="project-modal-title" className="text-blue-400 font-bold">{project.title}</span>
               <span className="text-neutral-600">•</span>
               <span className="text-neutral-400">{project.category}</span>
             </div>
@@ -114,6 +118,7 @@ export function ProjectWindowModal({ project, onClose }: ProjectWindowModalProps
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1 text-xs font-mono text-blue-400 hover:underline"
+                  aria-label={`Visit live site for ${project.title}`}
                 >
                   <span>Live App</span>
                   <ExternalLink className="h-3.5 w-3.5" />
@@ -123,20 +128,30 @@ export function ProjectWindowModal({ project, onClose }: ProjectWindowModalProps
           </div>
 
           {/* Window Sub-Navigation Tabs */}
-          <div className="flex items-center gap-4 px-6 py-3 bg-black/40 border-b border-white/10 font-mono text-xs shrink-0 overflow-x-auto">
+          <div
+            role="tablist"
+            aria-label="Project case study sections"
+            className="flex items-center gap-4 px-6 py-3 bg-black/40 border-b border-white/10 font-mono text-xs shrink-0 overflow-x-auto"
+          >
             <button
+              role="tab"
+              aria-selected={activeTab === 'overview'}
               onClick={() => setActiveTab('overview')}
               className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'overview' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30 font-bold' : 'text-neutral-400 hover:text-white'}`}
             >
               01 // Overview
             </button>
             <button
+              role="tab"
+              aria-selected={activeTab === 'architecture'}
               onClick={() => setActiveTab('architecture')}
               className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'architecture' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30 font-bold' : 'text-neutral-400 hover:text-white'}`}
             >
               02 // Architecture Diagram
             </button>
             <button
+              role="tab"
+              aria-selected={activeTab === 'features'}
               onClick={() => setActiveTab('features')}
               className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'features' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30 font-bold' : 'text-neutral-400 hover:text-white'}`}
             >
@@ -162,9 +177,11 @@ export function ProjectWindowModal({ project, onClose }: ProjectWindowModalProps
                 <div className="relative overflow-hidden rounded-2xl bg-neutral-950 border border-white/10">
                   {project.heroImage && (
                     <div className="relative w-full aspect-[16/9] max-h-80 overflow-hidden bg-neutral-950">
-                      <img
+                      <Image
                         src={project.heroImage}
                         alt={project.title}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 800px"
                         className="w-full h-full object-cover object-top"
                       />
                       {/* Gradient overlay */}

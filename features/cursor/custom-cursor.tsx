@@ -8,7 +8,15 @@ export function CustomCursor() {
   const { cursorVariant } = useCursor();
   const { resolvedTheme } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
-  const [isMobileOrTouch, setIsMobileOrTouch] = useState(true);
+  const [isMobileOrTouch, setIsMobileOrTouch] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+    const isMobileViewport = window.innerWidth <= 1024;
+    const noHover = window.matchMedia('(hover: none)').matches;
+    const hasTouchEvents = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    return isCoarse || isMobileViewport || noHover || hasTouchEvents || prefersReducedMotion;
+  });
   const cursorRef = useRef<HTMLDivElement>(null);
 
   const targetPos = useRef({ x: -100, y: -100 });
@@ -25,21 +33,19 @@ export function CustomCursor() {
       const isMobileViewport = window.innerWidth <= 1024;
       const noHover = window.matchMedia('(hover: none)').matches;
       const hasTouchEvents = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      return isCoarse || isMobileViewport || noHover || hasTouchEvents;
+      return isCoarse || isMobileViewport || noHover || hasTouchEvents || prefersReducedMotion;
     };
 
     if (checkIsMobileOrTouch()) {
-      setIsMobileOrTouch(true);
       document.body.classList.remove('custom-cursor-active');
       document.documentElement.classList.remove('custom-cursor-active');
       return;
     }
 
-    setIsMobileOrTouch(false);
     document.body.classList.add('custom-cursor-active');
     document.documentElement.classList.add('custom-cursor-active');
-    setIsVisible(true);
 
     const handleResize = () => {
       if (checkIsMobileOrTouch()) {
@@ -56,7 +62,7 @@ export function CustomCursor() {
     const handleMouseMove = (e: MouseEvent) => {
       targetPos.current.x = e.clientX;
       targetPos.current.y = e.clientY;
-      if (!isVisible) setIsVisible(true);
+      setIsVisible(true);
     };
 
     const handleMouseLeave = () => setIsVisible(false);
@@ -84,7 +90,7 @@ export function CustomCursor() {
     return () => {
       if (rafId.current) cancelAnimationFrame(rafId.current);
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove, { capture: true } as any);
+      window.removeEventListener('mousemove', handleMouseMove, { capture: true });
       document.removeEventListener('mouseleave', handleMouseLeave);
       document.removeEventListener('mouseenter', handleMouseEnter);
       document.body.classList.remove('custom-cursor-active');

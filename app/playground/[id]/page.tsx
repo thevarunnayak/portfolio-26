@@ -1,8 +1,9 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getPlaygroundItemById, getAllPlaygroundIds } from '@/content/playground';
-import { getPlaygroundDetailById } from '@/content/playground-prompts';
+import { getPlaygroundItemById, getAllPlaygroundIds, getPlaygroundDetailById } from '@/content/playground';
+import { JsonLd } from '@/components/seo/json-ld';
+
 import { PlaygroundNavHeader, ReturnToPlaygroundButton } from './playground-nav-header';
 import { PlaygroundCanvas } from '@/features/playground/playground-canvas';
 import { siteConfig } from '@/content/site';
@@ -36,14 +37,33 @@ export async function generateMetadata({ params }: PlaygroundPageProps): Promise
     };
   }
 
+  const pageUrl = `${siteConfig.url}/playground/${item.id}`;
+  const isRasterImage = item.previewImage && /\.(png|jpg|jpeg|webp)$/i.test(item.previewImage);
+  const ogImageUrl = isRasterImage ? `${siteConfig.url}${item.previewImage}` : `${siteConfig.url}/og-image.png`;
+
   return {
     title: `${item.title} — ${siteConfig.name} R&D Lab`,
     description: item.description,
+    alternates: {
+      canonical: pageUrl,
+    },
     openGraph: {
       title: `${item.title} | Varun Nayak Engineering Lab`,
       description: item.description,
-      type: 'article',
-      url: `https://varunnayak.com/playground/${item.id}`,
+      type: 'website',
+      url: pageUrl,
+      images: [
+        {
+          url: ogImageUrl,
+          alt: item.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${item.title} | Varun Nayak Engineering Lab`,
+      description: item.description,
+      images: [ogImageUrl],
     },
   };
 }
@@ -57,8 +77,28 @@ export default async function PlaygroundDetailPage({ params }: PlaygroundPagePro
     notFound();
   }
 
+  const pageUrl = `${siteConfig.url}/playground/${item.id}`;
+
+  const webAppSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    '@id': `${pageUrl}#webapp`,
+    name: item.title,
+    description: item.description,
+    url: pageUrl,
+    applicationCategory: item.category,
+    creator: {
+      '@type': 'Person',
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+    codeRepository: detail.githubUrl || undefined,
+  };
+
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 selection:bg-blue-500 selection:text-white pb-24">
+    <>
+      <JsonLd data={webAppSchema} />
+      <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 selection:bg-blue-500 selection:text-white pb-24">
       {/* Sticky Header */}
       <PlaygroundNavHeader category={item.category} title={item.title} />
 
@@ -181,5 +221,6 @@ export default async function PlaygroundDetailPage({ params }: PlaygroundPagePro
         </div>
       </main>
     </div>
+    </>
   );
 }

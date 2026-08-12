@@ -3,8 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useCursor } from '@/features/cursor/cursor-context';
-import { siteConfig } from '@/content/site';
-import { FileText, Download, ShieldCheck, Sparkles } from 'lucide-react';
+import { FileText, Download, ShieldCheck } from 'lucide-react';
 
 export function ResumeSection() {
   const { setCursorState, resetCursorState } = useCursor();
@@ -34,31 +33,40 @@ export function ResumeSection() {
               download="Varun_Resume.pdf"
               onMouseEnter={() => setCursorState('button', 'Download PDF')}
               onMouseLeave={resetCursorState}
-              className="flex items-center gap-2 rounded-full bg-blue-500 px-6 py-3 text-sm font-semibold text-white keep-white hover:bg-blue-600 shadow-xl transition-all"
+              aria-label="Download Varun's Resume PDF file"
+              className="flex items-center gap-2 rounded-full bg-blue-500 px-6 py-3 text-sm font-semibold text-white keep-white hover:bg-blue-600 shadow-xl transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500"
             >
-              <Download className="h-4 w-4" />
+              <Download className="h-4 w-4" aria-hidden="true" />
               <span>Download Resume PDF</span>
             </a>
           </div>
         </div>
 
         {/* View Selector Tabs */}
-        <div className="flex md:items-center gap-4 font-mono text-xs md:flex-row flex-col items-start">
+        <div
+          role="tablist"
+          aria-label="Resume viewing options"
+          className="flex md:items-center gap-4 font-mono text-xs md:flex-row flex-col items-start"
+        >
           <button
+            role="tab"
+            aria-selected={activeView === 'preview'}
             onClick={() => setActiveView('preview')}
-            className={`px-4 py-2 rounded-full transition-all  border border-white/20 ${
+            className={`px-4 py-2 rounded-full transition-all border border-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500 ${
               activeView === 'preview'
-                ? 'bg-white/10 text-white'
+                ? 'bg-white/10 text-white font-bold'
                 : 'text-neutral-400 hover:text-white'
             }`}
           >
             PDF Document Preview
           </button>
           <button
+            role="tab"
+            aria-selected={activeView === 'ats'}
             onClick={() => setActiveView('ats')}
-            className={`px-4 py-2 rounded-full transition-all border border-white/20 ${
+            className={`px-4 py-2 rounded-full transition-all border border-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500 ${
               activeView === 'ats'
-                ? 'bg-white/10 text-white'
+                ? 'bg-white/10 text-white font-bold'
                 : 'text-neutral-400 hover:text-white'
             }`}
           >

@@ -1,6 +1,7 @@
 export interface SiteConfig {
   name: string;
   shortName: string;
+  url: string;
   role: string;
   subRole: string;
   tagline: string;
@@ -131,6 +132,12 @@ export interface PlaygroundItem {
   description: string;
   category: string;
   tech: string[];
+  // Detail page fields (previously in playground-prompts.ts)
+  libraryUsed: string;
+  developerPurpose: string;
+  architectureInsights: string[];
+  aiPrompt?: string;
+  githubUrl: string;
   interactiveDemoId: string;
   previewImage?: string;
   githubLink?: string;

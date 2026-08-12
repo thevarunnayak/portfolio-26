@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { playgroundData } from '@/content/playground';
@@ -164,9 +165,11 @@ export function PlaygroundSection() {
                       onMouseLeave={resetCursorState}
                       className="relative h-56 w-full overflow-hidden rounded-2xl border border-white/10 bg-black/60 shadow-inner group cursor-pointer block"
                     >
-                      <img
+                      <Image
                         src={exp.previewImage}
                         alt={exp.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />

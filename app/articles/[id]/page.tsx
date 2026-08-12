@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getArticleById, getAllArticleIds } from '@/content/articles';
+import { siteConfig } from '@/content/site';
+import { JsonLd } from '@/components/seo/json-ld';
 import { ArticleNavHeader } from './article-nav-header';
 import {
   ArrowLeft,
@@ -33,16 +35,35 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const articleUrl = `${siteConfig.url}/articles/${article.id}`;
+  const articleImageUrl = article.coverImage ? `${siteConfig.url}${article.coverImage}` : `${siteConfig.url}/og-image.png`;
+
   return {
     title: `${article.title} | Executive Case Study`,
     description: article.summary,
     keywords: article.keywords,
+    authors: [{ name: article.author, url: siteConfig.url }],
+    alternates: {
+      canonical: articleUrl,
+    },
     openGraph: {
       title: article.title,
       description: article.summary,
       type: 'article',
-      images: article.coverImage ? [{ url: article.coverImage }] : []
-    }
+      url: articleUrl,
+      images: [
+        {
+          url: articleImageUrl,
+          alt: article.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: article.summary,
+      images: [articleImageUrl],
+    },
   };
 }
 
@@ -54,10 +75,36 @@ export default async function ArticlePage({ params }: PageProps) {
     notFound();
   }
 
+  const articleUrl = `${siteConfig.url}/articles/${article.id}`;
+
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    '@id': `${articleUrl}#article`,
+    headline: article.title,
+    description: article.summary,
+    url: articleUrl,
+    author: {
+      '@type': 'Person',
+      name: article.author,
+      url: siteConfig.url,
+    },
+    publisher: {
+      '@type': 'Person',
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+    datePublished: article.date,
+    image: article.coverImage ? [`${siteConfig.url}${article.coverImage}`] : undefined,
+    keywords: article.keywords?.join(', '),
+  };
+
   return (
-    <main className="min-h-screen w-full bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 selection:bg-blue-500 selection:text-white">
-      {/* Top Client Navigation Header matching Navbar theme toggle format */}
-      <ArticleNavHeader category={article.category} readTime={article.readTime} />
+    <>
+      <JsonLd data={articleSchema} />
+      <main className="min-h-screen w-full bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 selection:bg-blue-500 selection:text-white">
+        {/* Top Client Navigation Header matching Navbar theme toggle format */}
+        <ArticleNavHeader category={article.category} readTime={article.readTime} />
 
       {/* Main Article Container */}
       <article className="mx-auto max-w-4xl px-6 py-12 sm:py-16 space-y-12">
@@ -269,5 +316,6 @@ export default async function ArticlePage({ params }: PageProps) {
         </div>
       </article>
     </main>
+    </>
   );
 }

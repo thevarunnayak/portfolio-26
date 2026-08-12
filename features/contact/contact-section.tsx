@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { siteConfig } from '@/content/site';
 import { socialLinks } from '@/content/socials';
 import { useCursor } from '@/features/cursor/cursor-context';
@@ -45,7 +44,7 @@ export function ContactSection() {
             <span>START A CONVERSATION</span>
           </div>
           <h2 className="text-5xl font-extrabold tracking-tight hero-title-main sm:text-7xl lg:text-8xl uppercase leading-none">
-            LET'S BUILD <br />
+            LET&apos;S BUILD <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-teal-500 to-indigo-500 font-extrabold">
               SOMETHING REMARKABLE.
             </span>
@@ -63,7 +62,8 @@ export function ContactSection() {
               onClick={handleCopy}
               onMouseEnter={() => setCursorState('button', copied ? 'Copied!' : 'Copy Email')}
               onMouseLeave={resetCursorState}
-              className="flex items-center gap-3 rounded-full bg-white px-8 py-4 text-base font-bold text-black hover:bg-blue-400 hover:text-white transition-all shadow-2xl"
+              aria-label="Copy Varun's email address to clipboard"
+              className="flex items-center gap-3 rounded-full bg-white px-8 py-4 text-base font-bold text-black hover:bg-blue-400 hover:text-white transition-all shadow-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500"
             >
               {copied ? (
                 <>
@@ -88,7 +88,8 @@ export function ContactSection() {
                 rel="noopener noreferrer"
                 onMouseEnter={() => setCursorState('link', 'Cal.com')}
                 onMouseLeave={resetCursorState}
-                className="flex items-center gap-2.5 rounded-full bg-white/10 px-8 py-4 text-base font-semibold text-white hover:bg-white/20 border border-white/15 transition-all backdrop-blur-md"
+                aria-label="Schedule a 1-on-1 call via Cal.com"
+                className="flex items-center gap-2.5 rounded-full bg-white/10 px-8 py-4 text-base font-semibold text-white hover:bg-white/20 border border-white/15 transition-all backdrop-blur-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500"
               >
                 <Calendar className="h-5 w-5 text-blue-400" />
                 <span>Schedule 1:1 Call</span>
@@ -108,7 +109,8 @@ export function ContactSection() {
                 rel="noopener noreferrer"
                 onMouseEnter={() => setCursorState('button', social.platform)}
                 onMouseLeave={resetCursorState}
-                className="flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-xs font-mono text-neutral-300 hover:bg-white/10 hover:text-white border border-white/10 transition-all"
+                aria-label={`Visit Varun's ${social.platform} profile`}
+                className="flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-xs font-mono text-neutral-300 hover:bg-white/10 hover:text-white border border-white/10 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500"
               >
                 {getIcon(social.iconName)}
                 <span>{social.platform}</span>

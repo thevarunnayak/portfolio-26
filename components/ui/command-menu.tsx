@@ -6,7 +6,7 @@ import { navigationItems } from '@/content/navigation';
 import { siteConfig } from '@/content/site';
 import { copyToClipboard } from '@/lib/utils';
 import { useThemeService } from '@/lib/theme-service';
-import { Command, Search, X, FileText, Mail, Sun, Moon, ArrowRight, Check } from 'lucide-react';
+import { Search, X, Mail, Sun, Moon, ArrowRight, Check } from 'lucide-react';
 
 interface CommandMenuProps {
   isOpen: boolean;
@@ -61,6 +61,9 @@ export function CommandMenu({ isOpen, onClose }: CommandMenuProps) {
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-black/70 backdrop-blur-md">
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Command palette"
           initial={{ opacity: 0, scale: 0.95, y: -20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: -20 }}
@@ -69,17 +72,22 @@ export function CommandMenu({ isOpen, onClose }: CommandMenuProps) {
         >
           {/* Command Input Bar */}
           <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/10">
-            <Search className="h-4 w-4 text-neutral-400 shrink-0" />
+            <Search className="h-4 w-4 text-neutral-400 shrink-0" aria-hidden="true" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Type a command or section name..."
+              aria-label="Search sections or actions"
               className="w-full bg-transparent text-sm text-white placeholder-neutral-500 focus:outline-none font-mono"
               autoFocus
             />
-            <button onClick={onClose} className="text-neutral-500 hover:text-white">
-              <X className="h-4 w-4" />
+            <button
+              onClick={onClose}
+              aria-label="Close command palette"
+              className="text-neutral-500 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500 rounded"
+            >
+              <X className="h-4 w-4" aria-hidden="true" />
             </button>
           </div>
 

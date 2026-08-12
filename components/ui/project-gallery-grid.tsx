@@ -1,48 +1,39 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Sparkles } from 'lucide-react';
 
 interface ProjectGalleryGridProps {
-  images?: string[];
-  columnGroups?: string[][];
-  fullWidthImages?: string[];
+  images: string[];
   columns?: number;
   title?: string;
+  fullWidthImages?: string[];
+  columnGroups?: string[][];
 }
 
 export function ProjectGalleryGrid({
-  images = [],
-  columnGroups,
-  fullWidthImages = [],
-  columns = 2,
-  title = 'PRODUCT VISUALS & INTERFACE SCREENSHOTS',
+  images,
+  columns = 3,
+  title = 'PRODUCT SCREENSHOTS & UI SHOWCASE',
+  fullWidthImages,
 }: ProjectGalleryGridProps) {
-  let cols: string[][] = [];
+  if (!images || images.length === 0) return null;
 
-  if (columnGroups && columnGroups.length > 0) {
-    cols = columnGroups;
-  } else if (images && images.length > 0) {
-    const colCount = Math.max(1, Math.min(columns, 4));
-    cols = Array.from({ length: colCount }, () => []);
-    images.forEach((imgUrl, i) => {
-      cols[i % colCount].push(imgUrl);
-    });
-  }
+  // Split images evenly across the specified number of columns
+  const colCount = Math.min(columns, images.length);
+  const cols: string[][] = Array.from({ length: colCount }, () => []);
 
-  const colCount = cols.length;
+  images.forEach((img, idx) => {
+    cols[idx % colCount].push(img);
+  });
+
   const gridClass =
     colCount === 1
-      ? 'grid-cols-1 w-full'
-      : colCount === 3
-      ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3'
-      : colCount === 4
-      ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
-      : 'grid-cols-1 md:grid-cols-2';
-
-  if (cols.length === 0 && fullWidthImages.length === 0) {
-    return null;
-  }
+      ? 'grid-cols-1'
+      : colCount === 2
+      ? 'grid-cols-1 sm:grid-cols-2'
+      : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
 
   return (
     <div className="space-y-4 w-full">
@@ -52,7 +43,7 @@ export function ProjectGalleryGrid({
           <span>{title}</span>
         </h3>
       )}
-      
+
       {/* Column-based screenshots */}
       {cols.length > 0 && (
         <div className={`grid ${gridClass} gap-4 items-start w-full`}>
@@ -63,9 +54,12 @@ export function ProjectGalleryGrid({
                   key={imgIdx}
                   className="group relative w-full overflow-hidden rounded-2xl border border-white/10 bg-neutral-950 shadow-lg hover:border-blue-500/40 transition-all duration-300"
                 >
-                  <img
+                  <Image
                     src={imgUrl}
                     alt={`Screenshot ${colIdx * colCount + imgIdx + 1}`}
+                    width={800}
+                    height={600}
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="w-full h-auto object-cover rounded-2xl group-hover:scale-[1.02] transition-transform duration-300"
                   />
                 </div>
@@ -75,7 +69,7 @@ export function ProjectGalleryGrid({
         </div>
       )}
 
-      {/* Full-width footer screenshots (e.g. Admin Dashboard spanning all columns below) */}
+      {/* Full-width footer screenshots */}
       {fullWidthImages && fullWidthImages.length > 0 && (
         <div className="flex flex-col gap-4 w-full pt-2">
           {fullWidthImages.map((imgUrl, idx) => (
@@ -83,9 +77,12 @@ export function ProjectGalleryGrid({
               key={idx}
               className="group relative w-full overflow-hidden rounded-2xl border border-white/10 bg-neutral-950 shadow-lg hover:border-blue-500/40 transition-all duration-300"
             >
-              <img
+              <Image
                 src={imgUrl}
                 alt={`Full Width Screenshot ${idx + 1}`}
+                width={1200}
+                height={800}
+                sizes="100vw"
                 className="w-full h-auto object-cover rounded-2xl group-hover:scale-[1.02] transition-transform duration-300"
               />
             </div>

@@ -267,3 +267,36 @@ section {
     cursor: none !important;
   }
 }
+
+/* Accessibility: High-Contrast Focus Visible Ring */
+:focus-visible {
+  outline: 2px solid var(--accent-color) !important;
+  outline-offset: 2px !important;
+}
+
+/* Accessibility: Reduced Motion Preference Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html.custom-cursor-active,
+  body.custom-cursor-active,
+  .custom-cursor-active *,
+  .custom-cursor-active ::before,
+  .custom-cursor-active ::after {
+    cursor: auto !important;
+  }
+
+  .custom-cursor-dot {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+}
+

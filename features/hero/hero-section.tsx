@@ -123,7 +123,8 @@ export function HeroSection() {
               onClick={handleCopyEmail}
               onMouseEnter={() => setCursorState('button', copied ? 'Copied!' : 'Copy Email')}
               onMouseLeave={resetCursorState}
-              className="group flex items-center gap-2 rounded-2xl bg-white/5 px-5 py-3.5 font-mono text-xs font-semibold text-neutral-300 hover:bg-white/10 hover:text-white border border-white/10 transition-all active:scale-95"
+              aria-label="Copy Varun's email address to clipboard"
+              className="group flex items-center gap-2 rounded-2xl bg-white/5 px-5 py-3.5 font-mono text-xs font-semibold text-neutral-300 hover:bg-white/10 hover:text-white border border-white/10 transition-all active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500"
             >
               {copied ? (
                 <>
