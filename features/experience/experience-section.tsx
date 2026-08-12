@@ -128,15 +128,16 @@ export function ExperienceSection() {
                 </div>
 
                 {/* Expandable Content Drawer */}
-                <AnimatePresence>
+                <AnimatePresence initial={false}>
                   {isExpanded && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                      className="border-t border-white/10 px-6 py-8 sm:px-8 space-y-8 bg-black/60 backdrop-blur-md relative z-10"
+                      transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1] }}
+                      className="overflow-hidden relative z-10"
                     >
+                      <div className="border-t border-white/10 px-6 py-8 sm:px-8 space-y-8 bg-black/60 backdrop-blur-md">
                       {/* Impact Metrics Grid */}
                       {item.impact && item.impact.length > 0 && (
                         <div className="space-y-3">
@@ -197,6 +198,7 @@ export function ExperienceSection() {
                           </div>
                         </div>
                       )}
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
