@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, OrbitControls, useGLTF, Center } from '@react-three/drei';
+import { Float, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
 /* 1. Multi-Geometry WebGL Scene (Three.js & R3F) */
@@ -293,21 +293,21 @@ function AudioSpectrumCanvas() {
 }
 
 /* 5. 3D Car Configurator & Scene Settings Studio */
-function ProceduralCarMesh({ color, wireframe }: { color: string; wireframe: boolean }) {
+function ProceduralSportsCarMesh({ color, wireframe }: { color: string; wireframe: boolean }) {
   const groupRef = useRef<THREE.Group>(null!);
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
     if (groupRef.current) {
-      groupRef.current.position.y = Math.sin(t * 1.5) * 0.04;
+      groupRef.current.position.y = Math.sin(t * 1.5) * 0.03;
     }
   });
 
   return (
-    <group ref={groupRef} position={[0, -0.15, 0]}>
-      {/* Car Main Body Chassis */}
-      <mesh position={[0, 0.4, 0]}>
-        <boxGeometry args={[2.4, 0.48, 1.2]} />
+    <group ref={groupRef} position={[0, -0.1, 0]}>
+      {/* 1. Aerodynamic Main Body Chassis */}
+      <mesh position={[0, 0.35, 0]}>
+        <boxGeometry args={[3.2, 0.45, 1.4]} />
         <meshStandardMaterial
           color={color}
           roughness={0.15}
@@ -316,113 +316,132 @@ function ProceduralCarMesh({ color, wireframe }: { color: string; wireframe: boo
         />
       </mesh>
 
-      {/* Car Roof Cabin */}
-      <mesh position={[-0.2, 0.8, 0]}>
-        <boxGeometry args={[1.2, 0.45, 1.0]} />
+      {/* 2. Front Hood Slope & Nose Cone */}
+      <mesh position={[-1.2, 0.32, 0]} rotation={[0, 0, -Math.PI / 16]}>
+        <boxGeometry args={[0.8, 0.38, 1.36]} />
+        <meshStandardMaterial
+          color={color}
+          roughness={0.15}
+          metalness={0.85}
+          wireframe={wireframe}
+        />
+      </mesh>
+
+      {/* 3. Front Air Splitter (Carbon Fiber) */}
+      <mesh position={[-1.55, 0.16, 0]}>
+        <boxGeometry args={[0.3, 0.08, 1.46]} />
+        <meshStandardMaterial color="#09090b" roughness={0.3} metalness={0.9} wireframe={wireframe} />
+      </mesh>
+
+      {/* 4. Side Skirts */}
+      {[0.72, -0.72].map((z, idx) => (
+        <mesh key={idx} position={[0, 0.16, z]}>
+          <boxGeometry args={[2.4, 0.12, 0.1]} />
+          <meshStandardMaterial color="#09090b" roughness={0.4} metalness={0.8} wireframe={wireframe} />
+        </mesh>
+      ))}
+
+      {/* 5. Sleek Tinted Glass Cabin Canopy */}
+      <mesh position={[-0.1, 0.72, 0]}>
+        <boxGeometry args={[1.4, 0.42, 1.15]} />
         <meshStandardMaterial
           color="#0f172a"
-          roughness={0.1}
-          metalness={0.9}
+          roughness={0.05}
+          metalness={0.95}
           wireframe={wireframe}
         />
       </mesh>
 
-      {/* Rear Spoiler */}
-      <mesh position={[1.1, 0.75, 0]}>
-        <boxGeometry args={[0.2, 0.15, 1.1]} />
+      {/* 6. Curved Windshield Slope */}
+      <mesh position={[-0.8, 0.65, 0]} rotation={[0, 0, -Math.PI / 5]}>
+        <boxGeometry args={[0.5, 0.38, 1.14]} />
         <meshStandardMaterial
-          color="#1e293b"
-          roughness={0.2}
-          metalness={0.9}
+          color="#020617"
+          roughness={0.05}
+          metalness={0.95}
           wireframe={wireframe}
         />
       </mesh>
 
-      {/* Wheels */}
-      {[
-        [-0.8, 0.15, 0.65],
-        [0.8, 0.15, 0.65],
-        [-0.8, 0.15, -0.65],
-        [0.8, 0.15, -0.65],
-      ].map((pos, idx) => (
-        <mesh key={idx} position={pos as [number, number, number]} rotation={[Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[0.3, 0.3, 0.18, 32]} />
-          <meshStandardMaterial color="#09090b" roughness={0.5} metalness={0.5} wireframe={wireframe} />
+      {/* 7. Side Mirrors */}
+      {[-0.65, 0.65].map((z, idx) => (
+        <mesh key={idx} position={[-0.45, 0.62, z]}>
+          <boxGeometry args={[0.15, 0.1, 0.22]} />
+          <meshStandardMaterial color={color} roughness={0.2} metalness={0.8} wireframe={wireframe} />
         </mesh>
       ))}
 
-      {/* Headlights */}
-      {[-0.4, 0.4].map((z, idx) => (
-        <mesh key={idx} position={[-1.21, 0.4, z]}>
-          <boxGeometry args={[0.05, 0.1, 0.25]} />
-          <meshBasicMaterial color="#60a5fa" />
-        </mesh>
-      ))}
-
-      {/* Ground Shadow Disc */}
-      <mesh position={[0, -0.05, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[3.2, 2.2]} />
-        <meshBasicMaterial color="#000000" transparent opacity={0.4} />
+      {/* 8. Rear Carbon Fiber High-Downforce Aero Wing */}
+      <mesh position={[1.4, 0.82, 0]}>
+        <boxGeometry args={[0.3, 0.08, 1.38]} />
+        <meshStandardMaterial color="#09090b" roughness={0.2} metalness={0.9} wireframe={wireframe} />
       </mesh>
-    </group>
-  );
-}
+      {[-0.45, 0.45].map((z, idx) => (
+        <mesh key={idx} position={[1.35, 0.66, z]}>
+          <boxGeometry args={[0.08, 0.24, 0.08]} />
+          <meshStandardMaterial color="#1e293b" roughness={0.2} metalness={0.9} wireframe={wireframe} />
+        </mesh>
+      ))}
 
-function GLTFCarModel({ color, wireframe }: { color: string; wireframe: boolean }) {
-  const { scene } = useGLTF('/models/car.glb');
-  const groupRef = useRef<THREE.Group>(null!);
+      {/* 9. Sports Alloy Wheels & Red Brake Calipers */}
+      {[
+        [-1.0, 0.34, 0.72],
+        [1.0, 0.34, 0.72],
+        [-1.0, 0.34, -0.72],
+        [1.0, 0.34, -0.72],
+      ].map((pos, idx) => (
+        <group key={idx} position={pos as [number, number, number]}>
+          {/* Rubber Tire */}
+          <mesh rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.34, 0.34, 0.22, 32]} />
+            <meshStandardMaterial color="#09090b" roughness={0.6} metalness={0.4} wireframe={wireframe} />
+          </mesh>
+          {/* Silver Alloy Rim */}
+          <mesh rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.24, 0.24, 0.23, 16]} />
+            <meshStandardMaterial color="#e2e8f0" roughness={0.15} metalness={0.95} wireframe={wireframe} />
+          </mesh>
+          {/* Red Brake Caliper */}
+          <mesh position={[0, 0.08, 0]}>
+            <boxGeometry args={[0.1, 0.14, 0.1]} />
+            <meshStandardMaterial color="#ef4444" roughness={0.3} metalness={0.7} wireframe={wireframe} />
+          </mesh>
+        </group>
+      ))}
 
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    if (groupRef.current) {
-      groupRef.current.position.y = Math.sin(t * 1.5) * 0.04;
-    }
-  });
+      {/* 10. Front Laser Headlight Strips (Blue Glow) */}
+      {[-0.45, 0.45].map((z, idx) => (
+        <mesh key={idx} position={[-1.56, 0.38, z]}>
+          <boxGeometry args={[0.06, 0.08, 0.35]} />
+          <meshStandardMaterial color="#60a5fa" emissive="#3b82f6" emissiveIntensity={2} />
+        </mesh>
+      ))}
 
-  const clonedScene = React.useMemo(() => {
-    const clone = scene.clone(true);
-    
-    // Calculate bounding box to normalize model dimensions to ~3.2 units
-    const box = new THREE.Box3().setFromObject(clone);
-    const size = new THREE.Vector3();
-    box.getSize(size);
-    const maxDim = Math.max(size.x, size.y, size.z);
-    const targetScale = maxDim > 0 ? 3.2 / maxDim : 1;
-    
-    clone.scale.setScalar(targetScale);
+      {/* 11. Rear Full-Width LED Tail Light Bar (Red Glow) */}
+      <mesh position={[1.56, 0.42, 0]}>
+        <boxGeometry args={[0.06, 0.08, 1.28]} />
+        <meshStandardMaterial color="#ef4444" emissive="#dc2626" emissiveIntensity={2.5} />
+      </mesh>
 
-    clone.traverse((child) => {
-      if ((child as THREE.Mesh).isMesh) {
-        const mesh = child as THREE.Mesh;
-        if (mesh.material) {
-          const mat = (mesh.material as THREE.MeshStandardMaterial).clone();
-          mat.wireframe = wireframe;
-          if (color) {
-            mat.color = new THREE.Color(color);
-          }
-          mesh.material = mat;
-        }
-      }
-    });
+      {/* 12. Quad Chrome Exhaust Pipes */}
+      {[-0.28, -0.12, 0.12, 0.28].map((z, idx) => (
+        <mesh key={idx} position={[1.58, 0.24, z]} rotation={[0, 0, Math.PI / 2]}>
+          <cylinderGeometry args={[0.045, 0.045, 0.15, 16]} />
+          <meshStandardMaterial color="#cbd5e1" roughness={0.1} metalness={0.95} />
+        </mesh>
+      ))}
 
-    return clone;
-  }, [scene, color, wireframe]);
-
-  return (
-    <group ref={groupRef} position={[0, 0, 0]}>
-      <Center>
-        <primitive object={clonedScene} />
-      </Center>
+      {/* 13. Soft Ground Contact Shadow */}
+      <mesh position={[0, 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[4.2, 2.6]} />
+        <meshBasicMaterial color="#000000" transparent opacity={0.45} />
+      </mesh>
     </group>
   );
 }
 
 function CarMesh({ color, wireframe }: { color: string; wireframe: boolean }) {
-  return (
-    <React.Suspense fallback={<ProceduralCarMesh color={color} wireframe={wireframe} />}>
-      <GLTFCarModel color={color} wireframe={wireframe} />
-    </React.Suspense>
-  );
+  return <ProceduralSportsCarMesh color={color} wireframe={wireframe} />;
 }
 
 function CarConfiguratorDemo() {
