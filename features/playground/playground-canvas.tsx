@@ -467,12 +467,52 @@ function GLTFCarModel({ color, wireframe }: { color: string; wireframe: boolean 
       if ((child as THREE.Mesh).isMesh) {
         const mesh = child as THREE.Mesh;
         if (mesh.material) {
-          const mat = (mesh.material as THREE.MeshStandardMaterial).clone();
-          mat.wireframe = wireframe;
-          if (color) {
-            mat.color = new THREE.Color(color);
-          }
-          mesh.material = mat;
+          const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+          const clonedMaterials = materials.map((m) => {
+            const mat = (m as THREE.MeshStandardMaterial).clone();
+            mat.wireframe = wireframe;
+
+            const name = (mesh.name + ' ' + (m.name || '')).toLowerCase();
+
+            const isNonBodyPart =
+              name.includes('wheel') ||
+              name.includes('tire') ||
+              name.includes('rim') ||
+              name.includes('glass') ||
+              name.includes('window') ||
+              name.includes('windshield') ||
+              name.includes('light') ||
+              name.includes('interior') ||
+              name.includes('seat') ||
+              name.includes('dashboard') ||
+              name.includes('brake') ||
+              name.includes('chrome') ||
+              name.includes('black') ||
+              name.includes('rubber') ||
+              name.includes('mirror') ||
+              name.includes('grille') ||
+              name.includes('exhaust');
+
+            const isBodyPaint =
+              name.includes('body') ||
+              name.includes('paint') ||
+              name.includes('chassis') ||
+              name.includes('car_body') ||
+              name.includes('exterior') ||
+              name.includes('fender') ||
+              name.includes('hood') ||
+              name.includes('door') ||
+              name.includes('roof');
+
+            // Recolor only body paint meshes; preserve original textures & non-body materials
+            if ((isBodyPaint || (!isNonBodyPart && !mat.map)) && color) {
+              mat.color = new THREE.Color(color);
+            }
+
+            return mat;
+          });
+
+          mesh.material = Array.isArray(mesh.material) ? clonedMaterials : clonedMaterials[0];
         }
       }
     });
