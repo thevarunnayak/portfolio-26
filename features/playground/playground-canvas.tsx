@@ -7,6 +7,25 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import * as THREE from 'three';
 
+// Safely defer URL.revokeObjectURL for GLTFLoader bufferView textures to allow browser image decoding
+if (typeof window !== 'undefined' && !(window as Window & { __safeBlobRevokePatched?: boolean }).__safeBlobRevokePatched) {
+  (window as Window & { __safeBlobRevokePatched?: boolean }).__safeBlobRevokePatched = true;
+  const originalRevoke = URL.revokeObjectURL;
+  URL.revokeObjectURL = function (url: string) {
+    if (typeof url === 'string' && url.startsWith('blob:')) {
+      setTimeout(() => {
+        try {
+          originalRevoke.call(URL, url);
+        } catch {
+          // Ignore revocation exceptions
+        }
+      }, 10000);
+    } else {
+      originalRevoke.call(URL, url);
+    }
+  };
+}
+
 /* 1. Multi-Geometry WebGL Scene (Three.js & R3F) */
 function MultiGeometryScene() {
   const torusRef = useRef<THREE.Mesh>(null!);
