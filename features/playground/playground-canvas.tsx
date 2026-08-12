@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, OrbitControls } from '@react-three/drei';
+import { Float, OrbitControls, useGLTF, Center } from '@react-three/drei';
 import * as THREE from 'three';
 
 /* 1. Multi-Geometry WebGL Scene (Three.js & R3F) */
@@ -440,8 +440,91 @@ function ProceduralSportsCarMesh({ color, wireframe }: { color: string; wirefram
   );
 }
 
+function GLTFCarModel({ color, wireframe }: { color: string; wireframe: boolean }) {
+  const { scene } = useGLTF('/models/car.glb');
+  const groupRef = useRef<THREE.Group>(null!);
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    if (groupRef.current) {
+      groupRef.current.position.y = Math.sin(t * 1.5) * 0.03;
+    }
+  });
+
+  const clonedScene = React.useMemo(() => {
+    const clone = scene.clone(true);
+    
+    // Calculate bounding box to normalize model dimensions to ~3.5 units
+    const box = new THREE.Box3().setFromObject(clone);
+    const size = new THREE.Vector3();
+    box.getSize(size);
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const targetScale = maxDim > 0 ? 3.5 / maxDim : 1;
+    
+    clone.scale.setScalar(targetScale);
+
+    clone.traverse((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        const mesh = child as THREE.Mesh;
+        if (mesh.material) {
+          const mat = (mesh.material as THREE.MeshStandardMaterial).clone();
+          mat.wireframe = wireframe;
+          if (color) {
+            mat.color = new THREE.Color(color);
+          }
+          mesh.material = mat;
+        }
+      }
+    });
+
+    return clone;
+  }, [scene, color, wireframe]);
+
+  return (
+    <group ref={groupRef}>
+      <Center>
+        <primitive object={clonedScene} />
+      </Center>
+    </group>
+  );
+}
+
+// Preload GLTF model for fast initial display
+try {
+  useGLTF.preload('/models/car.glb');
+} catch {
+  // Preload fallback if unavailable
+}
+
+class CarErrorBoundary extends React.Component<
+  { fallback: React.ReactNode; children: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { fallback: React.ReactNode; children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
 function CarMesh({ color, wireframe }: { color: string; wireframe: boolean }) {
-  return <ProceduralSportsCarMesh color={color} wireframe={wireframe} />;
+  return (
+    <CarErrorBoundary fallback={<ProceduralSportsCarMesh color={color} wireframe={wireframe} />}>
+      <React.Suspense fallback={<ProceduralSportsCarMesh color={color} wireframe={wireframe} />}>
+        <GLTFCarModel color={color} wireframe={wireframe} />
+      </React.Suspense>
+    </CarErrorBoundary>
+  );
 }
 
 function CarConfiguratorDemo() {
