@@ -13,30 +13,50 @@ Designed and engineered by **Varun Nayak**, Senior Software Engineer specializin
 
 ---
 
-## 📸 Portfolio Snapshots & Key Highlights
+## 📸 Live Site Snapshots (Captured from `localhost:3000`)
 
-![Varun Nayak Portfolio Banner](public/og-image.png)
+### 1. 🌟 Main Hero Section & WebGL Ambient Studio
+Interactive hero section with ambient particle canvas, dynamic typography, and primary CTA actions.
 
-### 1. 🏎️ Interactive 3D WebGL Studio & Laboratory
-Experience interactive 3D WebGL graphics powered by **Three.js** and **React Three Fiber**. Features an interactive 3D Car Configurator with real-time lighting adjustment, color customization, wireframe toggling, and camera angle presets.
-
-![3D Car Configurator Studio](public/images/playground/car-configurator.png)
+![Hero Section Snapshot](public/screenshots/hero_preview.png)
 
 ---
 
-### 2. 💼 Professional Engineering Timeline
+### 2. 🏎️ Interactive 3D WebGL Studio & Laboratory
+3D WebGL laboratory featuring an interactive sports car configurator with real-time lighting, color selection, wireframe mode, and camera controls.
+
+![3D Car Configurator Studio](public/screenshots/car_configurator_preview.png)
+
+---
+
+### 3. 🛠️ Featured Engineering Projects Showcase Grid
+Comprehensive engineering showcase grid featuring real-time applications, WebGL games, and platform architectures.
+
+![Projects Showcase Grid](public/screenshots/projects_preview.png)
+
+---
+
+### 4. 📝 Engineering Deep-Dive Publication
+Deep-dive technical article layout featuring SDV Edge Sensor Fusion & Voice AI Cockpit architecture insights.
+
+![Engineering Publication Article](public/screenshots/article_preview.png)
+
+---
+
+## 💼 Professional Engineering Timeline
+
 Interactive career experience cards showcasing impactful engineering milestones at top-tier research and automotive institutions:
 - **IISc (Indian Institute of Science)**: Autonomous vehicle perception and multi-modal edge sensor fusion research.
 - **Mercedes-Benz R&D India**: Software-Defined Vehicle (SDV) cockpit systems and real-time infotainment architectures.
 - **Bosch**: Embedded automotive diagnostic protocols and connected mobility backends.
 
-![IISc Research & Engineering](public/images/iisc-banner.png)
+![IISc Research & Engineering Banner](public/images/iisc-banner.png)
 
 ---
 
-### 3. 🛠️ Featured Engineering Projects
+## 🛠️ Featured Engineering Projects Detail
 
-| Project | Showcase | Description |
+| Project | Snapshot | Description |
 | :--- | :---: | :--- |
 | **Convo AI Voice Assistant** | ![Convo AI](public/projects/convo/hero.png) | Real-time AI voice meeting assistant with automated transcripts, calendar integration, and AI summaries. |
 | **Shah-Mat 3D Chess** | ![Shah-Mat 3D Chess](public/projects/shah-mat/gameplay.png) | Real-time multiplayer 3D chess game powered by WebSockets, Three.js WebGL graphics, and move analysis. |
@@ -82,8 +102,8 @@ portfolio-26/
 │   ├── playground/             # Interactive 3D WebGL laboratory demos
 │   ├── articles/               # Deep-dive engineering publications
 │   └── contact/                # Contact section with interactive modal
-├── public/                     # Static assets, 3D GLTF models, and images
-│   ├── models/                 # 3D GLB/GLTF assets
+├── public/                     # Static assets, screenshots & images
+│   ├── screenshots/            # Live localhost:3000 site screenshots
 │   ├── projects/               # High-resolution project snapshots
 │   └── images/                 # Section banners & blog visual assets
 └── next.config.ts              # Production security headers, CSP & Next.js config
