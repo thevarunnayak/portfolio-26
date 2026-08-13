@@ -14,7 +14,7 @@ export const experienceItems: ExperienceItem[] = [
     summary: 'Architecting core platform capabilities for Connect Assistant & enterprise audit suites, reusable Angular UI design systems, AI-assisted development pipelines, custom Photolog scripting, and high-performance data visualizers.',
     logoText: 'RT',
     responsibilities: [
-      'Engineered core frontend architecture for Connect Assistant & Finding Action Assistant, building document-to-form workflows supporting manual copy, auto-replace, and append operations across complex UI controls.',
+      'Engineered core frontend architecture for Connect Assistant, building document-to-form workflows supporting manual copy, auto-replace, and append operations across complex UI controls.',
       'Implemented Timeline View within Calendar View with horizontal and vertical timeline layouts, multi-attribute filtering, responsive card behavior, and view persistence.',
       'Architected reusable Angular Design System services (Dynamic Window Service with resizing/orientation support, Shape Charts, Toast Notification, Avatar Group) for platform-wide scalability.',
       'Architected custom HTML5 Canvas image editing tools, native getUserMedia camera hardware integrations, and report chart widgets from scratch with zero post-deployment defect leakage.',
@@ -25,8 +25,8 @@ export const experienceItems: ExperienceItem[] = [
     impact: [
       {
         metric: 'Connect Assistant',
-        label: 'Core Platform Lead',
-        detail: 'Architected document-to-form workflows, Finding Action Assistant, and dynamic form control population.'
+        label: 'Core Platform Engineer',
+        detail: 'Architected document-to-form workflows and dynamic form control population for core platform modules.'
       },
       {
         metric: '7+ Charts',
@@ -52,7 +52,7 @@ export const experienceItems: ExperienceItem[] = [
       'Figma',
       'Design Systems'
     ],
-    featuredProjects: ['Connect Assistant', 'Finding Action Assistant', 'Timeline & Calendar View', 'Custom Camera & Image Editor', 'Angular Window Service']
+    featuredProjects: ['Connect Assistant', 'Timeline & Calendar View', 'Custom Camera & Image Editor', 'Angular Window Service']
   },
   {
     id: 'associate-se',
