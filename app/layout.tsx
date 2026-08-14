@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from 'next';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { satoshi, inter, geistMono, fascinate } from '@/lib/fonts';
 import { siteConfig } from '@/content/site';
 import { ThemeProvider } from '@/components/providers/theme-provider';
@@ -93,6 +95,8 @@ export default function RootLayout({
             </CursorProvider>
           </SmoothScrollProvider>
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
