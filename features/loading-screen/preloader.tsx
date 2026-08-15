@@ -16,16 +16,15 @@ export function Preloader({ onComplete }: PreloaderProps) {
     const statusMessages = [
       'INITIALIZING CORE ENGINE...',
       'PRELOADING FONTS & GRAPHICS...',
-      'COMPILING GLSL SHADER PIPELINE...',
       'HYDRATING STRUCTURED CONTENT...',
       'SYSTEM READY'
     ];
 
     let currentProgress = 0;
 
-    // Hyper-optimized fast progress animation (~150ms) for sub-second FCP & high performance score
+    // Instant/high-speed progress animation (~25ms) for sub-second LCP & peak Vercel Speed Insights score
     const interval = setInterval(() => {
-      currentProgress += Math.floor(Math.random() * 25) + 20;
+      currentProgress += 50;
 
       if (currentProgress >= 100) {
         currentProgress = 100;
@@ -33,19 +32,15 @@ export function Preloader({ onComplete }: PreloaderProps) {
         setStatusText('SYSTEM READY');
         clearInterval(interval);
 
-        setTimeout(() => {
+        requestAnimationFrame(() => {
           setIsFinished(true);
-          setTimeout(onComplete, 120);
-        }, 50);
+          onComplete();
+        });
       } else {
         setProgress(currentProgress);
-        const textIdx = Math.min(
-          Math.floor((currentProgress / 100) * (statusMessages.length - 1)),
-          statusMessages.length - 2
-        );
-        setStatusText(statusMessages[textIdx]);
+        setStatusText('SYSTEM READY');
       }
-    }, 12);
+    }, 10);
 
     return () => clearInterval(interval);
   }, [onComplete]);
@@ -56,8 +51,8 @@ export function Preloader({ onComplete }: PreloaderProps) {
         <motion.div
           key="preloader"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, filter: 'blur(8px)' }}
-          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          exit={{ opacity: 0, filter: 'blur(4px)' }}
+          transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="fixed inset-0 z-[99999] flex flex-col items-center justify-between bg-[var(--bg-primary,#0a0a0a)] text-[var(--text-primary,#ffffff)] px-8 py-12 select-none pointer-events-none transition-colors duration-300"
         >
           {/* Top minimal status bar */}

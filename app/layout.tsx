@@ -78,6 +78,8 @@ export default function RootLayout({
       className={`${satoshi.variable} ${inter.variable} ${geistMono.variable} ${fascinate.variable}`}
     >
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="preload"
           href="/images/prof.jpg"
