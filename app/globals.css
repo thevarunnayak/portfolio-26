@@ -463,6 +463,22 @@ input:focus-visible,
 
 .animate-badge-spin-sync {
   animation: badge-spin-sync 2s steps(50) infinite;
-  will-change: transform;
 }
+
+.paused-animation {
+  animation-play-state: paused !important;
+}
+
+/* Defer layout and paint calculations for heavy off-screen sections until scrolled near */
+#experience,
+#projects,
+#skills,
+#certifications,
+#playground,
+#resume,
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto 650px;
+}
+
 

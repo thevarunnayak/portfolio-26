@@ -7,6 +7,7 @@ import { ThemeProvider } from '@/components/providers/theme-provider';
 import { SmoothScrollProvider } from '@/components/providers/smooth-scroll-provider';
 import { CursorProvider } from '@/features/cursor/cursor-context';
 import { CustomCursor } from '@/features/cursor/custom-cursor';
+import { ConsoleSuppressor } from '@/components/providers/console-suppressor';
 import './globals.css';
 
 export const viewport: Viewport = {
@@ -89,6 +90,7 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased selection:bg-blue-500 selection:text-white">
+        <ConsoleSuppressor />
         <ThemeProvider>
           <SmoothScrollProvider>
             <CursorProvider>

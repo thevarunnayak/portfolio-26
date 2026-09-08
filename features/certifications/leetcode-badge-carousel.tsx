@@ -33,12 +33,32 @@ export function LeetCodeBadgeCarousel() {
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [itemSpacing, setItemSpacing] = useState(96);
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const isHoveredRef = useRef(isHovered);
   isHoveredRef.current = isHovered;
+  const isInViewRef = useRef(isInView);
+  isInViewRef.current = isInView;
   const lastManualStepTime = useRef(0);
   const syncTrackerRef = useRef<HTMLSpanElement>(null);
 
   const totalBadges = leetcodeBadgesData.length;
+
+  // Viewport IntersectionObserver to pause animations and timing when offscreen
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { rootMargin: '120px 0px' }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Responsive spacing between badges in step track
   useEffect(() => {
@@ -68,12 +88,13 @@ export function LeetCodeBadgeCarousel() {
     setActiveIndex((prev) => (prev - 1 + totalBadges) % totalBadges);
   }, [totalBadges]);
 
-  // Synchronize carousel slide with 3D rotation: 1 full rotation (2.0s) = 1 step
+  // Synchronize carousel slide with 3D rotation: only when carousel is visible in viewport
   useEffect(() => {
     const el = syncTrackerRef.current;
     if (!el) return;
 
     const handleIteration = () => {
+      if (!isInViewRef.current) return;
       if (isHoveredRef.current) return;
       if (Date.now() - lastManualStepTime.current < 1200) return;
       nextStep(false);
@@ -86,11 +107,17 @@ export function LeetCodeBadgeCarousel() {
   const currentBadge = leetcodeBadgesData[activeIndex];
 
   return (
-    <div className="badge-carousel-container relative w-full mt-12 sm:mt-16 space-y-6 pt-10 border-t border-white/10 select-none">
-      {/* 3D Rotation Animation Timing Tracker */}
+    <div
+      ref={containerRef}
+      className="badge-carousel-container relative w-full mt-12 sm:mt-16 space-y-6 pt-10 border-t border-white/10 select-none"
+    >
+      {/* 3D Rotation Animation Timing Tracker - only animates when in viewport */}
       <span
         ref={syncTrackerRef}
-        className="animate-badge-spin-sync absolute w-px h-px opacity-0 pointer-events-none -z-50"
+        className={`animate-badge-spin-sync absolute w-px h-px opacity-0 pointer-events-none -z-50 ${
+          !isInView ? 'paused-animation' : ''
+        }`}
+        style={{ animationPlayState: isInView ? 'running' : 'paused' }}
         aria-hidden="true"
       />
       {/* Header Bar */}
@@ -155,6 +182,10 @@ export function LeetCodeBadgeCarousel() {
             if (diff < -totalBadges / 2) diff += totalBadges;
 
             const absDiff = Math.abs(diff);
+            // Virtualize: Only mount visible badges plus 1 buffer neighbor for fluid transitions (max 5 on mobile, 7 on desktop)
+            const maxDiff = isMobile ? 2 : 3;
+            if (absDiff > maxDiff) return null;
+
             // On mobile show 3 badges (absDiff <= 1: left, center, right); on desktop/tablet show 5 (absDiff <= 2)
             const isVisible = isMobile ? absDiff <= 1 : absDiff <= 2;
             const isCenter = diff === 0;
@@ -214,14 +245,21 @@ export function LeetCodeBadgeCarousel() {
                   }}
                 />
 
-                {/* Synchronized 3D Rotating Badge Sprite (GPU Hardware Accelerated) */}
+                {/* Synchronized 3D Rotating Badge Sprite (GPU Hardware Accelerated, pauses when offscreen) */}
                 <div className="relative h-14 w-14 sm:h-16 sm:w-16 lg:h-20 lg:w-20 rounded-full overflow-hidden flex items-center shrink-0 drop-shadow-[0_4px_14px_rgba(0,0,0,0.5)]">
                   <img
                     src={badge.spritePath}
                     alt={badge.title}
                     draggable={false}
-                    style={{ width: '5000%', height: '100%', maxWidth: 'none' }}
-                    className="animate-badge-spin-sync pointer-events-none select-none"
+                    style={{
+                      width: '5000%',
+                      height: '100%',
+                      maxWidth: 'none',
+                      animationPlayState: isInView ? 'running' : 'paused',
+                    }}
+                    className={`animate-badge-spin-sync pointer-events-none select-none ${
+                      !isInView ? 'paused-animation' : ''
+                    }`}
                   />
                 </div>
               </motion.div>

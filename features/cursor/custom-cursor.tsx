@@ -59,24 +59,51 @@ export function CustomCursor() {
       }
     };
 
+    let isRunning = false;
+
+    const startRaf = () => {
+      if (!isRunning) {
+        isRunning = true;
+        rafId.current = requestAnimationFrame(updatePosition);
+      }
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
       targetPos.current.x = e.clientX;
       targetPos.current.y = e.clientY;
       setIsVisible(true);
+      startRaf();
     };
 
     const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
+    const handleMouseEnter = () => {
+      setIsVisible(true);
+      startRaf();
+    };
 
     window.addEventListener('resize', handleResize, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { capture: true, passive: true });
     document.addEventListener('mouseleave', handleMouseLeave, { passive: true });
     document.addEventListener('mouseenter', handleMouseEnter, { passive: true });
 
-    // Smooth 120fps GPU RAF loop
+    // Smooth 120fps GPU RAF loop with automatic idle sleep mode
     const updatePosition = () => {
-      currentPos.current.x += (targetPos.current.x - currentPos.current.x) * 0.45;
-      currentPos.current.y += (targetPos.current.y - currentPos.current.y) * 0.45;
+      const dx = targetPos.current.x - currentPos.current.x;
+      const dy = targetPos.current.y - currentPos.current.y;
+
+      // When cursor has reached target position, stop RAF loop until next mousemove
+      if (Math.abs(dx) < 0.08 && Math.abs(dy) < 0.08) {
+        currentPos.current.x = targetPos.current.x;
+        currentPos.current.y = targetPos.current.y;
+        if (cursorRef.current) {
+          cursorRef.current.style.transform = `translate3d(${currentPos.current.x}px, ${currentPos.current.y}px, 0) translate(-50%, -50%)`;
+        }
+        isRunning = false;
+        return;
+      }
+
+      currentPos.current.x += dx * 0.45;
+      currentPos.current.y += dy * 0.45;
 
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate3d(${currentPos.current.x}px, ${currentPos.current.y}px, 0) translate(-50%, -50%)`;
@@ -85,7 +112,7 @@ export function CustomCursor() {
       rafId.current = requestAnimationFrame(updatePosition);
     };
 
-    rafId.current = requestAnimationFrame(updatePosition);
+    startRaf();
 
     return () => {
       if (rafId.current) cancelAnimationFrame(rafId.current);

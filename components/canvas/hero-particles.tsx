@@ -96,6 +96,8 @@ function GPUWaveRibbon() {
 
 export function HeroParticles() {
   const [mounted, setMounted] = useState(false);
+  const [isInView, setIsInView] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Mount WebGL canvas during idle time after initial DOM render & paint
@@ -108,14 +110,34 @@ export function HeroParticles() {
     }
   }, []);
 
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { rootMargin: '100px 0px' }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [mounted]);
+
   if (!mounted) return null;
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-0 opacity-80" style={{ pointerEvents: 'none' }}>
+    <div
+      ref={containerRef}
+      className="absolute inset-0 pointer-events-none z-0 opacity-80"
+      style={{ pointerEvents: 'none' }}
+    >
       <Canvas
         style={{ pointerEvents: 'none' }}
         camera={{ position: [0, 0, 10], fov: 55 }}
         gl={{ antialias: false, alpha: true, powerPreference: 'low-power' }}
+        frameloop={isInView ? 'always' : 'never'}
       >
         <ambientLight intensity={0.5} />
         <GPUWaveRibbon />

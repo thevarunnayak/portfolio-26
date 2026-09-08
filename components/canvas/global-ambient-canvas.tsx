@@ -61,22 +61,34 @@ function SmoothAmbientParticleField() {
 export function GlobalAmbientCanvas() {
   const [mounted, setMounted] = useState(false);
   const [showCanvas, setShowCanvas] = useState(false);
+  const [isTabVisible, setIsTabVisible] = useState(true);
 
   useEffect(() => {
     setMounted(true);
 
+    const handleVisibility = () => {
+      setIsTabVisible(document.visibilityState === 'visible');
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    let ticking = false;
     const checkScroll = () => {
-      // Only reveal global ambient particles when scrolled past Hero section (~250px)
-      if (window.scrollY > 250) {
-        setShowCanvas(true);
-      } else {
-        setShowCanvas(false);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // Only reveal global ambient particles when scrolled past Hero section (~250px)
+          setShowCanvas(window.scrollY > 250);
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
     checkScroll();
     window.addEventListener('scroll', checkScroll, { passive: true });
-    return () => window.removeEventListener('scroll', checkScroll);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility);
+      window.removeEventListener('scroll', checkScroll);
+    };
   }, []);
 
   if (!mounted || !showCanvas) return null;
@@ -90,6 +102,7 @@ export function GlobalAmbientCanvas() {
         style={{ pointerEvents: 'none' }}
         camera={{ position: [0, 0, 10], fov: 60 }}
         gl={{ antialias: false, alpha: true, powerPreference: 'low-power' }}
+        frameloop={isTabVisible ? 'always' : 'never'}
       >
         <ambientLight intensity={0.5} />
         <SmoothAmbientParticleField />
