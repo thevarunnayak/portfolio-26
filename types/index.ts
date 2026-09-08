@@ -47,6 +47,7 @@ export interface ExperienceItem {
   featuredProjects: string[];
   logoText: string;
   award?: string;
+  badgeGif?: string;
   bannerImage?: string;
   companyLogo?: string;
 }
@@ -74,7 +75,7 @@ export interface ProjectCaseStudy {
   slug: string;
   title: string;
   tagline: string;
-  category: 'Full-Stack' | 'Mobile & Cross-Platform' | 'Real-Time' | 'Productivity' | 'Healthcare' | '3D & Graphics' | 'Frontend & E-Commerce' | 'Frontend';
+  category: 'Full-Stack' | 'Mobile & Cross-Platform' | 'Real-Time' | 'Productivity' | 'Healthcare' | '3D & Graphics' | 'Frontend & E-Commerce' | 'Frontend' | 'Developer Tooling';
   featured: boolean;
   period: string;
   heroImage: string;

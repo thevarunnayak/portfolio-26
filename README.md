@@ -49,7 +49,7 @@ Deep-dive technical article featuring SDV Edge Sensor Fusion & Voice AI Cockpit 
 | **Convo AI Voice Assistant** | ![Convo AI](public/projects/convo/hero.png) | Real-time AI voice meeting assistant with automated transcripts, calendar integration, and AI summaries. |
 | **Shah-Mat 3D Chess** | ![Shah-Mat 3D Chess](public/projects/shah-mat/gameplay.png) | Real-time multiplayer 3D chess game powered by WebSockets, Three.js WebGL graphics, and move analysis. |
 | **RCB 2025 Fan Experience** | ![RCB 2025](public/projects/rcb-2025/hero.png) | High-traffic sports franchise web app featuring dynamic Bento grids, live match scores, and fan interactions. |
-| **Nike Store E-Commerce** | ![Nike Store](public/projects/nike-store/hero.png) | Modern e-commerce web application with interactive product customization, smooth animations, and cart management. |
+| **ReactLabz** | ![ReactLabz](public/projects/reactlabz/hero.png) | Interactive React Hooks Studio & Visual Architecture Lab for diagnosing Fiber telemetry, closures, and referential identity on an infinite canvas. |
 
 ---
 

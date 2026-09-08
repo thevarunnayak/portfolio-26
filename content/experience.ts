@@ -8,7 +8,8 @@ export const experienceItems: ExperienceItem[] = [
     location: 'India',
     period: 'July 2025 – Present',
     isCurrent: true,
-    award: 'GOOGLE AI CERTIFIED • 365 LEETCODE BADGE',
+    award: 'GOOGLE AI CERTIFIED • 500 LEETCODE BADGE',
+    badgeGif: '/images/leetcode-500.gif',
     bannerImage: '/images/robo-banner.png',
     companyLogo: '/images/robo-logo.jpeg',
     summary: 'Architecting core platform capabilities for Connect Assistant & enterprise audit suites, reusable Angular UI design systems, AI-assisted development pipelines, custom Photolog scripting, and high-performance data visualizers.',
@@ -20,7 +21,7 @@ export const experienceItems: ExperienceItem[] = [
       'Architected custom HTML5 Canvas image editing tools, native getUserMedia camera hardware integrations, and report chart widgets from scratch with zero post-deployment defect leakage.',
       'Implemented custom client Photolog scripting solution, authoring technical documentation and providing guidance for future team customizations.',
       'Adopted AI tools (ChatGPT, GitHub Copilot) for rapid solution exploration, code reviews, and task planning while maintaining 100% T&E process compliance and 160 hrs/mo peak utilization.',
-      'Earned 365-Day LeetCode streak badge, Google AI Professional Certificate, React Specialization, and mentored student robotics teams during organizational CSR initiatives.'
+      'Earned 500-Day LeetCode streak badge, Google AI Professional Certificate, React Specialization, and mentored student robotics teams during organizational CSR initiatives.'
     ],
     impact: [
       {

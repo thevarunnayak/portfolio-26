@@ -1,7 +1,97 @@
 import { ProjectCaseStudy } from '@/types';
 
 export const projectsData: ProjectCaseStudy[] = [
-  // Rank 1: Mobile-First Habit & Growth Platform (React Native & Supabase)
+  // Rank 1: Interactive React Hooks Studio & Visual Architecture Lab
+  {
+    id: 'reactlabz',
+    slug: 'reactlabz',
+    title: 'ReactLabz',
+    tagline: 'Interactive React Hooks Studio & Visual Architecture Lab for diagnosing Fiber telemetry, closures, and referential identity on an infinite canvas.',
+    category: 'Developer Tooling',
+    featured: true,
+    period: '2025 – 2026',
+    heroImage: '/projects/reactlabz/hero.png',
+    galleryImages: [
+      '/projects/reactlabz/playground.png',
+      '/projects/reactlabz/layout-studio.png',
+      '/projects/reactlabz/custom-hooks.png',
+      '/projects/reactlabz/challenges.png'
+    ],
+    columnGroups: [
+      [
+        '/projects/reactlabz/playground.png',
+        '/projects/reactlabz/layout-studio.png'
+      ],
+      [
+        '/projects/reactlabz/custom-hooks.png',
+        '/projects/reactlabz/challenges.png'
+      ]
+    ],
+    galleryColumns: 2,
+    overview: 'ReactLabz is an interactive diagnostic laboratory and visual architecture studio designed to demystify React internals. Rather than memorizing surface hook syntax, engineers visually inspect fiber reconciliation telemetry, live render causality diffs, referential memory addresses, and stale closures. It features an infinite canvas component builder (Figma-meets-ReactFlow), a hierarchical Flexbox layout studio, 50 curated real-time architecture blueprints, and a 20-part curriculum covering 18+ standard and React 19 hooks.',
+    problem: 'Mastering React hooks is deceptively difficult when developers only memorize syntax without understanding Fiber reconciliation, closures, and render lifecycles. Traditional debuggers fail to visualize stale closures, referential identity drift, or why specific component trees re-render.',
+    solution: 'Engineered a zero-backend, local-first visual laboratory with an infinite dot-grid canvas, real-time reactive port wiring (events, data, dependencies), live render causality telemetry, and dynamic code generation that outputs production-ready TypeScript React JSX directly from canvas node graphs.',
+    architecture: {
+      summary: 'Client-side React & TypeScript visual canvas engine with AST-based dynamic code generator, Fiber telemetry diagnostics, and local-first browser persistence.',
+      nodes: [
+        { id: '1', label: 'Infinite Visual Canvas', sub: 'Dot-Grid Viewport, Zoom/Pan & Node Engine', type: 'client' },
+        { id: '2', label: 'Fiber & Memory Telemetry', sub: 'Causality Diffs, Closures & Referentials', type: 'service' },
+        { id: '3', label: 'AST Code Generator', sub: 'Idiomatic TypeScript JSX Emitter', type: 'service' },
+        { id: '4', label: 'Local-First Store', sub: 'Zero-Cloud Web Storage & JSON Export', type: 'database' }
+      ],
+      dataFlow: [
+        'Canvas Node Graph -> Semantic port wiring evaluates event, state & dependency triggers',
+        'Runtime Execution Pulse -> Traces User Click -> State Update -> Fiber Render -> UI Update',
+        'AST Code Engine -> Emits formatted, production-grade TypeScript React component code',
+        'Diagnostic Inspectors -> Live render counters, memory address diffs & stale closure traps'
+      ]
+    },
+    metrics: [
+      { label: 'Hook Coverage', value: '18+ Hooks', description: 'Core, Concurrent, and React 19 (useActionState, useOptimistic)' },
+      { label: 'Architecture Presets', value: '50 Blueprints', description: 'From stopwatches to Suspense streaming & WebSocket controllers' },
+      { label: 'Custom Hooks', value: '40+ Implementations', description: 'Curated sensor, storage, performance, and state utilities' },
+      { label: 'Privacy & Architecture', value: '100% Local-First', description: 'Zero cloud dependence with instant JSON workspace backup/restore' }
+    ],
+    techStack: ['React 19', 'TypeScript', 'Tailwind CSS', 'Canvas API', 'Framer Motion', 'Web Speech API', 'Vite', 'Local-First'],
+    features: [
+      {
+        title: 'Visual Component Builder & Infinite Canvas',
+        description: 'Figma-meets-ReactFlow visual canvas with dot-grid pan/zoom, interactive rendered UI nodes, dummy datasets, semantic port wiring (events, data, dependencies), and live execution tracing.'
+      },
+      {
+        title: 'Visual Layout & Flex Studio',
+        description: 'Hierarchical flexbox composition with recursive container nesting, custom justify/gap/sizing controls, auto-grouping by canvas coordinates, and multi-device responsive simulation.'
+      },
+      {
+        title: 'Deep Fiber Diagnostics & Visualizers',
+        description: 'Real-time causality diffs ("Why did this render?"), referential equality memory address comparator (0xCAFE), stale closure timer labs, and Concurrent React transitions.'
+      },
+      {
+        title: 'Dynamic AST Code Generation',
+        description: 'Generates clean, production-ready, idiomatic TypeScript React code respecting exact UI sequencing, state variables, hooks, imports, and handlers.'
+      },
+      {
+        title: 'Senior React Interview Preparation Lab',
+        description: 'Multi-tier simulator (Junior to Architect) with bug finding, output prediction, hook optimization, and deep architectural discussion questions.'
+      },
+      {
+        title: 'Universal Command Palette (⌘K) with Voice Search',
+        description: 'Instant fuzzy searching across all hooks, blueprints, and challenges with Web Speech API speech-to-text microphone integration.'
+      }
+    ],
+    challenges: [
+      'Designing an interactive canvas node graph where nodes render actual, live-interactive UI components without interfering with canvas panning and drag events.',
+      'Building an AST-compliant real-time code generator that produces human-written-quality TypeScript React code from arbitrary graph wiring.'
+    ],
+    lessons: [
+      'Visual telemetry and live execution tracing make complex runtime mental models (like stale closures and referential instability) intuitively graspable within seconds.',
+      'Local-first architecture provides lightning-fast zero-latency performance while guaranteeing 100% user privacy and data portability.'
+    ],
+    liveUrl: 'https://reactlabz.vercel.app',
+    githubUrl: 'https://github.com/thevarunnayak/react-hooks'
+  },
+
+  // Rank 2: Mobile-First Habit & Growth Platform (React Native & Supabase)
   {
     id: 'odyssey',
     slug: 'odyssey',
@@ -736,81 +826,6 @@ export const projectsData: ProjectCaseStudy[] = [
       'Purposeful animation and modular bento layout design transform static sports portals into engaging, campaign-grade digital experiences.'
     ],
     liveUrl: 'https://rcb25.vercel.app/',
-    githubUrl: undefined
-  },
-
-  // Rank 4: Foundational Milestone Project (Nike Adapt Storefront)
-  {
-    id: 'nike-store',
-    slug: 'nike-adapt-store',
-    title: 'Nike Adapt 2.0 Storefront',
-    tagline: 'Frontend e-commerce application built with React, Vite, and Redux Toolkit simulating a modern online sneaker shopping experience.',
-    category: 'Frontend & E-Commerce',
-    featured: true,
-    period: '2023 – 2024',
-    heroImage: '/projects/nike-store/hero.png',
-    galleryImages: [
-      '/projects/nike-store/top-rated-sales.png',
-      '/projects/nike-store/popular-sales.png',
-      '/projects/nike-store/top-stories.png',
-      '/projects/nike-store/cart.png'
-    ],
-    columnGroups: [
-      [
-        '/projects/nike-store/top-rated-sales.png',
-        '/projects/nike-store/popular-sales.png',
-        '/projects/nike-store/top-stories.png'
-      ],
-      [
-        '/projects/nike-store/cart.png'
-      ]
-    ],
-    overview: 'Nike Adapt 2.0 Storefront is a modern e-commerce application inspired by Nike\'s futuristic Adapt footwear line. Built during my frontend training as one of my first complete React applications, it served as a foundational milestone for mastering component composition, Vite development, and centralized state management using Redux Toolkit.',
-    problem: 'Early e-commerce templates felt static, slow to respond, and lacked modern component composition and state management needed to simulate realistic shopping workflows without backend latency.',
-    solution: 'Engineered a polished, responsive React application utilizing Vite and Redux Toolkit, implementing complete frontend CRUD operations for shopping cart management, reusable product components, and instant declarative state reactivity.',
-    architecture: {
-      summary: 'Vite & React component hierarchy powered by Redux Toolkit for predictable centralized cart state and immutable slice reducers.',
-      nodes: [
-        { id: '1', label: 'Vite & React UI', sub: 'Component Tree & Mock Product Catalog', type: 'client' },
-        { id: '2', label: 'Redux Toolkit', sub: 'Centralized Store, Cart Slice & Selectors', type: 'client' },
-        { id: '3', label: 'CSS3 Layout System', sub: 'Responsive Grid & Custom Typography', type: 'client' }
-      ],
-      dataFlow: [
-        'User clicks add-to-cart on sneaker card -> Action dispatched to Redux cart slice',
-        'Slice reducer computes immutable state update -> Item added or quantity incremented',
-        'Redux selectors compute total price & items -> UI re-renders declaratively with instant feedback'
-      ]
-    },
-    metrics: [
-      { label: 'Foundational App', value: 'Milestone', description: 'Core React & Redux Toolkit learning milestone' },
-      { label: 'State Latency', value: '0ms', description: 'Instant client-side cart CRUD operations without server roundtrips' }
-    ],
-    techStack: ['React', 'Vite', 'JavaScript', 'Redux Toolkit', 'CSS3'],
-    features: [
-      {
-        title: 'Product Catalog & Quick Actions',
-        description: 'Browse Nike Adapt footwear with high-res sneaker cards, pricing, categories, ratings, and instant add-to-cart triggers.'
-      },
-      {
-        title: 'Full Frontend Cart CRUD',
-        description: 'Add, remove, increment, and decrement item quantities with automatic derived totals calculation via Redux Toolkit.'
-      },
-      {
-        title: 'Dynamic Declarative UI',
-        description: 'Instant interface updates reflecting cart state changes across navigation badges and cart drawers without page reloads.'
-      },
-      {
-        title: 'Responsive Nike-Inspired Aesthetic',
-        description: 'Sleek dark design with bold sports typography, clean product cards, and responsive grid layouts for desktop and mobile.'
-      }
-    ],
-    challenges: [
-      'Understanding component communication via shared global state and mastering immutable state updates, actions, reducers, and selectors in Redux Toolkit.'
-    ],
-    lessons: [
-      'Built a deep architectural foundation in React component composition, centralized state management, and predictable data flows that informed all later React and Angular engineering work.'
-    ],
-    liveUrl: 'https://nikestores.netlify.app/',
     githubUrl: undefined
   }
 ];

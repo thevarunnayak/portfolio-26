@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { certificationsData } from '@/content/certifications';
 import { useCursor } from '@/features/cursor/cursor-context';
 import { Award, ChevronDown, ExternalLink, Calendar, CheckCircle2, ShieldCheck, BookOpen, Sparkles, Layers } from 'lucide-react';
+import { LeetCodeBadgeCarousel } from './leetcode-badge-carousel';
 
 export function CertificationsSection() {
   const { setCursorState, resetCursorState } = useCursor();
@@ -234,6 +235,9 @@ export function CertificationsSection() {
             );
           })}
         </div>
+
+        {/* LeetCode Badges & Competitive Programming Carousel */}
+        <LeetCodeBadgeCarousel />
       </div>
     </section>
   );

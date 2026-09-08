@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { experienceItems } from '@/content/experience';
 import { useCursor } from '@/features/cursor/cursor-context';
 import { Briefcase, ChevronDown, Sparkles, MapPin, Calendar, CheckCircle2 } from 'lucide-react';
+import { GifBadge } from '@/components/ui/gif-badge';
 
 export function ExperienceSection() {
   const { setCursorState, resetCursorState } = useCursor();
@@ -96,6 +97,14 @@ export function ExperienceSection() {
                                 <Sparkles className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-amber-950 dark:text-amber-400" />
                                 <span className="text-amber-950 dark:text-amber-400">{item.award}</span>
                               </span>
+                            )}
+                            {item.badgeGif && (
+                              <GifBadge
+                                src={item.badgeGif}
+                                alt={`${item.company} Badge`}
+                                size={32}
+                                title="LeetCode 500 Days Streak Badge"
+                              />
                             )}
                           </div>
                           <p className="font-mono text-xs sm:text-sm text-neutral-400">{item.role}</p>
