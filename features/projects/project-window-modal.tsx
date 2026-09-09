@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ProjectCaseStudy } from '@/types';
@@ -18,11 +19,16 @@ interface ProjectWindowModalProps {
 export function ProjectWindowModal({ project, onClose }: ProjectWindowModalProps) {
   const { setCursorState, resetCursorState } = useCursor();
   const { lenis } = useSmoothScroll();
+  const [mounted, setMounted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'features' | 'metrics'>('overview');
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Lock main body scroll & pause Lenis when modal is open & listen for ESC key
-  React.useEffect(() => {
+  useEffect(() => {
     if (project) {
       document.body.style.overflow = 'hidden';
       if (lenis) lenis.stop();
@@ -41,28 +47,29 @@ export function ProjectWindowModal({ project, onClose }: ProjectWindowModalProps
     };
   }, [project, lenis, onClose]);
 
-  if (!project) return null;
+  if (!mounted) return null;
 
-  return (
+  return createPortal(
     <AnimatePresence>
-      <div
-        onClick={(e) => {
-          if (e.target === e.currentTarget) onClose();
-        }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/80 backdrop-blur-xl"
-      >
-        <motion.div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="project-modal-title"
-          initial={{ opacity: 0, scale: 0.92, y: 30 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.92, y: 30 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-          className={`flex flex-col w-full bg-neutral-900 border border-white/20 rounded-3xl shadow-2xl overflow-hidden transition-all duration-300 ${
-            isFullscreen ? 'h-full max-w-full' : 'max-w-5xl h-[88vh]'
-          }`}
+      {project && (
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) onClose();
+          }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 md:p-10 bg-black/80 backdrop-blur-xl"
         >
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-modal-title"
+            initial={{ opacity: 0, scale: 0.92, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.92, y: 30 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+            className={`flex flex-col w-full bg-neutral-900 border border-white/20 rounded-3xl shadow-2xl overflow-hidden transition-all duration-300 ${
+              isFullscreen ? 'h-full max-w-full rounded-none sm:rounded-3xl' : 'max-w-5xl h-[88vh] max-h-[88vh] my-auto'
+            }`}
+          >
           {/* macOS Desktop Window Title Bar */}
           <div
             onMouseEnter={() => setCursorState('window', project.title)}
@@ -373,6 +380,8 @@ export function ProjectWindowModal({ project, onClose }: ProjectWindowModalProps
           </div>
         </motion.div>
       </div>
-    </AnimatePresence>
-  );
+    )}
+  </AnimatePresence>,
+  document.body
+);
 }
